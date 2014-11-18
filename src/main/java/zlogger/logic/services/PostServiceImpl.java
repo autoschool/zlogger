@@ -1,12 +1,12 @@
-package zlobber.logic.services;
+package zlogger.logic.services;
 
-import zlobber.logic.models.Post;
+import zlogger.logic.models.Post;
 
 import java.util.List;
 
 
 //@Repository
-public class PostService implements IPostService {
+public class PostServiceImpl implements PostService {
 
     //@Autowired
     //private SessionFactory sessionFactory;

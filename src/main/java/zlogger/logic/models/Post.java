@@ -1,4 +1,4 @@
-package zlobber.logic.models;
+package zlogger.logic.models;
 
 
 //import javax.persistence.Column;

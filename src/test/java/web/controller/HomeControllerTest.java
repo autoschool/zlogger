@@ -1,4 +1,4 @@
-package zlobber.web.controllers;
+package zlogger.web.controllers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;

@@ -1,4 +1,4 @@
-package zlobber.delete_this_example;
+package zlogger.delete_this_example;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
