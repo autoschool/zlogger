@@ -1,6 +1,6 @@
 target/
 .idea/
-*.iml
+zlobber.iml
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
