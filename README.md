@@ -1,4 +1,4 @@
-Zlogger
+Zlogger 2
 ========
 
 Blog project
