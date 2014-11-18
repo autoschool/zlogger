@@ -1,6 +1,8 @@
 Zlogger
 ========
 
+Test
+
 Blog project
 
 Spring MVC, AngularJS.
