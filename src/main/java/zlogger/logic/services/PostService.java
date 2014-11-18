@@ -1,9 +1,9 @@
-package zlobber.logic.services;
+package zlogger.logic.services;
 
-import zlobber.logic.models.Post;
+import zlogger.logic.models.Post;
 import java.util.List;
 
-public interface IPostService {
+public interface PostService {
     public void addPost(Post contact);
     public List<Post> listPosts();
     public void removePost(Integer id);

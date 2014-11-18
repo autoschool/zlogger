@@ -1,4 +1,4 @@
-package zlobber.web.controllers;
+package zlogger.web.controllers;
 
 import javax.validation.Valid;
 
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import zlobber.delete_this_example.FormDTO;
+import zlogger.delete_this_example.FormDTO;
 
 @Controller
 public class HomeController {

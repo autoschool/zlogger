@@ -1,12 +1,11 @@
-package zlobber.web.controllers;
+package zlogger.web.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import zlobber.logic.models.Post;
-import zlobber.logic.services.IPostService;
+import zlogger.logic.models.Post;
+import zlogger.logic.services.PostService;
 
 import java.util.List;
 
@@ -15,7 +14,7 @@ public class PostContoller {
 
 
     //@Autowired
-    IPostService postService;
+    PostService postService;
 
     @RequestMapping("/list")
     public
