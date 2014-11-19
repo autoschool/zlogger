@@ -21,7 +21,7 @@
 
     <bean id="postDao" class="zlogger.logic.dal.impl.PostDaoHibernateImpl"/>
     <bean id="postService" class="zlogger.logic.services.PostServiceImpl"/>
-    <bean id="webConfig" class="base.spring.WebConfig"/>
+
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="${database.driver}" />
