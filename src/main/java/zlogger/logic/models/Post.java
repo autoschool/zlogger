@@ -1,19 +1,11 @@
 package zlogger.logic.models;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import zlogger.util.CustomJsonDateDeserializer;
-import zlogger.util.CustomJsonDateSerializer;
-
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.Date;
 
-//@Repository
-@XmlRootElement
 @Entity
-@Table(name = "posts")
+@Table(name = "Posts")
 public class Post implements Serializable {
 
     @Id
@@ -28,8 +20,6 @@ public class Post implements Serializable {
     private String message;
 
     @Column(name = "creation_date")
-    @JsonSerialize(using = CustomJsonDateSerializer.class)
-    @JsonDeserialize(using = CustomJsonDateDeserializer.class)
     private Date creationDate;
 
     public Post() {
