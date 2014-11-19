@@ -25,7 +25,7 @@ public class PostController {
     @RequestMapping("/list")
     public ModelAndView getList() {
         IndexModel model = new IndexModel();
-        model.setWelcome( "test welcome") ;
+        model.setWelcome("test welcome");
         model.setPosts(postService.listPosts());
         return new ModelAndView("list", "indexModel", model);
     }
@@ -35,12 +35,12 @@ public class PostController {
     public String getAdd(
             @RequestParam("title") String title,
             @RequestParam("message") String message
-            ) {
+    ) {
         Post newPost = new Post();
         newPost.setTitle(title);
         newPost.setMessage(message);
         postService.addPost(newPost);
-        return "forward:/list";
+        return "redirect:/list";
     }
 
 }

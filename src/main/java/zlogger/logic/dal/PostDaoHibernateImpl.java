@@ -17,10 +17,10 @@ public class PostDaoHibernateImpl implements PostDao {
     private SessionFactory mySessionFactory;
 
     private Session getCurrentSession() {
-        Session session = null;
+        Session session;
         try {
             session = mySessionFactory.getCurrentSession();
-        } catch ( HibernateException he ) {
+        } catch (HibernateException he) {
             session = mySessionFactory.openSession();
         }
         return session;
@@ -52,7 +52,20 @@ public class PostDaoHibernateImpl implements PostDao {
 
     @Override
     public Long updatePost(Post post) {
-        getCurrentSession().saveOrUpdate(post);
+        if (post.getId() != null) {
+            Post oldPost = getPostById(post.getId());
+            if (oldPost == null)
+                return null;
+
+           if (post.getMessage() == null) {
+               post.setMessage(oldPost.getMessage());
+           }
+            if (post.getTitle() == null) {
+                post.setTitle(oldPost.getTitle());
+            }
+            post.setCreationDate(oldPost.getCreationDate());
+        }
+        getCurrentSession().merge(post);
         return post.getId();
     }
 }

@@ -18,14 +18,12 @@
         <spring.version>3.2.6.RELEASE</spring.version>
         <hibernate.version>4.2.15-Final</hibernate.version>
         <jetty.version>9.2.5.v20141112</jetty.version>
-        <logback.version>1.1.2</logback.version>
         <allure.version>1.4.4</allure.version>
-
     </properties>
 
 
     <build>
-        <finalName>${pom.artifactId}</finalName>
+        <finalName>${project.artifactId}</finalName>
 
         <plugins>
 
@@ -77,7 +75,7 @@
                         </goals>
                         <configuration>
                             <scanIntervalSeconds>0</scanIntervalSeconds>
-                            <!-- <daemon>true</daemon>  -->
+                            <daemon>true</daemon>
                         </configuration>
                     </execution>
                     <execution>
@@ -88,6 +86,17 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.14</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/web/**/*.java</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
 
             <plugin>
@@ -239,17 +248,15 @@
         </dependency>
 
     </dependencies>
-    <!--
-        <reporting>
-            <excludeDefaults>true</excludeDefaults>
-            <plugins>
-                <plugin>
-                    <groupId>ru.yandex.qatools.allure</groupId>
-                    <artifactId>allure-maven-plugin</artifactId>
-                    <version>2.0</version>
-                </plugin>
-            </plugins>
-        </reporting>
-          -->
+    <reporting>
+        <excludeDefaults>true</excludeDefaults>
+        <plugins>
+            <plugin>
+                <groupId>ru.yandex.qatools.allure</groupId>
+                <artifactId>allure-maven-plugin</artifactId>
+                <version>2.0</version>
+            </plugin>
+        </plugins>
+    </reporting>
 
 </project>
