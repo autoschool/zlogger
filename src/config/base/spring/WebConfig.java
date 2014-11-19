@@ -16,8 +16,7 @@ import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
-import zlogger.logic.dal.PostDao;
-import zlogger.logic.dal.impl.PostDaoJPA2Impl;
+
 
 @Configuration
 @EnableWebMvc
@@ -66,10 +65,5 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         // # -1 : never reload, 0 always reload
         messageSource.setCacheSeconds(0);
         return messageSource;
-    }
-
-    @Bean
-    public PostDao postDao() {
-        return new PostDaoJPA2Impl();
     }
 }

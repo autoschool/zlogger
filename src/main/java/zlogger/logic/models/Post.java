@@ -6,15 +6,11 @@ import zlogger.util.CustomJsonDateDeserializer;
 import zlogger.util.CustomJsonDateSerializer;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
-import java.io.Serializable;
 import java.util.Date;
 
-//@Repository
-@XmlRootElement
 @Entity
-@Table(name = "posts")
-public class Post implements Serializable {
+@Table(name = "Posts")
+public class Post {
 
     @Id
     @GeneratedValue

@@ -8,7 +8,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 public class ZloggerApplication extends ResourceConfig {
 
     public ZloggerApplication() {
-        packages("zlogger.logic");
+        //packages("zlogger.logic");
     }
 
 }
