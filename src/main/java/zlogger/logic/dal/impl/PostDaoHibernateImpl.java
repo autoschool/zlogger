@@ -3,7 +3,6 @@ package zlogger.logic.dal.impl;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import zlogger.logic.dal.PostDao;
 import zlogger.logic.models.Post;
@@ -13,7 +12,7 @@ import java.util.List;
 public class PostDaoHibernateImpl implements PostDao {
 
     @Autowired
-    SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
     private Session getCurrentSession() {
         return sessionFactory.getCurrentSession();
