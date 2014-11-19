@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import zlogger.logic.models.Post;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -44,6 +45,7 @@ public class PostDaoHibernateImpl implements PostDao {
 
     @Override
     public Long createPost(Post post) {
+        post.setCreationDate(new Date());
         getCurrentSession().save(post);
         return post.getId();
     }
