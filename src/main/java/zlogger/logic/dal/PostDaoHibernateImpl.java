@@ -1,26 +1,33 @@
-package zlogger.logic.dal.impl;
+package zlogger.logic.dal;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import zlogger.logic.dal.PostDao;
 import zlogger.logic.models.Post;
+
 import java.util.List;
 
 @Repository
 public class PostDaoHibernateImpl implements PostDao {
 
     @Autowired
-    private SessionFactory sessionFactory;
+    private SessionFactory mySessionFactory;
 
     private Session getCurrentSession() {
-        return sessionFactory.getCurrentSession();
+        Session session = null;
+        try {
+            session = mySessionFactory.getCurrentSession();
+        } catch ( HibernateException he ) {
+            session = mySessionFactory.openSession();
+        }
+        return session;
     }
 
     @Override
     public List<Post> getPosts() {
-        return getCurrentSession().createQuery("from Posts").list();
+        return getCurrentSession().createCriteria(Post.class).list();
     }
 
     @Override

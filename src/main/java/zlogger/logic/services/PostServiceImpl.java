@@ -6,9 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import zlogger.logic.dal.PostDao;
 import zlogger.logic.models.Post;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.util.List;
 
 
