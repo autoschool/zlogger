@@ -30,10 +30,10 @@
         					<spring:message code="message.home.instructions"/>
         				</div>
 
-        				<div>
-        					<div id="message" class="alert alert-success">
-								<spring:message code="message.youWrote" arguments="${indexModel.welcome}" htmlEscape="true" />
-							</div>
+						<div id="message" class="alert alert-success">
+							<spring:message code="message.youWrote" arguments="${indexModel.welcome}" htmlEscape="true" />
+						</div>
+        				<div id="postsWall" class="posts">
 							<c:forEach var="sentence" items="${indexModel.posts}" varStatus="i">
 
 								  <h3>${sentence.title}</h3>
