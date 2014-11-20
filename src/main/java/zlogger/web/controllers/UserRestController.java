@@ -26,9 +26,7 @@ public class UserRestController {
     public
     @ResponseBody
     List<User> getUsers() {
-        List<User> users = postService.listUsers();
-
-        return users;
+        return postService.listUsers();
     }
 
     @RequestMapping(method = RequestMethod.POST,
@@ -38,8 +36,7 @@ public class UserRestController {
     public
     @ResponseBody
     Long addUser(@RequestBody User user) {
-        Long id = postService.addUser(user);
-        return id;
+        return postService.addUser(user);
     }
 
     @RequestMapping(value = "/{id}",
@@ -49,8 +46,7 @@ public class UserRestController {
     public
     @ResponseBody
     User getUser(@PathVariable("id") Long id) {
-        User user = postService.getUser(id);
-        return user;
+        return postService.getUser(id);
     }
 
     @RequestMapping(value = "/{id}",

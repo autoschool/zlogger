@@ -26,9 +26,7 @@ public class PostRestController {
     public
     @ResponseBody
     List<Post> getPosts() {
-        List<Post> posts = postService.listPosts();
-
-        return posts;
+        return postService.listPosts();
     }
 
     @RequestMapping(method = RequestMethod.POST,
@@ -38,8 +36,7 @@ public class PostRestController {
     public
     @ResponseBody
     Long addPost(@RequestBody Post post) {
-        Long id = postService.addPost(post);
-        return id;
+        return postService.addPost(post);
     }
 
     @RequestMapping(value = "/{id}",
@@ -49,8 +46,7 @@ public class PostRestController {
     public
     @ResponseBody
     Post getPost(@PathVariable("id") Long id) {
-        Post post = postService.getPost(id);
-        return post;
+        return postService.getPost(id);
     }
 
     @RequestMapping(value = "/{id}",

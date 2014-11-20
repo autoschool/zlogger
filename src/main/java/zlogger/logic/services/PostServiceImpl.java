@@ -21,15 +21,14 @@ public class PostServiceImpl implements PostService {
     @Transactional
     public Long addPost(Post post) {
         post.setCreationDate(new Date());
-        Long id = postDao.createPost(post);
-        return id;
+        return postDao.createPost(post);
     }
 
 
     @Override
+    @Transactional
     public List<Post> listPosts() {
-        List<Post> list = postDao.getPosts();
-        return list;
+        return postDao.getPosts();
     }
 
     @Override
@@ -39,9 +38,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    @Transactional
     public Post getPost(Long id) {
-        Post post = postDao.getPostById(id);
-        return post;
+        return postDao.getPostById(id);
     }
 
     @Override
