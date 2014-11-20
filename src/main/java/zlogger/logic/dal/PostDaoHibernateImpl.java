@@ -45,7 +45,6 @@ public class PostDaoHibernateImpl implements PostDao {
 
     @Override
     public Long createPost(Post post) {
-        post.setCreationDate(new Date());
         getCurrentSession().save(post);
         return post.getId();
     }

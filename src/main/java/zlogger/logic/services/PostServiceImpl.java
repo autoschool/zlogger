@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import zlogger.logic.dal.PostDao;
 import zlogger.logic.models.Post;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -19,6 +20,7 @@ public class PostServiceImpl implements PostService {
     @Override
     @Transactional
     public Long addPost(Post post) {
+        post.setCreationDate(new Date());
         Long id = postDao.createPost(post);
         return id;
     }
