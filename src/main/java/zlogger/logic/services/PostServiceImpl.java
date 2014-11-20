@@ -18,10 +18,10 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public void addPost(Post post) {
-        postDao.createPost(post);
+    public Long addPost(Post post) {
+        Long id = postDao.createPost(post);
+        return id;
     }
-
 
 
     @Override
@@ -31,7 +31,20 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void removePost(Long id) {
+    @Transactional
+    public void deletePost(Long id) {
         postDao.deletePostById(id);
+    }
+
+    @Override
+    public Post getPost(Long id) {
+        Post post = postDao.getPostById(id);
+        return post;
+    }
+
+    @Override
+    @Transactional
+    public void updatePost(Post post) {
+        postDao.updatePost(post);
     }
 }

@@ -50,6 +50,7 @@
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
                 <prop key="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</prop>
+                <prop key="hibernate.show_sql">true</prop>
             </props>
         </property>
     </bean>
@@ -63,13 +64,13 @@
 
     <bean id="messageSource"
           class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-        <property name="basename" value="classpath:messages/messages" />
+        <property name="basename" value="classpath:messages/messages"/>
         <property name="defaultEncoding" value="UTF-8"/>
     </bean>
 
     <bean id="localeChangeInterceptor"
           class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
-        <property name="paramName" value="lang" />
+        <property name="paramName" value="lang"/>
     </bean>
 
     <bean id="localeResolver"
@@ -80,7 +81,7 @@
     <bean id="handlerMapping"
           class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
         <property name="interceptors">
-            <ref bean="localeChangeInterceptor" />
+            <ref bean="localeChangeInterceptor"/>
         </property>
     </bean>
 
