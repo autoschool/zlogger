@@ -56,13 +56,15 @@ public class PostDaoHibernateImpl implements PostDao {
             if (oldPost == null)
                 return null;
 
-           if (post.getMessage() == null) {
-               post.setMessage(oldPost.getMessage());
-           }
+            if (post.getMessage() == null) {
+                post.setMessage(oldPost.getMessage());
+            }
             if (post.getTitle() == null) {
                 post.setTitle(oldPost.getTitle());
             }
             post.setCreationDate(oldPost.getCreationDate());
+            post.setWall(oldPost.getWall());
+            post.setCreator(oldPost.getCreator());
         }
         getCurrentSession().merge(post);
         return post.getId();

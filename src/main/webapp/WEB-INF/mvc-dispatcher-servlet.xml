@@ -31,8 +31,9 @@
     </bean>
 
     <bean id="postDao" class="zlogger.logic.dal.PostDaoHibernateImpl"/>
-    <bean id="postService" class="zlogger.logic.services.PostServiceImpl"  />
-
+    <bean id="postService" class="zlogger.logic.services.PostServiceImpl"/>
+    <bean id="userDao" class="zlogger.logic.dal.UserDaoHibernateImpl"/>
+    <bean id="userService" class="zlogger.logic.services.UserServiceImpl"/>
 
 
     <bean id="myDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">

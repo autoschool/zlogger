@@ -5,7 +5,7 @@ import zlogger.logic.models.Post;
 import java.util.List;
 
 public interface PostService {
-    public Long addPost(Post contact);
+    public Long addPost(Post post);
 
     public List<Post> listPosts();
 
