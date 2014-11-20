@@ -25,6 +25,14 @@ public class Post implements Serializable {
     @Column(name = "creation_date")
     private Date creationDate;
 
+    @ManyToOne
+    @JoinColumn(name = "creator_id")
+    private User creator;
+
+    @ManyToOne
+    @JoinColumn(name = "wall_id")
+    private Wall wall;
+
     public Post() {
     }
 
@@ -65,5 +73,21 @@ public class Post implements Serializable {
 
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public User getCreator() {
+        return creator;
+    }
+
+    public void setCreator(User creator) {
+        this.creator = creator;
+    }
+
+    public Wall getWall() {
+        return wall;
+    }
+
+    public void setWall(Wall wall) {
+        this.wall = wall;
     }
 }

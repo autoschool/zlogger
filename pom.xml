@@ -19,17 +19,12 @@
         <hibernate.version>4.2.15-Final</hibernate.version>
         <jetty.version>9.2.5.v20141112</jetty.version>
         <allure.version>1.4.4</allure.version>
+        <aspectj.version>1.7.4</aspectj.version>
     </properties>
 
 
     <build>
         <finalName>${project.artifactId}</finalName>
-
-        <testResources>
-            <testResource>
-                <directory>src/main/webapp/WEB-INF</directory>
-            </testResource>
-        </testResources>
 
         <plugins>
 
@@ -65,13 +60,6 @@
                         <scanTarget>${project.basedir}/src/test</scanTarget>
                     </scanTargets>
                 </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>mysql</groupId>
-                        <artifactId>mysql-connector-java</artifactId>
-                        <version>5.1.34</version>
-                    </dependency>
-                </dependencies>
                 <executions>
                     <execution>
                         <id>start-jetty</id>
@@ -99,6 +87,16 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.14</version>
                 <configuration>
+                    <testFailureIgnore>false</testFailureIgnore>
+                    <argLine>
+                        -javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
+                    </argLine>
+                    <properties>
+                        <property>
+                            <name>listener</name>
+                            <value>ru.yandex.qatools.allure.junit.AllureRunListener</value>
+                        </property>
+                    </properties>
                     <excludes>
                         <exclude>**/web/**/*.java</exclude>
                     </excludes>
@@ -124,6 +122,16 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <testFailureIgnore>false</testFailureIgnore>
+                    <argLine>
+                        -javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
+                    </argLine>
+                    <properties>
+                        <property>
+                            <name>listener</name>
+                            <value>ru.yandex.qatools.allure.junit.AllureRunListener</value>
+                        </property>
+                    </properties>
                     <includes>
                         <include>**/web/**/*.java</include>
                     </includes>
@@ -147,6 +155,12 @@
             <groupId>xml-apis</groupId>
             <artifactId>xml-apis</artifactId>
             <version>1.4.01</version>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.34</version>
         </dependency>
 
         <!-- Jersey-Spring http://mvnrepository.com/artifact/org.glassfish.jersey.ext/jersey-spring3/2.4.1 -->
@@ -179,7 +193,6 @@
             <version>4.2.16.Final</version>
         </dependency>
 
-
         <!-- Spring 3 dependencies -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -204,13 +217,11 @@
             <version>${spring.version}</version>
         </dependency>
 
-
         <dependency>
             <groupId>opensymphony</groupId>
             <artifactId>sitemesh</artifactId>
             <version>2.4.2</version>
         </dependency>
-
 
         <!-- Servlet API 3.0 -->
         <dependency>
@@ -239,7 +250,6 @@
             <version>4.11</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
@@ -251,9 +261,8 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <version>1.10.8</version>
+            <scope>test</scope>
         </dependency>
-
-
 
         <dependency>
             <groupId>ru.yandex.qatools.allure</groupId>
@@ -261,15 +270,18 @@
             <version>${allure.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>2.44.0</version>
+            <scope>test</scope>
         </dependency>
-
     </dependencies>
-
-
-
 
     <reporting>
         <excludeDefaults>true</excludeDefaults>

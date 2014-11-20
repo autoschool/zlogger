@@ -10,15 +10,15 @@ import org.mockito.MockitoAnnotations;
 import zlogger.logic.dal.PostDao;
 import zlogger.logic.models.Post;
 import zlogger.logic.services.PostServiceImpl;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class PostServiceImplTest {
 
@@ -29,14 +29,14 @@ public class PostServiceImplTest {
     private PostDao postDao;
 
     @Before
-    public void initMocks(){
+    public void initMocks() {
         MockitoAnnotations.initMocks(this);
     }
 
     @Test
-    public void should_createPost(){
+    public void should_createPost() {
         //Given
-        Post post = new Post("testTitle","custom message \n\n\t dsg");
+        Post post = new Post("testTitle", "custom message \n\n\t dsg");
         Long testId = Long.valueOf(22);
         Mockito.when(postDao.createPost(post)).thenReturn(testId);
 
@@ -44,11 +44,11 @@ public class PostServiceImplTest {
         Long newId = testingObject.addPost(post);
 
         //Then
-        Assert.assertEquals(testId,newId);
+        Assert.assertEquals(testId, newId);
     }
 
     @Test
-    public void should_setDate_createPost(){
+    public void should_setDate_createPost() {
         //Given
         Post post = mock(Post.class);
         //When
@@ -58,7 +58,7 @@ public class PostServiceImplTest {
     }
 
     @Test
-    public void should_listPosts(){
+    public void should_listPosts() {
         //Given
         List<Post> dbPosts = new ArrayList<Post>();
 
