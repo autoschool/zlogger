@@ -19,6 +19,7 @@
         <hibernate.version>4.2.15-Final</hibernate.version>
         <jetty.version>9.2.5.v20141112</jetty.version>
         <allure.version>1.4.4</allure.version>
+        <aspectj.version>1.7.4</aspectj.version>
     </properties>
 
 
@@ -99,6 +100,16 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.14</version>
                 <configuration>
+                    <testFailureIgnore>false</testFailureIgnore>
+                    <argLine>
+                        -javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
+                    </argLine>
+                    <properties>
+                        <property>
+                            <name>listener</name>
+                            <value>ru.yandex.qatools.allure.junit.AllureRunListener</value>
+                        </property>
+                    </properties>
                     <excludes>
                         <exclude>**/web/**/*.java</exclude>
                     </excludes>
@@ -124,6 +135,16 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <testFailureIgnore>false</testFailureIgnore>
+                    <argLine>
+                        -javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
+                    </argLine>
+                    <properties>
+                        <property>
+                            <name>listener</name>
+                            <value>ru.yandex.qatools.allure.junit.AllureRunListener</value>
+                        </property>
+                    </properties>
                     <includes>
                         <include>**/web/**/*.java</include>
                     </includes>
@@ -236,7 +257,6 @@
             <version>4.11</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
@@ -248,6 +268,7 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <version>1.10.8</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -256,9 +277,16 @@
             <version>${allure.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>2.44.0</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
