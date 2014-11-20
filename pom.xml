@@ -8,7 +8,7 @@
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
 
-    <name>Zlogger</name>
+    <name>zlogger</name>
     <url></url>
 
     <properties>
