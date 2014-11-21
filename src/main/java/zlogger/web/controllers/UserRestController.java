@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import zlogger.logic.models.Post;
-import zlogger.logic.services.PostService;
+import zlogger.logic.models.User;
+import zlogger.logic.services.UserService;
 
 import javax.ws.rs.core.MediaType;
 import java.util.List;
@@ -14,19 +14,19 @@ import java.util.List;
  * Created by alexwyrm on 11/20/14.
  */
 @Controller
-@RequestMapping("/posts")
-public class PostRestController {
+@RequestMapping("/users")
+public class UserRestController {
 
     @Autowired
-    PostService postService;
+    UserService postService;
 
     @RequestMapping(method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON)
     @ResponseStatus(HttpStatus.OK)
     public
     @ResponseBody
-    List<Post> getPosts() {
-        return postService.listPosts();
+    List<User> getUsers() {
+        return postService.listUsers();
     }
 
     @RequestMapping(method = RequestMethod.POST,
@@ -35,8 +35,8 @@ public class PostRestController {
     @ResponseStatus(HttpStatus.CREATED)
     public
     @ResponseBody
-    Long addPost(@RequestBody Post post) {
-        return postService.addPost(post);
+    Long addUser(@RequestBody User user) {
+        return postService.addUser(user);
     }
 
     @RequestMapping(value = "/{id}",
@@ -45,24 +45,23 @@ public class PostRestController {
     @ResponseStatus(HttpStatus.OK)
     public
     @ResponseBody
-    Post getPost(@PathVariable("id") Long id) {
-        return postService.getPost(id);
+    User getUser(@PathVariable("id") Long id) {
+        return postService.getUser(id);
     }
 
     @RequestMapping(value = "/{id}",
             method = RequestMethod.PUT,
             consumes = MediaType.APPLICATION_JSON)
     @ResponseStatus(HttpStatus.OK)
-    public void updatePost(@RequestBody Post post) {
-        postService.updatePost(post);
+    public void updateUser(@RequestBody User user) {
+        postService.updateUser(user);
     }
 
     @RequestMapping(value = "/{id}",
             method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletePost(@PathVariable("id") Long id) {
-        postService.deletePost(id);
+    public void deleteUser(@PathVariable("id") Long id) {
+        postService.deleteUser(id);
     }
-
 
 }
