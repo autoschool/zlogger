@@ -16,29 +16,86 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `posts`
+-- Table structure for table `Posts`
 --
 
-DROP TABLE IF EXISTS `posts`;
+DROP TABLE IF EXISTS `Posts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `posts` (
+CREATE TABLE `Posts` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `title` varchar(145) DEFAULT NULL,
   `message` varchar(5000) NOT NULL,
   `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+  `creator_id` bigint(20) NOT NULL,
+  `wall_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `creator_id` (`creator_id`),
+  KEY `wall_id` (`wall_id`),
+  CONSTRAINT `Posts_ibfk_1` FOREIGN KEY (`creator_id`) REFERENCES `Users` (`user_id`),
+  CONSTRAINT `Posts_ibfk_2` FOREIGN KEY (`wall_id`) REFERENCES `Walls` (`wall_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Posts`
+--
+
+LOCK TABLES `Posts` WRITE;
+/*!40000 ALTER TABLE `Posts` DISABLE KEYS */;
+INSERT INTO `Posts` VALUES (2,'hello, RouR','foo','2014-11-20 10:56:39',2,1),(3,'hello, AlexWyrm','bar','2014-11-20 10:56:39',3,1);
+/*!40000 ALTER TABLE `Posts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Users`
+--
+
+DROP TABLE IF EXISTS `Users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Users` (
+  `user_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `login` varchar(64) NOT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `login` (`login`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Users`
+--
+
+LOCK TABLES `Users` WRITE;
+/*!40000 ALTER TABLE `Users` DISABLE KEYS */;
+INSERT INTO `Users` VALUES (2,'AlexWyrm'),(3,'RouR'),(1,'testUser');
+/*!40000 ALTER TABLE `Users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Walls`
+--
+
+DROP TABLE IF EXISTS `Walls`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Walls` (
+  `wall_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `owner_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`wall_id`),
+  KEY `owner_id` (`owner_id`),
+  CONSTRAINT `Walls_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `Users` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `posts`
+-- Dumping data for table `Walls`
 --
 
-LOCK TABLES `posts` WRITE;
-/*!40000 ALTER TABLE `posts` DISABLE KEYS */;
-INSERT INTO `posts` VALUES (1,'Hello, title','Hello, world','2014-11-19 01:19:48');
-/*!40000 ALTER TABLE `posts` ENABLE KEYS */;
+LOCK TABLES `Walls` WRITE;
+/*!40000 ALTER TABLE `Walls` DISABLE KEYS */;
+INSERT INTO `Walls` VALUES (1,1);
+/*!40000 ALTER TABLE `Walls` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +107,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-11-19 13:15:53
+-- Dump completed on 2014-11-20 12:18:05

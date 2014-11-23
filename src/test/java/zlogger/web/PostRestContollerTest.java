@@ -8,6 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.yandex.qatools.allure.annotations.Step;
 import zlogger.logic.models.Post;
+import zlogger.logic.models.User;
+import zlogger.logic.models.Wall;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -28,6 +30,8 @@ public class PostRestContollerTest {
 
     private WebTarget target;
     private Long id;
+    private User testUser;
+    private Wall testWall;
 
     private String baseUrl = "http://localhost:8080/posts";
     private String testTitle = "test";
@@ -35,8 +39,15 @@ public class PostRestContollerTest {
     private String updatedTitle = "updated test";
     private String updatedMessage = "updated test message";
 
+    public PostRestContollerTest() {
+        testUser = new User();
+        testUser.setUserId(new Long(1));
+        testWall = new Wall();
+        testWall.setWallId(new Long(1));
+    }
+
     @Before
-    public void prepare() {
+    public void prepareClient() {
         ClientConfig clientConfig = new ClientConfig();
         clientConfig.register(JacksonFeature.class);
 
@@ -48,6 +59,8 @@ public class PostRestContollerTest {
     @Step
     public void shouldCreatePost() {
         Post post = new Post(testTitle, testMessage);
+        post.setCreator(testUser);
+        post.setWall(testWall);
         Response response = target
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .header("Content-type", "application/json")

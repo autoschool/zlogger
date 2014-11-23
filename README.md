@@ -7,7 +7,7 @@ Spring MVC, AngularJS.
 
 
 Use
-    mvn tomcat7:run
+    `mvn tomcat7:run`
 or
-    mvn jetty:run
+    `mvn jetty:run`
 
