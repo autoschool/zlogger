@@ -12,7 +12,7 @@
         >
 
     <context:component-scan base-package="zlogger.logic.models"/>
-    <context:property-placeholder location="classpath:config/database.properties"/>
+    <context:property-placeholder location="classpath:config/database.properties" order="1"/>
 
 
     <bean id="postDao" class="zlogger.logic.dal.PostDaoHibernateImpl"/>
@@ -35,7 +35,8 @@
 
         <property name="hibernateProperties">
             <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl}</prop>
                 <prop key="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</prop>
                 <prop key="hibernate.show_sql">true</prop>
             </props>

@@ -7,30 +7,30 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "Posts")
+@Table(name = "Posts", uniqueConstraints = {@UniqueConstraint(columnNames = "id")})
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Post implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(name = "title")
     private String title;
 
-    @Column(name = "message")
+    @Column(name = "message", nullable = false, length = 2000)
     private String message;
 
-    @Column(name = "creation_date")
+    @Column(name = "creation_date", nullable = false)
     private Date creationDate;
 
     @ManyToOne
-    @JoinColumn(name = "creator_id")
+    @JoinColumn(name = "creator_id", nullable = false)
     private User creator;
 
     @ManyToOne
-    @JoinColumn(name = "wall_id")
+    @JoinColumn(name = "wall_id", nullable = false)
     private Wall wall;
 
     public Post() {

@@ -9,16 +9,20 @@ import java.io.Serializable;
  * Created by alexwyrm on 11/20/14.
  */
 @Entity
-@Table(name = "Users")
+@Table(name = "Users",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "user_id"),
+                @UniqueConstraint(columnNames = "login")
+        })
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(name = "user_id")
+    @Column(name = "user_id", nullable = false)
     private Long userId;
 
-    @Column(name = "login")
+    @Column(name = "login", nullable = false)
     private String login;
 
     public User() {
