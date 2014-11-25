@@ -3,21 +3,20 @@ package zlogger.logic.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * Created by alexwyrm on 11/24/14.
+ */
 @Entity
-@Table(name = "posts", uniqueConstraints = {@UniqueConstraint(columnNames = "id")})
+@Table(name = "commentaries", uniqueConstraints = {@UniqueConstraint(columnNames = "id")})
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Post implements Serializable {
+public class Commentary {
 
     @Id
     @GeneratedValue
     @Column(name = "id", nullable = false)
     private Long id;
-
-    @Column(name = "title")
-    private String title;
 
     @Column(name = "message", nullable = false, length = 2000)
     private String message;
@@ -26,22 +25,12 @@ public class Post implements Serializable {
     private Date creationDate;
 
     @ManyToOne
-    @JoinColumn(name = "creator_name", nullable = false)
-    private User creator;
+    @JoinColumn(name = "creator_id", nullable = false)
+    private transient User creator;
 
     @ManyToOne
-    @JoinColumn(name = "wall_id", nullable = false)
-    private Wall wall;
-
-    public Post() {
-    }
-
-    public Post(String title, String message) {
-        this.title = title;
-        this.message = message;
-    }
-
-    // Getters and setters
+    @JoinColumn(name = "post_id", nullable = false)
+    private transient Post post;
 
     public Long getId() {
         return id;
@@ -49,14 +38,6 @@ public class Post implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getMessage() {
@@ -83,11 +64,11 @@ public class Post implements Serializable {
         this.creator = creator;
     }
 
-    public Wall getWall() {
-        return wall;
+    public Post getPost() {
+        return post;
     }
 
-    public void setWall(Wall wall) {
-        this.wall = wall;
+    public void setPost(Post post) {
+        this.post = post;
     }
 }

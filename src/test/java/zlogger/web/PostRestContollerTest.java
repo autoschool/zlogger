@@ -41,9 +41,9 @@ public class PostRestContollerTest {
 
     public PostRestContollerTest() {
         testUser = new User();
-        testUser.setUserId(new Long(1));
+        testUser.setUsername("testUser");
         testWall = new Wall();
-        testWall.setWallId(new Long(1));
+        testWall.setWallId(1L);
     }
 
     @Before
