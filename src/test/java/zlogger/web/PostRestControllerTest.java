@@ -26,7 +26,7 @@ import static org.junit.Assert.assertThat;
 /**
  * Created by alexwyrm on 11/19/14.
  */
-public class PostRestContollerTest {
+public class PostRestControllerTest {
 
     private WebTarget target;
     private Long id;
@@ -39,7 +39,7 @@ public class PostRestContollerTest {
     private String updatedTitle = "updated test";
     private String updatedMessage = "updated test message";
 
-    public PostRestContollerTest() {
+    public PostRestControllerTest() {
         testUser = new User();
         testUser.setUsername("testUser");
         testWall = new Wall();

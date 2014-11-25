@@ -25,7 +25,7 @@ public class Commentary {
     private Date creationDate;
 
     @ManyToOne
-    @JoinColumn(name = "creator_id", nullable = false)
+    @JoinColumn(name = "creator_name", nullable = false)
     private transient User creator;
 
     @ManyToOne

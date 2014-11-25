@@ -36,7 +36,7 @@
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">${hibernate.dialect}</prop>
-                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl}</prop>
+                <prop key="hibernate.hbm2ddl.auto"></prop>
                 <prop key="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</prop>
                 <prop key="hibernate.show_sql">true</prop>
             </props>
