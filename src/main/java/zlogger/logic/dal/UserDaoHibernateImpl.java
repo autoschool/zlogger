@@ -23,35 +23,37 @@ public class UserDaoHibernateImpl implements UserDao {
     }
 
     @Override
-    public User getUserById(Long id) {
+    public User getUserByName(String name) {
         return (User) sessionFactory.openSession()
-                .load(User.class, id);
+                .load(User.class, name);
     }
 
     @Override
-    public void deleteUserById(Long id) {
+    public void deleteUserByName(String name) {
         User user = (User) sessionFactory.getCurrentSession()
-                .load(User.class, id);
+                .load(User.class, name);
         sessionFactory.getCurrentSession().delete(user);
     }
 
     @Override
-    public Long createUser(User user) {
+    public String createUser(User user) {
         sessionFactory.getCurrentSession().save(user);
-        return user.getUserId();
+        return user.getUsername();
     }
 
     @Override
-    public Long updateUser(User user) {
-        if (user.getUserId() != null) {
-            User oldUser = getUserById(user.getUserId());
+    public String updateUser(User user) {
+        if (user.getUsername() != null) {
+            User oldUser = getUserByName(user.getUsername());
             if (oldUser == null) {
                 return null;
             }
-
-            user.setLogin(oldUser.getLogin());
+            if (user.getPassword() == null) {
+                user.setPassword(oldUser.getPassword());
+            }
+            user.setUsername(oldUser.getUsername());
         }
         sessionFactory.getCurrentSession().merge(user);
-        return user.getUserId();
+        return user.getUsername();
     }
 }

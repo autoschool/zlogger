@@ -1,3 +1,4 @@
-INSERT INTO Users(login) VALUES ('testUser1');
-INSERT INTO Walls(owner_id) VALUES (1);
-INSERT INTO Posts(title, message, creation_date, creator_id, wall_id) VALUES ('testTitle', 'testMessage', CURRENT_TIMESTAMP, 1, 1);
+INSERT INTO users(username, password, enabled) VALUES ('testUser', 'password', TRUE);
+INSERT INTO walls(owner_name) VALUES ('testUser');
+INSERT INTO posts(title, message, creation_date, creator_name, wall_id) VALUES ('testTitle', 'testMessage', CURRENT_TIMESTAMP, 'testUser', 1);
+INSERT INTO posts(title, message, creation_date, creator_name, wall_id) VALUES ('testTitle1', 'testMessage1', CURRENT_TIMESTAMP, 'testUser', 1);
