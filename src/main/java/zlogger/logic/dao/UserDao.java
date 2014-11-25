@@ -1,4 +1,4 @@
-package zlogger.logic.dal;
+package zlogger.logic.dao;
 
 import zlogger.logic.models.User;
 

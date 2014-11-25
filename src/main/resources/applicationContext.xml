@@ -15,10 +15,10 @@
     <context:property-placeholder location="classpath:config/database.properties" order="1"/>
 
 
-    <bean id="postDao" class="zlogger.logic.dal.PostDaoHibernateImpl"/>
-    <bean id="postService" class="zlogger.logic.services.PostServiceImpl"/>
-    <bean id="userDao" class="zlogger.logic.dal.UserDaoHibernateImpl"/>
-    <bean id="userService" class="zlogger.logic.services.UserServiceImpl"/>
+    <bean id="postDao" class="zlogger.logic.dao.impl.PostDaoHibernateImpl"/>
+    <bean id="postService" class="zlogger.logic.services.impl.PostServiceImpl"/>
+    <bean id="userDao" class="zlogger.logic.dao.impl.UserDaoHibernateImpl"/>
+    <bean id="userService" class="zlogger.logic.services.impl.UserServiceImpl"/>
 
 
     <bean id="myDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">

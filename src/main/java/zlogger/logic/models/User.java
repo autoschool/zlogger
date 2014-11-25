@@ -22,7 +22,7 @@ public class User implements Serializable {
     private String password;
 
     @Column(name = "enabled", nullable = false)
-    private boolean enabled;
+    private Boolean enabled;
 
     public User() {
     }
@@ -47,11 +47,11 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public boolean isEnabled() {
+    public Boolean getEnabled() {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
 }
