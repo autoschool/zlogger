@@ -15,8 +15,10 @@
 
 
         <div class="hero-unit">
-        			<h1>Home Zlobber  </h1>
-
+					<div class="inline-div">
+        				<h1>Home Zlogger  </h1>
+					</div>
+					<div class="logo inline-div"></div>
         			<p>
         				<spring:message code="message.welcome"/>
         			</p>
