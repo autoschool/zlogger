@@ -1,6 +1,5 @@
 package zlogger.unit;
 
-import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -9,12 +8,15 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import zlogger.logic.dao.PostDao;
 import zlogger.logic.models.Post;
+import zlogger.logic.models.User;
+import zlogger.logic.models.Wall;
 import zlogger.logic.services.impl.PostServiceImpl;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
 import static org.mockito.Matchers.any;
@@ -28,23 +30,31 @@ public class PostServiceImplTest {
     @Mock
     private PostDao postDao;
 
+    @Mock
+    private User testUser;
+    @Mock
+    private Wall testWall;
+
     @Before
     public void initMocks() {
         MockitoAnnotations.initMocks(this);
+        Mockito.when(testUser.getUsername()).thenReturn("");
+        Mockito.when(testUser.getEnabled()).thenReturn(true);
+        Mockito.when(testWall.getWallId()).thenReturn(0L);
     }
 
     @Test
     public void should_createPost() {
         //Given
         Post post = new Post("testTitle", "custom message \n\n\t dsg");
-        Long testId = Long.valueOf(22);
+        Long testId = 22L;
         Mockito.when(postDao.createPost(post)).thenReturn(testId);
 
         //When
-        Long newId = testingObject.addPost(post);
+        Long newId = testingObject.addPost(post, testWall, testUser);
 
         //Then
-        Assert.assertEquals(testId, newId);
+        assertThat(testId, equalTo(newId));
     }
 
     @Test
@@ -52,7 +62,7 @@ public class PostServiceImplTest {
         //Given
         Post post = mock(Post.class);
         //When
-        Long newId = testingObject.addPost(post);
+        testingObject.addPost(post, testWall, testUser);
         //Then
         verify(post, times(1)).setCreationDate(any(Date.class));
     }
@@ -60,17 +70,17 @@ public class PostServiceImplTest {
     @Test
     public void should_listPosts() {
         //Given
-        List<Post> dbPosts = new ArrayList<Post>();
+        List<Post> dbPosts = new ArrayList<>();
 
         Post db1 = new Post();
-        db1.setId(Long.valueOf(1));
+        db1.setId(1L);
         db1.setTitle("testTitle1");
         db1.setMessage("testTitle2");
         db1.setCreationDate(new Date());
         dbPosts.add(db1);
 
         Post db2 = new Post();
-        db2.setId(Long.valueOf(2));
+        db2.setId(2L);
         db2.setTitle("testTitle2");
         db2.setMessage("testTitle2");
         db2.setCreationDate(new Date());

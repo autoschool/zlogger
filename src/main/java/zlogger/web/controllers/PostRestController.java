@@ -5,14 +5,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import zlogger.logic.models.Post;
+import zlogger.logic.models.User;
 import zlogger.logic.services.PostService;
+import zlogger.logic.services.UserService;
 
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-/**
- * Created by alexwyrm on 11/20/14.
- */
 @Controller
 @RequestMapping("/posts")
 public class PostRestController {
@@ -20,12 +19,14 @@ public class PostRestController {
     @Autowired
     PostService postService;
 
+    @Autowired
+    UserService userService;
+
     @RequestMapping(method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON)
     @ResponseStatus(HttpStatus.OK)
-    public
     @ResponseBody
-    List<Post> getPosts() {
+    public List<Post> getPosts() {
         return postService.listPosts();
     }
 
@@ -33,18 +34,18 @@ public class PostRestController {
             consumes = MediaType.APPLICATION_JSON,
             produces = MediaType.APPLICATION_JSON)
     @ResponseStatus(HttpStatus.CREATED)
-    public
     @ResponseBody
-    Long addPost(@RequestBody Post post) {
-        return postService.addPost(post);
+    public Long addPost(@RequestBody Post post) {
+        User creator = userService.getUser(post.getCreator().getUsername());
+        return postService.addPost(post, post.getWall(), creator);
     }
 
     @RequestMapping(value = "/{id}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON)
     @ResponseStatus(HttpStatus.OK)
-    public
     @ResponseBody
+    public
     Post getPost(@PathVariable("id") Long id) {
         return postService.getPost(id);
     }

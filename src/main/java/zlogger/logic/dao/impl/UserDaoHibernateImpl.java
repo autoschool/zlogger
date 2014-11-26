@@ -8,9 +8,6 @@ import zlogger.logic.models.User;
 
 import java.util.List;
 
-/**
- * Created by alexwyrm on 11/20/14.
- */
 @Repository
 public class UserDaoHibernateImpl implements UserDao {
 
@@ -19,7 +16,7 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public List<User> listUsers() {
-        return sessionFactory.getCurrentSession()
+        return sessionFactory.openSession()
                 .createCriteria(User.class).list();
     }
 

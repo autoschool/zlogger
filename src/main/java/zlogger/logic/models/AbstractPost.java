@@ -1,13 +1,11 @@
 package zlogger.logic.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
-/**
- * Created by alexwyrm on 11/26/14.
- */
 @MappedSuperclass
-public abstract class AbstractPost {
+public abstract class AbstractPost implements Serializable {
 
     @Id
     @GeneratedValue

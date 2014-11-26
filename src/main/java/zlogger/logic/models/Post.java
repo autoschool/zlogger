@@ -1,14 +1,18 @@
 package zlogger.logic.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "posts", uniqueConstraints = {@UniqueConstraint(columnNames = "id")})
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Post extends AbstractPost implements Serializable {
+@JsonPropertyOrder({"id", "title", "message", "creationDate", "creator", "wall"})
+public class Post extends AbstractPost {
 
     @Column(name = "title")
     private String title;
@@ -16,6 +20,10 @@ public class Post extends AbstractPost implements Serializable {
     @ManyToOne
     @JoinColumn(name = "wall_id", nullable = false)
     private Wall wall;
+
+    @OneToMany(mappedBy = "id")
+    @JsonIgnore
+    private Set<Commentary> commentaries = new HashSet<>();
 
     public Post() {
     }
@@ -39,5 +47,13 @@ public class Post extends AbstractPost implements Serializable {
 
     public void setWall(Wall wall) {
         this.wall = wall;
+    }
+
+    public Set<Commentary> getCommentaries() {
+        return commentaries;
+    }
+
+    public void setCommentaries(Set<Commentary> commentaries) {
+        this.commentaries = commentaries;
     }
 }

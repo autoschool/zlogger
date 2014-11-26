@@ -1,17 +1,15 @@
 package zlogger.logic.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
-/**
- * Created by alexwyrm on 11/24/14.
- */
 @Entity
 @Table(name = "commentaries", uniqueConstraints = {@UniqueConstraint(columnNames = "id")})
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Commentary extends AbstractPost implements Serializable {
+@JsonPropertyOrder({"id", "message", "creationDate", "creator", "post"})
+public class Commentary extends AbstractPost {
 
     @ManyToOne
     @JoinColumn(name = "post_id", nullable = false)
