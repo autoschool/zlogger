@@ -1,8 +1,9 @@
-package zlogger.logic.dal;
+package zlogger.logic.dao.impl;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import zlogger.logic.dao.PostDao;
 import zlogger.logic.models.Post;
 
 import java.util.List;
@@ -40,22 +41,6 @@ public class PostDaoHibernateImpl implements PostDao {
 
     @Override
     public Long updatePost(Post post) {
-        if (post.getId() != null) {
-            Post oldPost = getPostById(post.getId());
-            if (oldPost == null) {
-                return null;
-            }
-
-            if (post.getMessage() == null) {
-                post.setMessage(oldPost.getMessage());
-            }
-            if (post.getTitle() == null) {
-                post.setTitle(oldPost.getTitle());
-            }
-            post.setCreationDate(oldPost.getCreationDate());
-            post.setWall(oldPost.getWall());
-            post.setCreator(oldPost.getCreator());
-        }
         sessionFactory.getCurrentSession().merge(post);
         return post.getId();
     }

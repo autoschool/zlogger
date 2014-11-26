@@ -1,29 +1,33 @@
 package zlogger.integration;
 
-import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import zlogger.logic.dal.PostDao;
+import org.springframework.transaction.annotation.Transactional;
+import zlogger.logic.dao.PostDao;
 import zlogger.logic.models.Post;
 
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:applicationContext.xml"})
+@ContextConfiguration(locations = {"classpath:testApplicationContext.xml"})
 public class PostDaoTest {
 
     @Autowired
     private PostDao postDao;
 
     @Test
-    @Ignore("No MySQL base on CI slave")
-    public void shouldGetPosts() throws Exception {
+    @Transactional
+    public void shouldGetPosts() {
         List<Post> posts = postDao.getPosts();
-        Assert.assertNotNull(posts);
-        Assert.assertFalse(posts.isEmpty());
+        assertThat(posts, notNullValue());
+        assertThat(posts.isEmpty(), is(false));
     }
+
 }

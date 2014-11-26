@@ -12,13 +12,13 @@
         >
 
     <context:component-scan base-package="zlogger.logic.models"/>
-    <context:property-placeholder location="classpath:config/database.properties"/>
+    <context:property-placeholder location="classpath:config/database.properties" order="1"/>
 
 
-    <bean id="postDao" class="zlogger.logic.dal.PostDaoHibernateImpl"/>
-    <bean id="postService" class="zlogger.logic.services.PostServiceImpl"/>
-    <bean id="userDao" class="zlogger.logic.dal.UserDaoHibernateImpl"/>
-    <bean id="userService" class="zlogger.logic.services.UserServiceImpl"/>
+    <bean id="postDao" class="zlogger.logic.dao.impl.PostDaoHibernateImpl"/>
+    <bean id="postService" class="zlogger.logic.services.impl.PostServiceImpl"/>
+    <bean id="userDao" class="zlogger.logic.dao.impl.UserDaoHibernateImpl"/>
+    <bean id="userService" class="zlogger.logic.services.impl.UserServiceImpl"/>
 
 
     <bean id="myDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -35,7 +35,8 @@
 
         <property name="hibernateProperties">
             <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.hbm2ddl.auto"></prop>
                 <prop key="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</prop>
                 <prop key="hibernate.show_sql">true</prop>
             </props>

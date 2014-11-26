@@ -35,21 +35,21 @@ public class UserRestController {
     @ResponseStatus(HttpStatus.CREATED)
     public
     @ResponseBody
-    Long addUser(@RequestBody User user) {
+    String addUser(@RequestBody User user) {
         return postService.addUser(user);
     }
 
-    @RequestMapping(value = "/{id}",
+    @RequestMapping(value = "/{name}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON)
     @ResponseStatus(HttpStatus.OK)
     public
     @ResponseBody
-    User getUser(@PathVariable("id") Long id) {
-        return postService.getUser(id);
+    User getUser(@PathVariable("name") String name) {
+        return postService.getUser(name);
     }
 
-    @RequestMapping(value = "/{id}",
+    @RequestMapping(value = "/{name}",
             method = RequestMethod.PUT,
             consumes = MediaType.APPLICATION_JSON)
     @ResponseStatus(HttpStatus.OK)
@@ -57,11 +57,11 @@ public class UserRestController {
         postService.updateUser(user);
     }
 
-    @RequestMapping(value = "/{id}",
+    @RequestMapping(value = "/{name}",
             method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteUser(@PathVariable("id") Long id) {
-        postService.deleteUser(id);
+    public void deleteUser(@PathVariable("name") String name) {
+        postService.deleteUser(name);
     }
 
 }

@@ -8,17 +8,17 @@ import javax.persistence.*;
  * Created by alexwyrm on 11/20/14.
  */
 @Entity
-@Table(name = "Walls")
+@Table(name = "walls", uniqueConstraints = {@UniqueConstraint(columnNames = "wall_id")})
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Wall {
 
     @Id
     @GeneratedValue
-    @Column(name = "wall_id")
+    @Column(name = "wall_id", nullable = false)
     private Long wallId;
 
     @ManyToOne
-    @JoinColumn(name = "owner_id")
+    @JoinColumn(name = "owner_name", nullable = false)
     private User owner;
 
     public Long getWallId() {
