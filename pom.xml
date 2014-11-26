@@ -15,6 +15,7 @@
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
         <spring.version>3.2.6.RELEASE</spring.version>
+        <springsecurity.version>3.2.0.RELEASE</springsecurity.version>
         <hibernate.version>4.2.15-Final</hibernate.version>
         <jetty.version>9.2.5.v20141112</jetty.version>
         <allure.version>1.4.4</allure.version>
@@ -225,17 +226,17 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
-            <version>3.2.0.RELEASE</version>
+            <version>${springsecurity.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
-            <version>3.2.0.RELEASE</version>
+            <version>${springsecurity.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
-            <version>3.2.0.RELEASE</version>
+            <version>${springsecurity.version}</version>
         </dependency>
 
         <dependency>
