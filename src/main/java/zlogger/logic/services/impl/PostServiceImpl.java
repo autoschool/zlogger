@@ -1,10 +1,11 @@
-package zlogger.logic.services;
+package zlogger.logic.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import zlogger.logic.dal.PostDao;
+import zlogger.logic.dao.PostDao;
 import zlogger.logic.models.Post;
+import zlogger.logic.services.PostService;
 
 import java.util.Date;
 import java.util.List;
@@ -46,6 +47,19 @@ public class PostServiceImpl implements PostService {
     @Override
     @Transactional
     public void updatePost(Post post) {
+        if (post.getId() != null) {
+            Post oldPost = getPost(post.getId());
+
+            if (post.getMessage() == null) {
+                post.setMessage(oldPost.getMessage());
+            }
+            if (post.getTitle() == null) {
+                post.setTitle(oldPost.getTitle());
+            }
+            post.setCreationDate(oldPost.getCreationDate());
+            post.setWall(oldPost.getWall());
+            post.setCreator(oldPost.getCreator());
+        }
         postDao.updatePost(post);
     }
 }

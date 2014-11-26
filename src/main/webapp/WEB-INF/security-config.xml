@@ -2,9 +2,9 @@
              xmlns:beans="http://www.springframework.org/schema/beans"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://www.springframework.org/schema/beans
- http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
- http://www.springframework.org/schema/security
- http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
     <http auto-config="true">
         <access-denied-handler error-page="/403page"/>
@@ -14,13 +14,12 @@
                     password-parameter="password" default-target-url="/user"
                     authentication-failure-url="/login?authfailed"/>
         <logout logout-success-url="/login?logout"/>
+        <remember-me data-source-ref="myDataSource"/>
     </http>
 
-    <authentication-manager>
+    <authentication-manager alias="authenticationManager">
         <authentication-provider>
-            <jdbc-user-service data-source-ref="myDataSource"
-                               users-by-username-query="select username,password, enabled from users where username=?"
-                               authorities-by-username-query="select username, role from user_roles where username =?  "/>
+            <jdbc-user-service data-source-ref="myDataSource"/>
         </authentication-provider>
     </authentication-manager>
 

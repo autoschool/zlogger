@@ -1,8 +1,9 @@
-package zlogger.logic.dal;
+package zlogger.logic.dao.impl;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import zlogger.logic.dao.UserDao;
 import zlogger.logic.models.User;
 
 import java.util.List;
@@ -43,16 +44,6 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public String updateUser(User user) {
-        if (user.getUsername() != null) {
-            User oldUser = getUserByName(user.getUsername());
-            if (oldUser == null) {
-                return null;
-            }
-            if (user.getPassword() == null) {
-                user.setPassword(oldUser.getPassword());
-            }
-            user.setUsername(oldUser.getUsername());
-        }
         sessionFactory.getCurrentSession().merge(user);
         return user.getUsername();
     }

@@ -7,9 +7,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import zlogger.logic.dal.PostDao;
+import zlogger.logic.dao.PostDao;
 import zlogger.logic.models.Post;
-import zlogger.logic.services.PostServiceImpl;
+import zlogger.logic.services.impl.PostServiceImpl;
 
 import java.util.ArrayList;
 import java.util.Date;

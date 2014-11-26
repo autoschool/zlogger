@@ -19,14 +19,14 @@ public class Authority implements Serializable {
     private User username;
 
     @Column(name = "authority", nullable = false, length = 50)
-    private String authority;
+    private String role;
 
-    public String getAuthority() {
-        return authority;
+    public String getRole() {
+        return role;
     }
 
-    public void setAuthority(String authority) {
-        this.authority = authority;
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public User getUsername() {
