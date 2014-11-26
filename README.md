@@ -1,4 +1,4 @@
-Zlogger
+![](src/main/webapp/resources/img/zlogo-small-round-red.png)
 ========
 
 Blog project
