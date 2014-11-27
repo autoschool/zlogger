@@ -23,7 +23,7 @@ CREATE TABLE `walls` (
   `wall_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `owner_name` varchar(50) NOT NULL,
   PRIMARY KEY (`wall_id`),
-  CONSTRAINT `fk_walls_owner_name` FOREIGN KEY (`owner_name`) REFERENCES `users` (`username`)
+  CONSTRAINT `fk_walls_owner_name` FOREIGN KEY (`owner_name`) REFERENCES `users` (`username`) ON DELETE CASCADE
 ) AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
@@ -33,7 +33,7 @@ CREATE TABLE `walls` (
 CREATE TABLE `authorities` (
       `username` varchar_ignorecase(50) NOT NULL,
       `authority` varchar_ignorecase(50) NOT NULL,
-      CONSTRAINT `fk_authorities_users` FOREIGN KEY (`username`) REFERENCES `users` (`username`)
+      CONSTRAINT `fk_authorities_users` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE CASCADE
 )  DEFAULT CHARSET=utf8;
 CREATE UNIQUE index `ix_auth_username` ON authorities (username,authority);
 
@@ -49,8 +49,8 @@ CREATE TABLE `posts` (
   `creator_name` varchar(50) NOT NULL,
   `wall_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`),
-  CONSTRAINT `fk_posts_creator_name` FOREIGN KEY (`creator_name`) REFERENCES `users` (`username`),
-  CONSTRAINT `fk_posts_wall_id` FOREIGN KEY (`wall_id`) REFERENCES `walls` (`wall_id`)
+  CONSTRAINT `fk_posts_creator_name` FOREIGN KEY (`creator_name`) REFERENCES `users` (`username`) ON DELETE CASCADE,
+  CONSTRAINT `fk_posts_wall_id` FOREIGN KEY (`wall_id`) REFERENCES `walls` (`wall_id`) ON DELETE CASCADE
 ) AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
@@ -64,7 +64,7 @@ CREATE TABLE `commentaries` (
   `creator_name` varchar(50) NOT NULL,
   `post_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`),
-  CONSTRAINT `fk_commentaries_creator_name` FOREIGN KEY (`creator_name`) REFERENCES `users` (`username`),
+  CONSTRAINT `fk_commentaries_creator_name` FOREIGN KEY (`creator_name`) REFERENCES `users` (`username`) ON DELETE CASCADE,
   CONSTRAINT `fk_commentaries_post_id` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE
 ) AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 

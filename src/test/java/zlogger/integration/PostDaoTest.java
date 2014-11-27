@@ -1,5 +1,7 @@
 package zlogger.integration;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +25,10 @@ public class PostDaoTest {
     private PostDao postDao;
 
     @Test
-    @Transactional
     public void shouldGetPosts() {
         List<Post> posts = postDao.getPosts();
         assertThat(posts, notNullValue());
-        assertThat(posts.isEmpty(), is(false));
+        assertThat(posts.get(0), notNullValue());
     }
 
 }

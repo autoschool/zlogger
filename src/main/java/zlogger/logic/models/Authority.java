@@ -5,11 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import java.io.Serializable;
 
-/**
- * Created by alexwyrm on 11/24/14.
- */
 @Entity
-@Table(name = "authorities")
+@Table(name = "authorities", uniqueConstraints =
+@UniqueConstraint(columnNames = {"username", "authority"}))
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Authority implements Serializable {
 

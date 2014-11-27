@@ -5,7 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import zlogger.logic.dao.PostDao;
 import zlogger.logic.models.Post;
+import zlogger.logic.models.User;
+import zlogger.logic.models.Wall;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -16,8 +19,18 @@ public class PostDaoHibernateImpl implements PostDao {
 
     @Override
     public List<Post> getPosts() {
-        return sessionFactory.getCurrentSession()
+        return sessionFactory.openSession()
                 .createCriteria(Post.class).list();
+    }
+
+    @Override
+    public List<Post> getPostsByWall(Wall wall) {
+        return new ArrayList<>(wall.getPosts());
+    }
+
+    @Override
+    public List<Post> getPostsByUser(User user) {
+        return new ArrayList<>(user.getPosts());
     }
 
     @Override

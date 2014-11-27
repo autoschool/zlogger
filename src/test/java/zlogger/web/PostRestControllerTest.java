@@ -6,10 +6,13 @@ import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.yandex.qatools.allure.annotations.Step;
 import zlogger.logic.models.Post;
-import zlogger.logic.models.User;
-import zlogger.logic.models.Wall;
+import zlogger.util.TestUtilities;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -23,28 +26,21 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
-/**
- * Created by alexwyrm on 11/19/14.
- */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"classpath:testApplicationContext.xml"})
 public class PostRestControllerTest {
+
+    @Autowired
+    TestUtilities testUtilities;
 
     private WebTarget target;
     private Long id;
-    private User testUser;
-    private Wall testWall;
 
-    private String baseUrl = "http://localhost:8080/posts";
-    private String testTitle = "test";
-    private String testMessage = "test message";
-    private String updatedTitle = "updated test";
-    private String updatedMessage = "updated test message";
-
-    public PostRestControllerTest() {
-        testUser = new User();
-        testUser.setUsername("testUser");
-        testWall = new Wall();
-        testWall.setWallId(1L);
-    }
+    private static final String BASE_URL = "http://localhost:8080/posts";
+    private static final String TEST_TITLE = "test";
+    private static final String TEST_MESSAGE = "test message";
+    private static final String UPDATED_TITLE = "updated test";
+    private static final String UPDATED_MESSAGE = "updated test message";
 
     @Before
     public void prepareClient() {
@@ -53,14 +49,14 @@ public class PostRestControllerTest {
 
         Client client = ClientBuilder.newClient(clientConfig);
 
-        target = client.target(baseUrl);
+        target = client.target(BASE_URL);
     }
 
     @Step
     public void shouldCreatePost() {
-        Post post = new Post(testTitle, testMessage);
-        post.setCreator(testUser);
-        post.setWall(testWall);
+        Post post = new Post(TEST_TITLE, TEST_MESSAGE);
+        post.setCreator(testUtilities.getConstantUser());
+        post.setWall(testUtilities.getConstantWall());
         Response response = target
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .header("Content-type", "application/json")
@@ -86,7 +82,7 @@ public class PostRestControllerTest {
 
     @Step
     public void shouldUpdatePost() {
-        Post post = new Post(updatedTitle, updatedMessage);
+        Post post = new Post(UPDATED_TITLE, UPDATED_MESSAGE);
         post.setId(id);
         Response response = target
                 .request(MediaType.APPLICATION_JSON)
@@ -123,9 +119,9 @@ public class PostRestControllerTest {
     public void CRUDTest() throws JsonProcessingException {
         shouldCreatePost();
         target = target.path("/" + id);
-        shouldGetPost(testTitle, testMessage);
+        shouldGetPost(TEST_TITLE, TEST_MESSAGE);
         shouldUpdatePost();
-        shouldGetPost(updatedTitle, updatedMessage);
+        shouldGetPost(UPDATED_TITLE, UPDATED_MESSAGE);
         shouldDeletePost();
     }
 
