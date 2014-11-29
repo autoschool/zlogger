@@ -8,6 +8,8 @@ import java.util.List;
 public class IndexModel {
     private List<Post> posts;
     private String welcome;
+    private boolean canAddPost;
+    private String urlAddPost;
 
     public void setWelcome(String welcome) {
         this.welcome = welcome;
@@ -23,5 +25,21 @@ public class IndexModel {
 
     public void setPosts(List<Post> posts) {
         this.posts = posts;
+    }
+
+    public boolean isCanAddPost() {
+        return canAddPost;
+    }
+
+    public void setCanAddPost(boolean canAddPost) {
+        this.canAddPost = canAddPost;
+    }
+
+    public String getUrlAddPost() {
+        return urlAddPost;
+    }
+
+    public void setUrlAddPost(String urlAddPost) {
+        this.urlAddPost = urlAddPost;
     }
 }

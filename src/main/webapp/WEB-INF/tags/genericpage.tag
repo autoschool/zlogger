@@ -13,25 +13,8 @@
         <title> title </title>
 
         <link href="/css/bootstrap.min.css" rel="stylesheet">
-        <style type="text/css">
-			body {
-				padding-top: 60px;
-		        padding-bottom: 40px;
-			}
-            .inline-div{
-                display: inline-block;
-            }
-            .logo{
-                width:50%;
-                height:125px;
-                background-image: url('/img/zlogo-small-round-red.png');
-                background-position: right center;
-                background-repeat:no-repeat;
-            }
-			.sidebar-nav {
-				padding: 9px 0;
-			}
-		</style>
+        <link href="/css/site.css" rel="stylesheet">
+
         <!-- See http://twitter.github.com/bootstrap/scaffolding.html#responsive -->
         <link href="/css/bootstrap-responsive.min.css" rel="stylesheet" />
 
@@ -66,7 +49,7 @@
                                 Logged in as <a href="#" class="navbar-link">Username</a>
                             </p>
                             <ul class="nav">
-                                <li class="active"><a href="#">Home</a></li>
+                                <li class="active"><a href="/">Home</a></li>
                                 <li><a href="#about">About</a></li>
                                 <li><a href="#contact">Contact</a></li>
                             </ul>
@@ -82,17 +65,9 @@
 		<div class="container-fluid">
 			<div class="row-fluid">
 
-				<div class="span3">
-                   <div class="well sidebar-nav">
-                           <ul class="nav nav-list">
-                               <li class="nav-header"><spring:message code="layout.lang" /> </li>
-                               <li><a href="?lang=fr"><spring:message code="layout.lang.french" /></a></li>
-                               <li><a href="?lang=en"><spring:message code="layout.lang.english" /></a></li>
-                           </ul>
-                       </div>
-				</div> <!--/span-->
 
-				<div class="span9">
+
+				<div class="span12">
 					<!--Body content-->
 					<jsp:doBody/>
 				</div>
