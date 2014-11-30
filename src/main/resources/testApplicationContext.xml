@@ -12,5 +12,6 @@
     <context:property-placeholder location="classpath:config/test-database.properties" order="0"/>
 
     <bean id="testUtilities" class="zlogger.util.TestUtilities"/>
+    <bean id="crudTestUtilities" class="zlogger.util.CRUDTestUtilities"/>
 
 </beans>

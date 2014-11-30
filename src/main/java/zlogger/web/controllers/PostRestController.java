@@ -27,7 +27,7 @@ public class PostRestController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<Post> getPosts() {
-        return postService.listPosts();
+        return postService.list();
     }
 
     @RequestMapping(method = RequestMethod.POST,
@@ -36,8 +36,8 @@ public class PostRestController {
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public Long addPost(@RequestBody Post post) {
-        User creator = userService.getUser(post.getCreator().getUsername());
-        return postService.addPost(post, post.getWall(), creator);
+        User creator = userService.get(post.getCreator().getUsername());
+        return postService.add(post, post.getWall(), creator);
     }
 
     @RequestMapping(value = "/{id}",
@@ -47,7 +47,7 @@ public class PostRestController {
     @ResponseBody
     public
     Post getPost(@PathVariable("id") Long id) {
-        return postService.getPost(id);
+        return postService.get(id);
     }
 
     @RequestMapping(value = "/{id}",
@@ -55,14 +55,14 @@ public class PostRestController {
             consumes = MediaType.APPLICATION_JSON)
     @ResponseStatus(HttpStatus.OK)
     public void updatePost(@RequestBody Post post) {
-        postService.updatePost(post);
+        postService.update(post);
     }
 
     @RequestMapping(value = "/{id}",
             method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletePost(@PathVariable("id") Long id) {
-        postService.deletePost(id);
+        postService.delete(id);
     }
 
 

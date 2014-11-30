@@ -13,6 +13,8 @@ import zlogger.logic.services.PostService;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 @Service
@@ -23,7 +25,44 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public Long addPost(Post post, Wall wall, User user) {
+    public List<Post> list() {
+        return postDao.getPosts();
+    }
+
+    @Override
+    @Transactional
+    public List<Post> listForWall(Wall wall) {
+        Objects.requireNonNull(wall, "Can't get posts for null wall");
+        Objects.requireNonNull(wall.getWallId(),
+                "Can't get posts for wall with null wall_id");
+
+        return postDao.getPostsByWall(wall);
+    }
+
+    @Override
+    @Transactional
+    public List<Post> listForUser(User user) {
+        Objects.requireNonNull(user, "Can't get posts for null user");
+        Objects.requireNonNull(user.getUsername(),
+                "Can't get posts for user with null username");
+
+        return postDao.getPostsByUser(user);
+    }
+
+    @Override
+    @Transactional
+    public Long add(Post post, Wall wall, User user) {
+        post.setWall(wall);
+        post.setCreator(user);
+        return add(post);
+    }
+
+    @Override
+    @Transactional
+    public Long add(Post entity) {
+        Objects.requireNonNull(entity, "Can't create null post");
+        Wall wall = entity.getWall();
+        User user = entity.getCreator();
         Objects.requireNonNull(wall, "Can't create post with null wall");
         Objects.requireNonNull(user, "Can't create post with null user");
         Objects.requireNonNull(wall.getWallId(),
@@ -34,12 +73,12 @@ public class PostServiceImpl implements PostService {
             throw new IllegalStateException("Can't add post with disabled creator");
         }
 
-        post.setWall(wall);
-        post.setCreator(user);
-        post.setCreationDate(new Date());
+        entity.setCreationDate(new Date());
         try {
-            return postDao.createPost(post);
+            return postDao.createPost(entity);
         } catch (ConstraintViolationException e) {
+            Logger logger = Logger.getGlobal();
+            logger.log(Level.WARNING, "ConstraintViolationException: " + e);
             throw new IllegalArgumentException("Post is malformed or it's " +
                     "dependencies are not persistent. " +
                     "Violated constraint: " + e.getConstraintName()
@@ -47,44 +86,9 @@ public class PostServiceImpl implements PostService {
         }
     }
 
-
     @Override
     @Transactional
-    public List<Post> listPosts() {
-        return postDao.getPosts();
-    }
-
-    @Override
-    @Transactional
-    public List<Post> listPostsForWall(Wall wall) {
-        Objects.requireNonNull(wall, "Can't get posts for null wall");
-        Objects.requireNonNull(wall.getWallId(),
-                "Can't get posts for wall with null wall_id");
-
-        return postDao.getPostsByWall(wall);
-    }
-
-    @Override
-    @Transactional
-    public List<Post> listPostsForUser(User user) {
-        Objects.requireNonNull(user, "Can't get posts for null user");
-        Objects.requireNonNull(user.getUsername(),
-                "Can't get posts for user with null username");
-
-        return postDao.getPostsByUser(user);
-    }
-
-    @Override
-    @Transactional
-    public void deletePost(Long id) {
-        Objects.requireNonNull(id, "Can't delete post with null id");
-
-        postDao.deletePostById(id);
-    }
-
-    @Override
-    @Transactional
-    public Post getPost(Long id) {
+    public Post get(Long id) {
         Objects.requireNonNull(id, "Can't get post with null id");
 
         return postDao.getPostById(id);
@@ -92,11 +96,11 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public Long updatePost(Post post) {
+    public Long update(Post post) {
         Objects.requireNonNull(post, "Can't update with null post");
         Objects.requireNonNull(post.getId(), "Can't update post with null id");
 
-        Post oldPost = getPost(post.getId());
+        Post oldPost = get(post.getId());
 
         if (post.getMessage() == null) {
             post.setMessage(oldPost.getMessage());
@@ -109,4 +113,13 @@ public class PostServiceImpl implements PostService {
         post.setCreator(oldPost.getCreator());
         return postDao.updatePost(post);
     }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        Objects.requireNonNull(id, "Can't delete post with null id");
+
+        postDao.deletePostById(id);
+    }
+
 }

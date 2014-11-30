@@ -6,18 +6,12 @@ import zlogger.logic.models.Wall;
 
 import java.util.List;
 
-public interface PostService {
-    public Long addPost(Post post, Wall wall, User user);
+public interface PostService extends CRUDService<Post, Long> {
 
-    public List<Post> listPosts();
+    public Long add(Post post, Wall wall, User user);
 
-    public List<Post> listPostsForWall(Wall wall);
+    public List<Post> listForWall(Wall wall);
 
-    public List<Post> listPostsForUser(User user);
+    public List<Post> listForUser(User user);
 
-    public void deletePost(Long id);
-
-    public Post getPost(Long id);
-
-    public Long updatePost(Post post);
 }

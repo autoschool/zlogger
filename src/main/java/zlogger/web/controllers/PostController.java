@@ -29,20 +29,24 @@ public class PostController {
     public ModelAndView getList() {
         IndexModel model = new IndexModel();
         model.setWelcome("test welcome");
-        model.setPosts(postService.listPosts());
-        model.setCanAddPost(false); //todo get user rights
-        model.setUrlAddPost("/post/add"); //todo implement
+        model.setPosts(postService.list());
+        //todo get user rights
+        model.setCanAddPost(false);
+        //todo implement
+        model.setUrlAddPost("/post/add");
         return new ModelAndView("list", "indexModel", model);
     }
 
     @RequestMapping("/post/{id}")
     public ModelAndView showPost(@PathVariable("id") long postId) {
         PostModel model = new PostModel();
-        model.setPost(postService.getPost(postId));
+        model.setPost(postService.get(postId));
         //model.setCommentaries(commentaryService.listCommentariesForPost(model.getPost())); load by ajax
         model.setUrlLoadCommentary("/post/"+postId+"/commentaries");
-        model.setCanAddCommnetary(false); //todo get user rights
-        model.setUrlAddCommentary("/post/"+postId+"/addcomment"); //todo implement
+        //todo get user rights
+        model.setCanAddCommnetary(false);
+        //todo implement
+        model.setUrlAddCommentary("/post/" + postId + "/addcomment");
         return new ModelAndView("post", "postModel", model);
     }
 

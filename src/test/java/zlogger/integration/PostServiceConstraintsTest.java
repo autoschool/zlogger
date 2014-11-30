@@ -33,14 +33,14 @@ public class PostServiceConstraintsTest {
     @Test(expected = NullPointerException.class)
     public void shouldGetNullPointerExceptionForMalformedEntity() {
         Post post = new Post(TEST_TITLE, TEST_MESSAGE);
-        postService.addPost(post, new Wall(), testUtilities.getConstantUser());
+        postService.add(post, new Wall(), testUtilities.getConstantUser());
     }
 
     @Test
     public void shouldReturnEmptyListForNonexistentEntity() {
         Wall testWall = new Wall();
         testWall.setWallId(Long.MAX_VALUE);
-        List<Post> posts = postService.listPostsForWall(testWall);
+        List<Post> posts = postService.listForWall(testWall);
 
         assertThat(posts, CoreMatchers.notNullValue());
         assertThat(posts.isEmpty(), is(true));
@@ -49,7 +49,7 @@ public class PostServiceConstraintsTest {
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowExceptionForConstrainViolation() {
         Post post = new Post(TEST_TITLE, null);
-        Long id = postService.addPost(post, testUtilities.getConstantWall(),
+        Long id = postService.add(post, testUtilities.getConstantWall(),
                 testUtilities.getConstantUser());
 
         assertThat(id, nullValue());
@@ -60,7 +60,7 @@ public class PostServiceConstraintsTest {
         Post post = new Post(TEST_TITLE, TEST_MESSAGE);
         Wall wall = new Wall();
         wall.setWallId(Long.MAX_VALUE);
-        postService.addPost(post, wall, testUtilities.getConstantUser());
+        postService.add(post, wall, testUtilities.getConstantUser());
     }
 
 }

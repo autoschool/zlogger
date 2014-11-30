@@ -91,8 +91,9 @@ INSERT INTO `authorities` VALUES ('testUser', 'ROLE_USER');
 
 INSERT INTO `walls` VALUES (1,'testUser');
 
-INSERT INTO `posts` VALUES (1,'test title','test message 1','2014-11-24 15:06:36','testUser', 1);
-INSERT INTO `posts` VALUES (2,'test title','test message 2','2014-11-24 15:06:39','testAdmin', 1);
+INSERT INTO `posts` VALUES (1,'test title','test message 2','2014-11-24 15:06:39','testAdmin', 1);
+INSERT INTO `posts` VALUES (2,'test title','test message 1','2014-11-24 15:06:36','testUser', 1);
 INSERT INTO `posts` VALUES (3,'test title','test message 3','2014-11-24 15:06:40','testUser', 1);
 
 INSERT INTO `commentaries` VALUES (1,'test message 1','2014-11-24 15:06:40','testAdmin', 1);
+INSERT INTO `commentaries` VALUES (2,'test message 2','2014-11-24 15:06:40','testAdmin', 1);
