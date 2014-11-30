@@ -38,26 +38,29 @@
         				<div id="postsWall" class="posts">
 							<c:forEach var="sentence" items="${indexModel.posts}" varStatus="i">
 
-								  <h3>${sentence.title}</h3>
+								<h3>
+									<a href="/post/${sentence.id}">
+								  		${sentence.title}
+									</a>
+								</h3>
 								  <p>${sentence.message}</p>
 
 							  </c:forEach>
         				</div>
 
-        				<form id="form" method="post" action="/add" >
+						<c:if test="${indexModel.canAddPost}">
+						<form id="form" method="post" action="${indexModel.urlAddPost}" >
 
-        					<spring:message code="message.typeMessage" var="typeMessage" />
-        				  	<input cssClass="input-block-level"  placeholder="" autocomplete="off" name="title" />
-							<textarea name="message">
-							</textarea>
+                                					<spring:message code="message.typeMessage" var="typeMessage" />
+                                				  	<input cssClass="input-block-level"  placeholder="" autocomplete="off" name="title" />
+                        							<textarea name="message">
+                        							</textarea>
 
-        		  			<c:if test="${not empty message}">
+                                				  	<button type="submit" class="btn">Submit</button>
 
-        					</c:if>
+                                				</form>
+						</c:if>
 
-        				  	<button type="submit" class="btn">Submit</button>
-
-        				</form>
         			</div>
         		</div>
 

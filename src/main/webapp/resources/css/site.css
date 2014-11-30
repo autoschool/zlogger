@@ -1,0 +1,17 @@
+body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+}
+.inline-div{
+    display: inline-block;
+}
+.logo{
+    width:50%;
+    height:125px;
+    background-image: url('/img/zlogo-small-round-red.png');
+    background-position: right center;
+    background-repeat:no-repeat;
+}
+.sidebar-nav {
+    padding: 9px 0;
+}

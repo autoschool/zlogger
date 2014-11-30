@@ -20,6 +20,8 @@
 
     <bean id="postDao" class="zlogger.logic.dao.impl.PostDaoHibernateImpl"/>
     <bean id="postService" class="zlogger.logic.services.impl.PostServiceImpl"/>
+    <bean id="commentaryDao" class="zlogger.logic.dao.impl.CommentaryDaoHibernateImpl"/>
+    <bean id="commentaryService" class="zlogger.logic.services.impl.CommentaryServiceImpl"/>
     <bean id="userDao" class="zlogger.logic.dao.impl.UserDaoHibernateImpl"/>
     <bean id="userService" class="zlogger.logic.services.impl.UserServiceImpl"/>
 

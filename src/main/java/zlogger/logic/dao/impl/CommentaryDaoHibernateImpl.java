@@ -25,12 +25,12 @@ public class CommentaryDaoHibernateImpl implements CommentaryDao {
 
     @Override
     public List<Commentary> getCommentariesByPost(Post post) {
-        return new ArrayList<>(post.getCommentaries());
+        return new ArrayList<>(post.getCommentaries()); //todo add filter criteria
     }
 
     @Override
     public List<Commentary> getCommentariesByUser(User user) {
-        return new ArrayList<>(user.getCommentaries());
+        return new ArrayList<>(user.getCommentaries()); //todo add filter criteria
     }
 
     @Override
