@@ -15,6 +15,8 @@ public class CRUDTestUtilities {
     private static final String TEST_USERNAME = "test";
     private static final String TEST_PASSWORD = "test";
 
+    private int counter = 0;
+
     @Autowired
     private PostService postService;
     @Autowired
@@ -39,7 +41,7 @@ public class CRUDTestUtilities {
     }
 
     public User createValidUser() {
-        return new User(TEST_USERNAME, TEST_PASSWORD);
+        return new User(TEST_USERNAME + counter++, TEST_PASSWORD);
     }
 
     public Post getRealPost() {

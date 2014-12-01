@@ -1,6 +1,7 @@
 package zlogger.logic.dao.impl;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import zlogger.logic.dao.PostDao;
@@ -8,7 +9,6 @@ import zlogger.logic.models.Post;
 import zlogger.logic.models.User;
 import zlogger.logic.models.Wall;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -18,42 +18,46 @@ public class PostDaoHibernateImpl implements PostDao {
     private SessionFactory sessionFactory;
 
     @Override
-    public List<Post> getPosts() {
+    public List<Post> list() {
         return sessionFactory.openSession()
                 .createCriteria(Post.class).list();
     }
 
     @Override
-    public List<Post> getPostsByWall(Wall wall) {
-        return new ArrayList<>(wall.getPosts());
+    public List<Post> listForWall(Wall wall) {
+        return sessionFactory.openSession()
+                .createCriteria(Post.class)
+                .add(Restrictions.eq("wall", wall))
+                .list();
     }
 
     @Override
-    public List<Post> getPostsByUser(User user) {
-        return new ArrayList<>(user.getPosts());
+    public List<Post> listForUser(User user) {
+        return sessionFactory.openSession()
+                .createCriteria(Post.class)
+                .add(Restrictions.eq("creator", user))
+                .list();
     }
 
     @Override
-    public Post getPostById(Long id) {
+    public Post get(Long id) {
         return (Post) sessionFactory.openSession()
                 .load(Post.class, id);
     }
 
     @Override
-    public void deletePostById(Long id) {
-        Post post = (Post) sessionFactory.getCurrentSession()
-                .load(Post.class, id);
+    public void delete(Post post) {
         sessionFactory.getCurrentSession().delete(post);
     }
 
     @Override
-    public Long createPost(Post post) {
+    public Long create(Post post) {
         sessionFactory.getCurrentSession().save(post);
         return post.getId();
     }
 
     @Override
-    public Long updatePost(Post post) {
+    public Long update(Post post) {
         sessionFactory.getCurrentSession().merge(post);
         return post.getId();
     }

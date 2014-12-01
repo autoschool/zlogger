@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "users",
@@ -25,18 +23,6 @@ public class User implements Serializable {
     @Column(name = "enabled", nullable = false)
     @JsonIgnore
     private Boolean enabled;
-
-    @OneToMany(mappedBy = "id")
-    @JsonIgnore
-    private Set<Post> posts = new HashSet<>();
-
-    @OneToMany(mappedBy = "wallId")
-    @JsonIgnore
-    private Set<Wall> walls = new HashSet<>();
-
-    @OneToMany(mappedBy = "id")
-    @JsonIgnore
-    private Set<Commentary> commentaries = new HashSet<>();
 
     public User() {
     }
@@ -69,29 +55,5 @@ public class User implements Serializable {
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
-    }
-
-    public Set<Post> getPosts() {
-        return posts;
-    }
-
-    public void setPosts(Set<Post> posts) {
-        this.posts = posts;
-    }
-
-    public Set<Wall> getWalls() {
-        return walls;
-    }
-
-    public void setWalls(Set<Wall> walls) {
-        this.walls = walls;
-    }
-
-    public Set<Commentary> getCommentaries() {
-        return commentaries;
-    }
-
-    public void setCommentaries(Set<Commentary> commentaries) {
-        this.commentaries = commentaries;
     }
 }

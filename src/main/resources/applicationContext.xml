@@ -16,6 +16,7 @@
 
     <context:component-scan base-package="zlogger.logic.models"/>
     <context:property-placeholder location="classpath:config/test-database.properties" order="1"/>
+    <context:annotation-config/>
 
 
     <bean id="postDao" class="zlogger.logic.dao.impl.PostDaoHibernateImpl"/>

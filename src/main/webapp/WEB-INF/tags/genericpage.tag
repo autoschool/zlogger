@@ -10,79 +10,57 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
 
-        <title> title </title>
+        <title> Zlogger </title>
 
         <link href="/css/bootstrap.min.css" rel="stylesheet">
         <link href="/css/site.css" rel="stylesheet">
-
-        <!-- See http://twitter.github.com/bootstrap/scaffolding.html#responsive -->
-        <link href="/css/bootstrap-responsive.min.css" rel="stylesheet" />
+        <link href="/css/blog.css" rel="stylesheet">
 
 		<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 		<!--[if lt IE 9]>
       		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     	<![endif]-->
 
-    	<!-- Fav and touch icons
-		<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/ico/apple-touch-icon-144-precomposed.png">
-		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/ico/apple-touch-icon-114-precomposed.png">
-		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/ico/apple-touch-icon-72-precomposed.png">
-		<link rel="apple-touch-icon-precomposed" href="/ico/apple-touch-icon-57-precomposed.png">
-		<link rel="shortcut icon" href="/ico/favicon.png">
-		-->
+		<link rel="icon" href="/img/favicon.png">
 
 		<jsp:invoke fragment="header"/>
     </head>
     <body>
 
-        <div class="navbar navbar-inverse navbar-fixed-top">
-                <div class="navbar-inner">
-                    <div class="container-fluid">
-                        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </a>
-                        <a class="brand" href="#">Mvc base</a>
-                        <div class="nav-collapse collapse">
-                            <p class="navbar-text pull-right">
-                                Logged in as <a href="#" class="navbar-link">Username</a>
-                            </p>
-                            <ul class="nav">
-                                <li class="active"><a href="/">Home</a></li>
-                                <li><a href="#about">About</a></li>
-                                <li><a href="#contact">Contact</a></li>
-                            </ul>
-                        </div> <!--/.nav-collapse -->
-                    </div>
-                </div>
-            </div>
+        <div class="blog-masthead">
+          <div class="container">
+            <nav class="blog-nav">
+              <a class="blog-nav-item active" href="/">Home</a>
+              <a class="blog-nav-item" href="/login">Login</a>
+              <a class="blog-nav-item" href="#">About</a>
+            </nav>
+          </div>
+        </div>
 
-		<div id="message" class="alert alert-info">
-			<spring:message code="message.lang.instructions"/>
+		<div class="container">
+
+			<div class="blog-header">
+        <h1 class="blog-title">Zlogger</h1>
+        <hr>
+        <p class="lead blog-description">A certain blog platform's evil twin</p>
+      </div>
+
+			<jsp:doBody/>
+
 		</div>
 
-		<div class="container-fluid">
-			<div class="row-fluid">
+        <hr>
+        <footer class="blog-footer">
+          <p>Blog template.</p>
+          <p>
+            <a href="#">Back to top</a>
+          </p>
+        </footer>
 
-
-
-				<div class="span12">
-					<!--Body content-->
-					<jsp:doBody/>
-				</div>
-
-			</div>
-
-			<hr>
-			<footer>
-			  <p></p>
-			</footer>
-
-		</div><!--/.container-fluid-->
-
-		<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<script src="/js/bootstrap.min.js" type="text/javascript"></script>
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <script src="/js/ie10-viewport-bug-workaround.js"></script>
 
 		<div id="pagefooter">
               <jsp:invoke fragment="footer"/>

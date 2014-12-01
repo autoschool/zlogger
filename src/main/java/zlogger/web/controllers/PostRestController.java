@@ -45,8 +45,7 @@ public class PostRestController {
             produces = MediaType.APPLICATION_JSON)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public
-    Post getPost(@PathVariable("id") Long id) {
+    public Post getPost(@PathVariable("id") Long id) {
         return postService.get(id);
     }
 
@@ -62,7 +61,8 @@ public class PostRestController {
             method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletePost(@PathVariable("id") Long id) {
-        postService.delete(id);
+        Post post = postService.get(id);
+        postService.delete(post);
     }
 
 

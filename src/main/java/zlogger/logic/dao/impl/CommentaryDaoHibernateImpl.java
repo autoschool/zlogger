@@ -1,6 +1,7 @@
 package zlogger.logic.dao.impl;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import zlogger.logic.dao.CommentaryDao;
@@ -8,7 +9,6 @@ import zlogger.logic.models.Commentary;
 import zlogger.logic.models.Post;
 import zlogger.logic.models.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -18,44 +18,48 @@ public class CommentaryDaoHibernateImpl implements CommentaryDao {
     private SessionFactory sessionFactory;
 
     @Override
-    public List<Commentary> getCommentaries() {
+    public List<Commentary> list() {
         return sessionFactory.openSession()
                 .createCriteria(Commentary.class).list();
     }
 
     @Override
-    public List<Commentary> getCommentariesByPost(Post post) {
+    public List<Commentary> listByPost(Post post) {
         //todo add filter criteria
-        return new ArrayList<>(post.getCommentaries());
+        return sessionFactory.openSession()
+                .createCriteria(Commentary.class)
+                .add(Restrictions.eq("post", post))
+                .list();
     }
 
     @Override
-    public List<Commentary> getCommentariesByUser(User user) {
+    public List<Commentary> listForUser(User user) {
         //todo add filter criteria
-        return new ArrayList<>(user.getCommentaries());
+        return sessionFactory.openSession()
+                .createCriteria(Commentary.class)
+                .add(Restrictions.eq("creator", user))
+                .list();
     }
 
     @Override
-    public Commentary getCommentaryById(Long id) {
+    public Commentary get(Long id) {
         return (Commentary) sessionFactory.openSession()
                 .load(Commentary.class, id);
     }
 
     @Override
-    public void deleteCommentaryById(Long id) {
-        Commentary commentary = (Commentary) sessionFactory.getCurrentSession()
-                .load(Commentary.class, id);
+    public void delete(Commentary commentary) {
         sessionFactory.getCurrentSession().delete(commentary);
     }
 
     @Override
-    public Long createCommentary(Commentary commentary) {
+    public Long create(Commentary commentary) {
         sessionFactory.getCurrentSession().save(commentary);
         return commentary.getId();
     }
 
     @Override
-    public Long updateCommentary(Commentary commentary) {
+    public Long update(Commentary commentary) {
         sessionFactory.getCurrentSession().merge(commentary);
         return commentary.getId();
     }

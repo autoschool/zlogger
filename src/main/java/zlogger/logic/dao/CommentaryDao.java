@@ -6,20 +6,10 @@ import zlogger.logic.models.User;
 
 import java.util.List;
 
-public interface CommentaryDao {
+public interface CommentaryDao extends GenericDao<Long, Commentary> {
 
-    public List<Commentary> getCommentaries();
+    public List<Commentary> listByPost(Post post);
 
-    public List<Commentary> getCommentariesByPost(Post post);
-
-    public List<Commentary> getCommentariesByUser(User user);
-
-    public Commentary getCommentaryById(Long id);
-
-    public void deleteCommentaryById(Long id);
-
-    public Long createCommentary(Commentary commentary);
-
-    public Long updateCommentary(Commentary commentary);
+    public List<Commentary> listForUser(User user);
 
 }

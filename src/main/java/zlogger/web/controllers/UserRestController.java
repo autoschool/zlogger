@@ -15,14 +15,14 @@ import java.util.List;
 public class UserRestController {
 
     @Autowired
-    UserService postService;
+    UserService userService;
 
     @RequestMapping(method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<User> getUsers() {
-        return postService.list();
+        return userService.list();
     }
 
     @RequestMapping(method = RequestMethod.POST,
@@ -31,7 +31,7 @@ public class UserRestController {
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public String addUser(@RequestBody User user) {
-        return postService.add(user);
+        return userService.add(user);
     }
 
     @RequestMapping(value = "/{name}",
@@ -40,7 +40,7 @@ public class UserRestController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public User getUser(@PathVariable("name") String name) {
-        return postService.get(name);
+        return userService.get(name);
     }
 
     @RequestMapping(value = "/{name}",
@@ -48,14 +48,15 @@ public class UserRestController {
             consumes = MediaType.APPLICATION_JSON)
     @ResponseStatus(HttpStatus.OK)
     public void updateUser(@RequestBody User user) {
-        postService.update(user);
+        userService.update(user);
     }
 
     @RequestMapping(value = "/{name}",
             method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable("name") String name) {
-        postService.delete(name);
+        User user = userService.get(name);
+        userService.delete(user);
     }
 
 }

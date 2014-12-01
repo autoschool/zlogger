@@ -49,7 +49,7 @@ public class PostServiceImplTest {
         //Given
         Post post = new Post("testTitle", "custom message \n\n\t dsg");
         Long testId = 22L;
-        Mockito.when(postDao.createPost(post)).thenReturn(testId);
+        Mockito.when(postDao.create(post)).thenReturn(testId);
 
         //When
         Long newId = testingObject.add(post, testWall, testUser);
@@ -88,7 +88,7 @@ public class PostServiceImplTest {
         db2.setCreationDate(new Date());
         dbPosts.add(db2);
 
-        Mockito.when(postDao.getPosts()).thenReturn(dbPosts);
+        Mockito.when(postDao.list()).thenReturn(dbPosts);
 
         //When
         List<Post> posts = testingObject.list();
