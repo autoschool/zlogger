@@ -25,12 +25,14 @@ public class CommentaryDaoHibernateImpl implements CommentaryDao {
 
     @Override
     public List<Commentary> getCommentariesByPost(Post post) {
-        return new ArrayList<>(post.getCommentaries()); //todo add filter criteria
+        //todo add filter criteria
+        return new ArrayList<>(post.getCommentaries());
     }
 
     @Override
     public List<Commentary> getCommentariesByUser(User user) {
-        return new ArrayList<>(user.getCommentaries()); //todo add filter criteria
+        //todo add filter criteria
+        return new ArrayList<>(user.getCommentaries());
     }
 
     @Override
@@ -41,9 +43,9 @@ public class CommentaryDaoHibernateImpl implements CommentaryDao {
 
     @Override
     public void deleteCommentaryById(Long id) {
-        Commentary Commentary = (Commentary) sessionFactory.getCurrentSession()
+        Commentary commentary = (Commentary) sessionFactory.getCurrentSession()
                 .load(Commentary.class, id);
-        sessionFactory.getCurrentSession().delete(Commentary);
+        sessionFactory.getCurrentSession().delete(commentary);
     }
 
     @Override

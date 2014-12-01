@@ -9,6 +9,8 @@ import zlogger.logic.services.UserService;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UserServiceImpl implements UserService {
 
@@ -17,11 +19,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public String addUser(User user) {
+    public List<User> list() {
+        return userDao.listUsers();
+    }
+
+    @Override
+    @Transactional
+    public String add(User user) {
         Objects.requireNonNull(user, "Can't add null user");
         try {
             return userDao.createUser(user);
         } catch (ConstraintViolationException e) {
+            Logger logger = Logger.getGlobal();
+            logger.log(Level.WARNING, "ConstraintViolationException: " + e);
             throw new IllegalArgumentException("User is malformed. " +
                     "Violated constraint: " + e.getConstraintName()
             );
@@ -30,32 +40,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public List<User> listUsers() {
-        return userDao.listUsers();
-    }
-
-    @Override
-    @Transactional
-    public void deleteUser(String name) {
-        Objects.requireNonNull(name, "Can't delete user with null username");
-        userDao.deleteUserByName(name);
-    }
-
-    @Override
-    @Transactional
-    public User getUser(String name) {
+    public User get(String name) {
         Objects.requireNonNull(name, "Can't get user with null username");
         return userDao.getUserByName(name);
     }
 
     @Override
     @Transactional
-    public void updateUser(User user) {
+    public String update(User user) {
         Objects.requireNonNull(user, "Can't update with null user");
         Objects.requireNonNull(user.getUsername(),
                 "Can't update user with null username");
 
-        User oldUser = getUser(user.getUsername());
+        User oldUser = get(user.getUsername());
 
         if (user.getPassword() == null) {
             user.setPassword(oldUser.getPassword());
@@ -64,6 +61,13 @@ public class UserServiceImpl implements UserService {
             user.setEnabled(oldUser.getEnabled());
         }
         user.setUsername(oldUser.getUsername());
-        userDao.updateUser(user);
+        return userDao.updateUser(user);
+    }
+
+    @Override
+    @Transactional
+    public void delete(String name) {
+        Objects.requireNonNull(name, "Can't delete user with null username");
+        userDao.deleteUserByName(name);
     }
 }

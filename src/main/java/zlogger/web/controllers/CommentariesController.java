@@ -26,7 +26,7 @@ public class CommentariesController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<Commentary> showPost(@PathVariable("id") long postId) {
-        return commentaryService.listCommentariesForPost(postService.getPost(postId));
+        return commentaryService.listForPost(postService.get(postId));
     }
 
 }

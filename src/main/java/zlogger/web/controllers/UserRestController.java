@@ -10,9 +10,6 @@ import zlogger.logic.services.UserService;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-/**
- * Created by alexwyrm on 11/20/14.
- */
 @Controller
 @RequestMapping("/users")
 public class UserRestController {
@@ -23,30 +20,27 @@ public class UserRestController {
     @RequestMapping(method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON)
     @ResponseStatus(HttpStatus.OK)
-    public
     @ResponseBody
-    List<User> getUsers() {
-        return postService.listUsers();
+    public List<User> getUsers() {
+        return postService.list();
     }
 
     @RequestMapping(method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON,
             produces = MediaType.APPLICATION_JSON)
     @ResponseStatus(HttpStatus.CREATED)
-    public
     @ResponseBody
-    String addUser(@RequestBody User user) {
-        return postService.addUser(user);
+    public String addUser(@RequestBody User user) {
+        return postService.add(user);
     }
 
     @RequestMapping(value = "/{name}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON)
     @ResponseStatus(HttpStatus.OK)
-    public
     @ResponseBody
-    User getUser(@PathVariable("name") String name) {
-        return postService.getUser(name);
+    public User getUser(@PathVariable("name") String name) {
+        return postService.get(name);
     }
 
     @RequestMapping(value = "/{name}",
@@ -54,14 +48,14 @@ public class UserRestController {
             consumes = MediaType.APPLICATION_JSON)
     @ResponseStatus(HttpStatus.OK)
     public void updateUser(@RequestBody User user) {
-        postService.updateUser(user);
+        postService.update(user);
     }
 
     @RequestMapping(value = "/{name}",
             method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable("name") String name) {
-        postService.deleteUser(name);
+        postService.delete(name);
     }
 
 }

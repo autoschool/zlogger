@@ -12,6 +12,8 @@ import zlogger.logic.services.CommentaryService;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CommentaryServiceImpl implements CommentaryService {
 
@@ -20,40 +22,13 @@ public class CommentaryServiceImpl implements CommentaryService {
 
     @Override
     @Transactional
-    public Long addCommentary(Commentary commentary, Post post, User user) {
-        Objects.requireNonNull(commentary, "Can't add null commentary");
-        Objects.requireNonNull(post, "Can't add commentary with null post");
-        Objects.requireNonNull(user, "Can't add commentary with null creator");
-        Objects.requireNonNull(post.getId(), "Can't add commentary with null post_id");
-        Objects.requireNonNull(user.getUsername(),
-                "Can't add commentary with null creator_name");
-        if (!user.getEnabled()) {
-            throw new IllegalStateException("Can't add commentary with disabled creator");
-        }
-
-        commentary.setPost(post);
-        commentary.setCreator(user);
-        commentary.setCreationDate(new Date());
-        try {
-            return commentaryDao.createCommentary(commentary);
-        } catch (ConstraintViolationException e) {
-            throw new IllegalArgumentException("Commentary is malformed or it's " +
-                    "dependencies are not persistent. " +
-                    "Violated constraint: " + e.getConstraintName()
-            );
-        }
-    }
-
-
-    @Override
-    @Transactional
-    public List<Commentary> listCommentaries() {
+    public List<Commentary> list() {
         return commentaryDao.getCommentaries();
     }
 
     @Override
     @Transactional
-    public List<Commentary> listCommentariesForPost(Post post) {
+    public List<Commentary> listForPost(Post post) {
         Objects.requireNonNull(post, "Can't get commentaries for null post");
         Objects.requireNonNull(post.getId(),
                 "Can't get commentaries for post with null id");
@@ -63,7 +38,7 @@ public class CommentaryServiceImpl implements CommentaryService {
 
     @Override
     @Transactional
-    public List<Commentary> listCommentariesForUser(User user) {
+    public List<Commentary> listForUser(User user) {
         Objects.requireNonNull(user, "Can't get commentaries for null user");
         Objects.requireNonNull(user.getUsername(),
                 "Can't get commentaries for user with null username");
@@ -73,15 +48,43 @@ public class CommentaryServiceImpl implements CommentaryService {
 
     @Override
     @Transactional
-    public void deleteCommentary(Long id) {
-        Objects.requireNonNull(id, "Can't delete commentary with null id");
-
-        commentaryDao.deleteCommentaryById(id);
+    public Long add(Commentary commentary, Post post, User user) {
+        commentary.setPost(post);
+        commentary.setCreator(user);
+        return add(commentary);
     }
 
     @Override
     @Transactional
-    public Commentary getCommentary(Long id) {
+    public Long add(Commentary entity) {
+        Objects.requireNonNull(entity, "Can't add null commentary");
+        User user = entity.getCreator();
+        Post post = entity.getPost();
+        Objects.requireNonNull(post, "Can't add commentary with null post");
+        Objects.requireNonNull(user, "Can't add commentary with null creator");
+        Objects.requireNonNull(post.getId(), "Can't add commentary with null post_id");
+        Objects.requireNonNull(user.getUsername(),
+                "Can't add commentary with null creator_name");
+        if (!user.getEnabled()) {
+            throw new IllegalStateException("Can't add commentary with disabled creator");
+        }
+
+        entity.setCreationDate(new Date());
+        try {
+            return commentaryDao.createCommentary(entity);
+        } catch (ConstraintViolationException e) {
+            Logger logger = Logger.getGlobal();
+            logger.log(Level.WARNING, "ConstraintViolationException: ");
+            throw new IllegalArgumentException("Commentary is malformed or it's " +
+                    "dependencies are not persistent. " +
+                    "Violated constraint: " + e.getConstraintName());
+
+        }
+    }
+
+    @Override
+    @Transactional
+    public Commentary get(Long id) {
         Objects.requireNonNull(id, "Can't get commentary with null id");
 
         return commentaryDao.getCommentaryById(id);
@@ -89,11 +92,11 @@ public class CommentaryServiceImpl implements CommentaryService {
 
     @Override
     @Transactional
-    public Long updateCommentary(Commentary commentary) {
+    public Long update(Commentary commentary) {
         Objects.requireNonNull(commentary, "Can't update with null commentary");
         Objects.requireNonNull(commentary.getId(), "Can't update commentary with null id");
 
-        Commentary oldCommentary = getCommentary(commentary.getId());
+        Commentary oldCommentary = get(commentary.getId());
 
         if (commentary.getMessage() == null) {
             commentary.setMessage(oldCommentary.getMessage());
@@ -102,5 +105,13 @@ public class CommentaryServiceImpl implements CommentaryService {
         commentary.setPost(oldCommentary.getPost());
         commentary.setCreator(oldCommentary.getCreator());
         return commentaryDao.updateCommentary(commentary);
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        Objects.requireNonNull(id, "Can't delete commentary with null id");
+
+        commentaryDao.deleteCommentaryById(id);
     }
 }
