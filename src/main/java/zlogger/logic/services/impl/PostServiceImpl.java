@@ -29,6 +29,8 @@ public class PostServiceImpl implements PostService {
         return postDao.list();
     }
 
+    private static final Logger LOGGER = Logger.getGlobal();
+
     @Override
     @Transactional
     public List<Post> listForWall(Wall wall) {
@@ -77,7 +79,6 @@ public class PostServiceImpl implements PostService {
         try {
             return postDao.create(entity);
         } catch (ConstraintViolationException e) {
-            Logger LOGGER = Logger.getGlobal();
             LOGGER.log(Level.WARNING, e.toString());
             throw new IllegalArgumentException("Post is malformed or it's " +
                     "dependencies are not persistent. " +
