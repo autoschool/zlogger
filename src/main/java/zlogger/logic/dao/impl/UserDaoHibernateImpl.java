@@ -1,10 +1,12 @@
 package zlogger.logic.dao.impl;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import zlogger.logic.dao.UserDao;
 import zlogger.logic.models.User;
+import zlogger.logic.models.Wall;
 
 import java.util.List;
 
@@ -15,33 +17,42 @@ public class UserDaoHibernateImpl implements UserDao {
     private SessionFactory sessionFactory;
 
     @Override
-    public List<User> listUsers() {
+    public List<User> list() {
         return sessionFactory.openSession()
                 .createCriteria(User.class).list();
     }
 
     @Override
-    public User getUserByName(String name) {
+    public User get(String name) {
         return (User) sessionFactory.openSession()
                 .load(User.class, name);
     }
 
     @Override
-    public void deleteUserByName(String name) {
-        User user = (User) sessionFactory.getCurrentSession()
-                .load(User.class, name);
+    public void delete(User user) {
         sessionFactory.getCurrentSession().delete(user);
     }
 
     @Override
-    public String createUser(User user) {
+    public String create(User user) {
         sessionFactory.getCurrentSession().save(user);
+        Wall wall = new Wall();
+        wall.setOwner(user);
+        sessionFactory.getCurrentSession().save(wall);
         return user.getUsername();
     }
 
     @Override
-    public String updateUser(User user) {
+    public String update(User user) {
         sessionFactory.getCurrentSession().merge(user);
         return user.getUsername();
+    }
+
+    @Override
+    public Wall getWall(User owner) {
+        return (Wall) sessionFactory.openSession()
+                .createCriteria(Wall.class)
+                .add(Restrictions.eq("owner", owner))
+                .uniqueResult();
     }
 }

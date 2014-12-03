@@ -10,7 +10,7 @@ public class PostModel {
     private List<Commentary> commentaries;
     private Post post;
 
-    private boolean canAddCommnetary;
+    private boolean canAddCommentary;
     private String urlAddCommentary;
     private String urlLoadCommentary;
 
@@ -22,12 +22,12 @@ public class PostModel {
         this.commentaries = commentaries;
     }
 
-    public boolean isCanAddCommnetary() {
-        return canAddCommnetary;
+    public boolean isCanAddCommentary() {
+        return canAddCommentary;
     }
 
-    public void setCanAddCommnetary(boolean canAddCommnetary) {
-        this.canAddCommnetary = canAddCommnetary;
+    public void setCanAddCommentary(boolean canAddCommentary) {
+        this.canAddCommentary = canAddCommentary;
     }
 
     public Post getPost() {

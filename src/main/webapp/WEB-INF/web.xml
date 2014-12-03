@@ -22,7 +22,7 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            WEB-INF/mvc-dispatcher-servlet.xml, WEB-INF/security-config.xml
+            WEB-INF/mvc-dispatcher-servlet.xml, WEB-INF/security-config.xml, WEB-INF/acl-context.xml
         </param-value>
     </context-param>
 

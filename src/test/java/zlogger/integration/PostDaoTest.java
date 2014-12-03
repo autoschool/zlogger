@@ -22,7 +22,7 @@ public class PostDaoTest {
 
     @Test
     public void shouldGetPosts() {
-        List<Post> posts = postDao.getPosts();
+        List<Post> posts = postDao.list();
         assertThat(posts, notNullValue());
     }
 

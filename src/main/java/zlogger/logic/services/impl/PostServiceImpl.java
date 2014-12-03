@@ -26,7 +26,7 @@ public class PostServiceImpl implements PostService {
     @Override
     @Transactional
     public List<Post> list() {
-        return postDao.getPosts();
+        return postDao.list();
     }
 
     @Override
@@ -36,7 +36,7 @@ public class PostServiceImpl implements PostService {
         Objects.requireNonNull(wall.getWallId(),
                 "Can't get posts for wall with null wall_id");
 
-        return postDao.getPostsByWall(wall);
+        return postDao.listForWall(wall);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class PostServiceImpl implements PostService {
         Objects.requireNonNull(user.getUsername(),
                 "Can't get posts for user with null username");
 
-        return postDao.getPostsByUser(user);
+        return postDao.listForUser(user);
     }
 
     @Override
@@ -75,10 +75,10 @@ public class PostServiceImpl implements PostService {
 
         entity.setCreationDate(new Date());
         try {
-            return postDao.createPost(entity);
+            return postDao.create(entity);
         } catch (ConstraintViolationException e) {
-            Logger logger = Logger.getGlobal();
-            logger.log(Level.WARNING, "ConstraintViolationException: " + e);
+            Logger LOGGER = Logger.getGlobal();
+            LOGGER.log(Level.WARNING, e.toString());
             throw new IllegalArgumentException("Post is malformed or it's " +
                     "dependencies are not persistent. " +
                     "Violated constraint: " + e.getConstraintName()
@@ -91,7 +91,7 @@ public class PostServiceImpl implements PostService {
     public Post get(Long id) {
         Objects.requireNonNull(id, "Can't get post with null id");
 
-        return postDao.getPostById(id);
+        return postDao.get(id);
     }
 
     @Override
@@ -111,15 +111,15 @@ public class PostServiceImpl implements PostService {
         post.setCreationDate(oldPost.getCreationDate());
         post.setWall(oldPost.getWall());
         post.setCreator(oldPost.getCreator());
-        return postDao.updatePost(post);
+        return postDao.update(post);
     }
 
     @Override
     @Transactional
-    public void delete(Long id) {
-        Objects.requireNonNull(id, "Can't delete post with null id");
+    public void delete(Post post) {
+        Objects.requireNonNull(post, "Can't delete null post");
 
-        postDao.deletePostById(id);
+        postDao.delete(post);
     }
 
 }
