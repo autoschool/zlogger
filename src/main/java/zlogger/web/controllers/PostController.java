@@ -50,6 +50,7 @@ public class PostController {
             consumes = MediaType.APPLICATION_JSON)
     @ResponseStatus(HttpStatus.CREATED)
     public String addPost(@RequestBody Post post, Authentication authentication) {
+        System.out.println("addPost " + post.getTitle() + " " + post.getMessage());
         User user = userService.get(authentication.getName());
         Wall wall = userService.getWall(user);
         postService.add(post, wall, user);
