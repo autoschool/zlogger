@@ -20,8 +20,6 @@ public class CommentaryServiceImpl implements CommentaryService {
     @Autowired
     private CommentaryDao commentaryDao;
 
-    private static final Logger LOGGER = Logger.getGlobal();
-
     @Override
     @Transactional
     public List<Commentary> list() {
@@ -75,6 +73,7 @@ public class CommentaryServiceImpl implements CommentaryService {
         try {
             return commentaryDao.create(entity);
         } catch (ConstraintViolationException e) {
+            Logger LOGGER = Logger.getGlobal();
             LOGGER.log(Level.WARNING, e.toString());
             throw new IllegalArgumentException("Commentary is malformed or it's " +
                     "dependencies are not persistent. " +

@@ -23,8 +23,6 @@ public class PostServiceImpl implements PostService {
     @Autowired
     private PostDao postDao;
 
-    private static final Logger LOGGER = Logger.getGlobal();
-
     @Override
     @Transactional
     public List<Post> list() {
@@ -79,6 +77,7 @@ public class PostServiceImpl implements PostService {
         try {
             return postDao.create(entity);
         } catch (ConstraintViolationException e) {
+            Logger LOGGER = Logger.getGlobal();
             LOGGER.log(Level.WARNING, e.toString());
             throw new IllegalArgumentException("Post is malformed or it's " +
                     "dependencies are not persistent. " +
