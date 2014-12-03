@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import zlogger.logic.models.User;
+import zlogger.logic.services.PostService;
 import zlogger.logic.services.UserService;
 
 import javax.ws.rs.core.MediaType;
@@ -16,6 +17,9 @@ public class UserRestController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    PostService postService;
 
     @RequestMapping(method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON)

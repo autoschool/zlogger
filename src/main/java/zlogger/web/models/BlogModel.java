@@ -5,18 +5,20 @@ import zlogger.logic.models.Post;
 
 import java.util.List;
 
-public class IndexModel {
+public class BlogModel {
+
     private List<Post> posts;
-    private String welcome;
+    private String blogName;
     private boolean canAddPost;
     private String urlAddPost;
+    private String urlLoadPost;
 
-    public void setWelcome(String welcome) {
-        this.welcome = welcome;
+    public void setBlogName(String blogName) {
+        this.blogName = blogName;
     }
 
-    public String getWelcome() {
-        return welcome;
+    public String getBlogName() {
+        return blogName;
     }
 
     public List<Post> getPosts() {
@@ -41,5 +43,13 @@ public class IndexModel {
 
     public void setUrlAddPost(String urlAddPost) {
         this.urlAddPost = urlAddPost;
+    }
+
+    public String getUrlLoadPost() {
+        return urlLoadPost;
+    }
+
+    public void setUrlLoadPost(String urlLoadPost) {
+        this.urlLoadPost = urlLoadPost;
     }
 }

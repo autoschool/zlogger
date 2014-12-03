@@ -3,6 +3,10 @@
 <%@attribute name="footer" fragment="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@tag import = "java.util.ResourceBundle" %>
+<% ResourceBundle resource = ResourceBundle.getBundle("version");
+    String version=resource.getString("version");
+    String timestamp=resource.getString("build.date"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,7 +16,7 @@
 
         <title> Zlogger </title>
 
-        <link href="/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
         <link href="/css/site.css" rel="stylesheet">
         <link href="/css/blog.css" rel="stylesheet">
 
@@ -40,8 +44,7 @@
 		<div class="container">
 
 			<div class="blog-header">
-        <h1 class="blog-title">Zlogger</h1>
-        <hr>
+        <div class="logo inline-div"></div>
         <p class="lead blog-description">A certain blog platform's evil twin</p>
       </div>
 
@@ -51,16 +54,14 @@
 
         <hr>
         <footer class="blog-footer">
-          <p>Blog template.</p>
+          <p>Version: <%=version %> Build date: <%=timestamp %></p>
           <p>
             <a href="#">Back to top</a>
           </p>
         </footer>
 
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<script src="/js/bootstrap.min.js" type="text/javascript"></script>
-        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <script src="/js/ie10-viewport-bug-workaround.js"></script>
+		<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 
 		<div id="pagefooter">
               <jsp:invoke fragment="footer"/>

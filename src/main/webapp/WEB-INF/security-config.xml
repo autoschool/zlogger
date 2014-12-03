@@ -11,7 +11,7 @@
         <intercept-url pattern="/user**" access="ROLE_USER"/>
         <intercept-url pattern="/admin**" access="ROLE_ADMIN"/>
         <form-login login-page='/login' username-parameter="username"
-                    password-parameter="password" default-target-url="/list"
+                    password-parameter="password" default-target-url="/"
                     authentication-failure-url="/login?authfailed"/>
         <logout logout-success-url="/login?logout"/>
         <remember-me data-source-ref="myDataSource"/>

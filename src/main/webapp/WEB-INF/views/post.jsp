@@ -6,15 +6,14 @@
 
 <t:genericpage>
     <jsp:attribute name="header">
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.js"></script>
-		<script src="/js/ng/app.js"></script>
-		<script>
-               app.value("loadUrl", "${postModel.urlLoadCommentary}");
-		</script>
-		<script src="/js/ng/controllers.js"></script>
     </jsp:attribute>
     <jsp:attribute name="footer">
-
+    	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.27/angular.min.js"></script>
+		<script src="/js/ng/app.js"></script>
+		<script>
+			   app.value("commentsLoadUrl", "${postModel.urlLoadCommentary}");
+		</script>
+		<script src="/js/ng/controllers.js"></script>
     </jsp:attribute>
     <jsp:body>
 
@@ -33,8 +32,8 @@
 			<hr>
 
 			<div ng-controller="postCommentsCtrl" >
-				<div class = "blog-post" ng-repeat="commentary in commentaries">
-					<p class="blog-post-meta">{{commentary.creationDate}} by <a href="#">{{commentary.creator.username}}</a></p>
+				<div class = "blog-commentary" ng-repeat="commentary in commentaries">
+					<p class="blog-post-meta">{{commentary.creationDate | date :'dd/MM/yy @ H:mm'}} by <a href="#">{{commentary.creator.username}}</a></p>
 					<p>{{commentary.message}}</p>
 				</div>
 			</div>
@@ -42,12 +41,10 @@
 
 			<c:if test="${postModel.canAddCommentary}">
 				<form id="form" method="post" action="${postModel.urlAddCommentary}" >
-
 				  	<input cssClass="input-block-level"  placeholder="" autocomplete="off" name="title" />
 					<textarea name="message"></textarea>
 
 				  	<button type="submit" class="btn">Submit</button>
-
 				</form>
 			</c:if>
 			</div>

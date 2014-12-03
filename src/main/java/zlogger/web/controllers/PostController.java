@@ -12,8 +12,10 @@ import zlogger.logic.models.Wall;
 import zlogger.logic.services.CommentaryService;
 import zlogger.logic.services.PostService;
 import zlogger.logic.services.UserService;
-import zlogger.web.models.IndexModel;
+import zlogger.web.models.BlogModel;
 import zlogger.web.models.PostModel;
+
+import javax.ws.rs.core.MediaType;
 
 @Controller
 //@RequestMapping("/posts")
@@ -28,37 +30,32 @@ public class PostController {
     UserService userService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String displayHome() {
-        return "redirect:/list";
-    }
-
-    @RequestMapping("/list")
-    public ModelAndView getList(Authentication authentication) {
-        IndexModel model = new IndexModel();
+    public ModelAndView displayHome(Authentication authentication) {
+        BlogModel model = new BlogModel();
         if (authentication == null) {
-            model.setWelcome("Hello anonymous");
-            model.setPosts(postService.list());
+            model.setBlogName("Common blog");
+            model.setUrlLoadPost("/posts");
             model.setCanAddPost(false);
         } else {
             String userName = authentication.getName();
-            User user = new User(userName, null);
-            model.setWelcome("Hello " + userName);
-            Wall wall = userService.getWall(user);
-            model.setPosts(postService.listForWall(wall));
+            model.setBlogName(userName + "\'s blog");
+            model.setUrlLoadPost("/blog/" + userName + "/posts");
             model.setCanAddPost(true);
         }
         model.setUrlAddPost("/post/add");
-        return new ModelAndView("list", "indexModel", model);
+        return new ModelAndView("blog", "blogModel", model);
     }
 
-    @RequestMapping(value = "/post/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/post/add", method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON)
     @ResponseStatus(HttpStatus.CREATED)
-    public String addPost(@ModelAttribute Post post, Authentication authentication) {
-        User user = new User(authentication.getName(), null);
+    public String addPost(@RequestBody Post post, Authentication authentication) {
+        System.out.println("addPost " + post.getTitle() + " " + post.getMessage());
+        User user = userService.get(authentication.getName());
         Wall wall = userService.getWall(user);
         postService.add(post, wall, user);
 
-        return "forward:/list";
+        return "redirect:/";
     }
 
     @RequestMapping("/post/{id}")
@@ -72,7 +69,6 @@ public class PostController {
         } else {
             model.setCanAddCommentary(true);
         }
-        //todo implement
         model.setUrlAddCommentary("/post/" + postId + "/addcomment");
         return new ModelAndView("post", "postModel", model);
     }
