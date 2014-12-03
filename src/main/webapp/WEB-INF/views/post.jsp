@@ -33,7 +33,7 @@
         				</div>
 
 					<div ng-controller="postCommentsCtrl" >
-						<ul>
+						<ul class="commentariesList" >
 							<li ng-repeat="commentary in commentaries">
 								<small>{{commentary.creator.username}}</small>
 								{{commentary.message}}
