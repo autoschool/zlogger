@@ -41,7 +41,6 @@
 
 			<c:if test="${postModel.canAddCommentary}">
 				<form id="form" method="post" action="${postModel.urlAddCommentary}" >
-				  	<input cssClass="input-block-level"  placeholder="" autocomplete="off" name="title" />
 					<textarea name="message"></textarea>
 
 				  	<button type="submit" class="btn">Submit</button>
