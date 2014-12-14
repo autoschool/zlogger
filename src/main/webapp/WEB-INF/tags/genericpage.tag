@@ -18,10 +18,12 @@
         <!-- See http://twitter.github.com/bootstrap/scaffolding.html#responsive -->
         <link href="/css/bootstrap-responsive.min.css" rel="stylesheet" />
 
-		<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 		<!--[if lt IE 9]>
       		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     	<![endif]-->
+
+        <script src="/js/ie/ie-emulation-modes-warning.js"></script>
 
     	<!-- Fav and touch icons
 		<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/ico/apple-touch-icon-144-precomposed.png">
