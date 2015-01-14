@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import zlogger.logic.dao.PostDao;
+import zlogger.logic.models.PagedList;
 import zlogger.logic.models.Post;
 import zlogger.logic.models.User;
 import zlogger.logic.models.Wall;
@@ -27,6 +28,16 @@ public class PostServiceImpl implements PostService {
     @Transactional
     public List<Post> list() {
         return postDao.list();
+    }
+
+    @Override
+    public PagedList<Post> list(int pageNumber, int pageSize) {
+        return new PagedList(postDao.list(pageNumber, pageSize), postDao.countAll(), pageNumber, pageSize);
+    }
+
+    @Override
+    public Long countAll() {
+        return postDao.countAll();
     }
 
     private static final Logger LOGGER = Logger.getGlobal();

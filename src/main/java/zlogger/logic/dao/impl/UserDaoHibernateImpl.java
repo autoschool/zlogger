@@ -1,6 +1,8 @@
 package zlogger.logic.dao.impl;
 
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,6 +22,22 @@ public class UserDaoHibernateImpl implements UserDao {
     public List<User> list() {
         return sessionFactory.openSession()
                 .createCriteria(User.class).list();
+    }
+
+    @Override
+    public List<User> list(int pageNumber, int pageSize) {
+        Criteria criteria = sessionFactory.openSession().createCriteria(User.class);
+        criteria.setFirstResult((pageNumber - 1) * pageSize);
+        criteria.setMaxResults(pageSize);
+        return criteria.list();
+    }
+
+    @Override
+    public Long countAll() {
+        return (Long)sessionFactory.openSession()
+                .createCriteria(User.class)
+                .setProjection(Projections.rowCount())
+                .uniqueResult();
     }
 
     @Override

@@ -1,13 +1,14 @@
 package zlogger.web.models;
 
 
+import zlogger.logic.models.PagedList;
 import zlogger.logic.models.Post;
 
 import java.util.List;
 
 public class BlogModel {
 
-    private List<Post> posts;
+    private PagedList<Post> posts;
     private String blogName;
     private boolean canAddPost;
     private String urlAddPost;
@@ -22,10 +23,24 @@ public class BlogModel {
     }
 
     public List<Post> getPosts() {
-        return posts;
+        return posts.getItems();
     }
 
-    public void setPosts(List<Post> posts) {
+    public boolean getHasNextPage(){
+        return posts.hasNextPage();
+    }
+    public boolean getHasPreviousPage(){
+        return posts.hasPreviousPage();
+    }
+    public String getLinkNextPage(){
+        return "/?page="+Integer.toString(posts.getPageNumber()+1);
+    }
+    public String getLinkPreviousPage(){
+        return "/?page="+Integer.toString(posts.getPageNumber()-1);
+    }
+
+
+    public void setPosts(PagedList<Post> posts) {
         this.posts = posts;
     }
 

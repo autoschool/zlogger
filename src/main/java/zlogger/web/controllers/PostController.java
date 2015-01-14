@@ -6,6 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import zlogger.logic.models.PagedList;
 import zlogger.logic.models.Post;
 import zlogger.logic.models.User;
 import zlogger.logic.models.Wall;
@@ -16,6 +17,7 @@ import zlogger.web.models.BlogModel;
 import zlogger.web.models.PostModel;
 
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 @Controller
 //@RequestMapping("/posts")
@@ -29,8 +31,10 @@ public class PostController {
     @Autowired
     UserService userService;
 
+    final int pageSize = 2;
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ModelAndView displayHome(Authentication authentication) {
+    public ModelAndView displayHome(Authentication authentication, @RequestParam(value = "page", defaultValue = "1") int page) {
         BlogModel model = new BlogModel();
         if (authentication == null) {
             model.setBlogName("Common blog");
@@ -42,6 +46,8 @@ public class PostController {
             model.setUrlLoadPost("/blog/" + userName + "/posts");
             model.setCanAddPost(true);
         }
+        PagedList<Post> posts = postService.list(page, pageSize);
+        model.setPosts(posts);
         model.setUrlAddPost("/post/add");
         return new ModelAndView("blog", "blogModel", model);
     }

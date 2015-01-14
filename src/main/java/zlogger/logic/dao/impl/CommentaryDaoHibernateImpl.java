@@ -1,6 +1,8 @@
 package zlogger.logic.dao.impl;
 
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -21,6 +23,22 @@ public class CommentaryDaoHibernateImpl implements CommentaryDao {
     public List<Commentary> list() {
         return sessionFactory.openSession()
                 .createCriteria(Commentary.class).list();
+    }
+
+    @Override
+    public List<Commentary> list(int pageNumber, int pageSize) {
+        Criteria criteria = sessionFactory.openSession().createCriteria(Commentary.class);
+        criteria.setFirstResult((pageNumber - 1) * pageSize);
+        criteria.setMaxResults(pageSize);
+        return criteria.list();
+    }
+
+    @Override
+    public Long countAll() {
+        return (Long)sessionFactory.openSession()
+                .createCriteria(Commentary.class)
+                .setProjection(Projections.rowCount())
+                .uniqueResult();
     }
 
     @Override
