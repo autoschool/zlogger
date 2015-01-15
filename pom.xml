@@ -21,6 +21,12 @@
         <allure.version>1.4.4</allure.version>
         <aspectj.version>1.7.4</aspectj.version>
         <jstl.version>1.2</jstl.version>
+
+        <db.user>zlogger</db.user>
+        <db.password>zlogger</db.password>
+        <db.url>jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=TRUE</db.url>
+        <db.driver>org.h2.Driver</db.driver>
+
         <timestamp>${maven.build.timestamp}</timestamp>
         <maven.build.timestamp.format>dd/MM/yy H:mm</maven.build.timestamp.format>
     </properties>
@@ -28,7 +34,7 @@
 
 
     <build>
-        <finalName>${project.artifactId}-${project.version}-r${git.buildnumber}</finalName>
+        <finalName>${project.artifactId}-${project.version}-${git.buildnumber}</finalName>
 
         <resources>
             <resource>
@@ -74,7 +80,7 @@
                         <goals>
                             <goal>extract-buildnumber</goal>
                         </goals>
-                        <phase>prepare-package</phase>
+                        <phase>generate-resources</phase>
                     </execution>
                 </executions>
                 <configuration>
@@ -211,6 +217,12 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.34</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>3.1</version>
         </dependency>
 
         <!-- Jersey-Spring -->
