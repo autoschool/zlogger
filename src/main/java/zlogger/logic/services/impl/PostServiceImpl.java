@@ -21,6 +21,8 @@ import java.util.logging.Logger;
 @Service
 public class PostServiceImpl implements PostService {
 
+    private static final Logger LOGGER = Logger.getGlobal();
+
     @Autowired
     private PostDao postDao;
 
@@ -39,8 +41,6 @@ public class PostServiceImpl implements PostService {
     public Long countAll() {
         return postDao.countAll();
     }
-
-    private static final Logger LOGGER = Logger.getGlobal();
 
     @Override
     @Transactional

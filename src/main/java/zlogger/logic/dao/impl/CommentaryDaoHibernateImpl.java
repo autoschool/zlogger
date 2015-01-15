@@ -35,7 +35,7 @@ public class CommentaryDaoHibernateImpl implements CommentaryDao {
 
     @Override
     public Long countAll() {
-        return (Long)sessionFactory.openSession()
+        return (Long) sessionFactory.openSession()
                 .createCriteria(Commentary.class)
                 .setProjection(Projections.rowCount())
                 .uniqueResult();
@@ -43,7 +43,6 @@ public class CommentaryDaoHibernateImpl implements CommentaryDao {
 
     @Override
     public List<Commentary> listByPost(Post post) {
-        //todo add filter criteria
         return sessionFactory.openSession()
                 .createCriteria(Commentary.class)
                 .add(Restrictions.eq("post", post))
@@ -52,7 +51,6 @@ public class CommentaryDaoHibernateImpl implements CommentaryDao {
 
     @Override
     public List<Commentary> listForUser(User user) {
-        //todo add filter criteria
         return sessionFactory.openSession()
                 .createCriteria(Commentary.class)
                 .add(Restrictions.eq("creator", user))

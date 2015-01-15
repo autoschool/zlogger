@@ -21,7 +21,7 @@
 
 					<c:forEach items="${blogModel.posts}" var="post">
 						<div class="blog-post" >
-							<h2 class="blog-post-title"><a href="/post/{{post.id}}">${post.title}</a></h2>
+							<h2 class="blog-post-title"><a href="/post/${post.id}">${post.title}</a></h2>
 							<p class="blog-post-meta">${post.creationDate} by <a href="#">${post.creator.username}</a></p>
 							<p>${post.message}</p>
 						</div>
@@ -45,17 +45,13 @@
 			</div>
 
 			<c:if test="${blogModel.canAddPost}">
-			<div ng-controller="postsFormCtrl">
-				<form novalidate>
-					<input type="text" ng-model="post.title"/><br/>
-					<textarea ng-model="post.message"></textarea>
+				<form id="form" method="post" action="${blogModel.urlAddPost}" >
+					<input type="text" name="title" placeholder="Title"></text>
+					<textarea name="message" placeholder="Message"></textarea>
 
-					<button ng-click="send(post)">Submit</button>
+					<button type="submit" class="btn">Submit</button>
 				</form>
-			</div>
 			</c:if>
-
-
 
 		</div>
 

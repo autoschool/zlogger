@@ -1,7 +1,7 @@
 package zlogger.logic.dao.impl;
 
-import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,21 +21,24 @@ public class PostDaoHibernateImpl implements PostDao {
 
     @Override
     public List<Post> list() {
-        Criteria criteria = sessionFactory.openSession().createCriteria(Post.class);
-        return criteria.list();
+        return sessionFactory.openSession()
+                .createCriteria(Post.class)
+                .list();
     }
 
     @Override
     public List<Post> list(int pageNumber, int pageSize) {
-        Criteria criteria = sessionFactory.openSession().createCriteria(Post.class);
-        criteria.setFirstResult((pageNumber - 1) * pageSize);
-        criteria.setMaxResults(pageSize);
-        return criteria.list();
+        return sessionFactory.openSession()
+                .createCriteria(Post.class)
+                .setFirstResult((pageNumber - 1) * pageSize)
+                .setMaxResults(pageSize)
+                .addOrder(Order.desc("creationDate"))
+                .list();
     }
 
     @Override
     public Long countAll() {
-        return (Long)sessionFactory.openSession()
+        return (Long) sessionFactory.openSession()
                 .createCriteria(Post.class)
                 .setProjection(Projections.rowCount())
                 .uniqueResult();

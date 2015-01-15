@@ -16,10 +16,9 @@ import java.util.logging.Logger;
 
 public class UserServiceImpl implements UserService {
 
+    private static final Logger LOGGER = Logger.getGlobal();
     @Autowired
     UserDao userDao;
-
-    private static final Logger LOGGER = Logger.getGlobal();
 
     @Override
     @Transactional
@@ -34,7 +33,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Long countAll() {
-        return  userDao.countAll();
+        return userDao.countAll();
     }
 
     @Override
