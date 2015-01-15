@@ -6,6 +6,10 @@ public interface GenericDao<K, E> {
 
     public List<E> list();
 
+    public List<E> list(int pageNumber, int pageSize);
+
+    public Long countAll();
+
     public E get(K key);
 
     public void delete(E entity);

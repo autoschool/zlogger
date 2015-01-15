@@ -10,29 +10,35 @@
     <jsp:attribute name="footer">
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.27/angular.min.js"></script>
 		<script src="/js/ng/app.js"></script>
-		<script>
-			   app.value("postsLoadUrl", "${blogModel.urlLoadPost}");
-			   app.value("postsAddUrl", "${blogModel.urlAddPost}");
-		</script>
 		<script src="/js/ng/controllers.js"></script>
     </jsp:attribute>
 	<jsp:body>
 
-        <div class="row" ng-app="myApp">
+        <div class="row" >
 
             <div class="col-sm-8 blog-main">
-				<div ng-controller="postsCtrl">
-					<div class="blog-post" ng-repeat="post in posts">
-						<h2 class="blog-post-title"><a href="/post/{{post.id}}">{{post.title}}</a></h2>
-						<p class="blog-post-meta">{{post.creationDate | date :'dd/MM/yy @ H:mm'}} by <a href="#">{{post.creator.username}}</a></p>
-						<p>{{post.message}}</p>
-					</div>
+				<div>
+
+					<c:forEach items="${blogModel.posts}" var="post">
+						<div class="blog-post" >
+							<h2 class="blog-post-title"><a href="/post/{{post.id}}">${post.title}</a></h2>
+							<p class="blog-post-meta">${post.creationDate} by <a href="#">${post.creator.username}</a></p>
+							<p>${post.message}</p>
+						</div>
+					</c:forEach>
+
+
 				</div>
 
 				<nav>
 					<ul class="pager">
-					  <li><a href="#">Previous</a></li>
-					  <li><a href="#">Next</a></li>
+						<c:if test="${blogModel.hasPreviousPage}">
+							<li><a href="${blogModel.linkPreviousPage}">Previous</a></li>
+						</c:if>
+						<c:if test="${blogModel.hasNextPage}">
+							<li><a href="${blogModel.linkNextPage}">Next</a></li>
+						</c:if>
+
 					</ul>
 				</nav>
 

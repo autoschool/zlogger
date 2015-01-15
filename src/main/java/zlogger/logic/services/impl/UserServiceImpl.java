@@ -4,6 +4,7 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import zlogger.logic.dao.UserDao;
+import zlogger.logic.models.PagedList;
 import zlogger.logic.models.User;
 import zlogger.logic.models.Wall;
 import zlogger.logic.services.UserService;
@@ -24,6 +25,16 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public List<User> list() {
         return userDao.list();
+    }
+
+    @Override
+    public PagedList<User> list(int pageNumber, int pageSize) {
+        return new PagedList(userDao.list(pageNumber, pageSize), userDao.countAll(), pageNumber, pageSize);
+    }
+
+    @Override
+    public Long countAll() {
+        return  userDao.countAll();
     }
 
     @Override

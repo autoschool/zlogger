@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import zlogger.logic.dao.CommentaryDao;
 import zlogger.logic.models.Commentary;
+import zlogger.logic.models.PagedList;
 import zlogger.logic.models.Post;
 import zlogger.logic.models.User;
 import zlogger.logic.services.CommentaryService;
@@ -24,6 +25,16 @@ public class CommentaryServiceImpl implements CommentaryService {
     @Transactional
     public List<Commentary> list() {
         return commentaryDao.list();
+    }
+
+    @Override
+    public PagedList<Commentary> list(int pageNumber, int pageSize) {
+        return new PagedList(commentaryDao.list(pageNumber, pageSize), commentaryDao.countAll(), pageNumber, pageSize);
+    }
+
+    @Override
+    public Long countAll() {
+        return commentaryDao.countAll();
     }
 
     private static final Logger LOGGER = Logger.getGlobal();

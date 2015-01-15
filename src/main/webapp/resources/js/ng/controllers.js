@@ -16,20 +16,6 @@ myAppControllers.controller('postCommentsCtrl', ['$scope', '$http','commentsLoad
         });
 }]);
 
-myAppControllers.controller('postsCtrl', ['$scope', '$http','postsLoadUrl', function ($scope, $http, postsLoadUrl) {
-    $scope.posts = [];
-
-    $http.get(postsLoadUrl)
-        .success(function (data) {
-            $scope.posts = data;
-        })
-        .error(function () {
-            alert("AJAX fail");
-        });
-
-
-}]);
-
 myAppControllers.controller('postsFormCtrl', ['$scope' , '$http', 'postsAddUrl', function($scope, $http, postsAddUrl) {
 
      $scope.send = function(data) {
