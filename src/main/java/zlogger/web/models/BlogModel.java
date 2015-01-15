@@ -14,34 +14,36 @@ public class BlogModel {
     private String urlAddPost;
     private String urlLoadPost;
 
-    public void setBlogName(String blogName) {
-        this.blogName = blogName;
-    }
-
     public String getBlogName() {
         return blogName;
+    }
+
+    public void setBlogName(String blogName) {
+        this.blogName = blogName;
     }
 
     public List<Post> getPosts() {
         return posts.getItems();
     }
 
-    public boolean getHasNextPage(){
-        return posts.hasNextPage();
-    }
-    public boolean getHasPreviousPage(){
-        return posts.hasPreviousPage();
-    }
-    public String getLinkNextPage(){
-        return "/?page="+Integer.toString(posts.getPageNumber()+1);
-    }
-    public String getLinkPreviousPage(){
-        return "/?page="+Integer.toString(posts.getPageNumber()-1);
-    }
-
-
     public void setPosts(PagedList<Post> posts) {
         this.posts = posts;
+    }
+
+    public boolean getHasNextPage() {
+        return posts.hasNextPage();
+    }
+
+    public boolean getHasPreviousPage() {
+        return posts.hasPreviousPage();
+    }
+
+    public String getLinkNextPage() {
+        return "/?page=" + Integer.toString(posts.getPageNumber() + 1);
+    }
+
+    public String getLinkPreviousPage() {
+        return "/?page=" + Integer.toString(posts.getPageNumber() - 1);
     }
 
     public boolean isCanAddPost() {

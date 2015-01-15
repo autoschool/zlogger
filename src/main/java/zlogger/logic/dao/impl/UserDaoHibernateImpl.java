@@ -34,7 +34,7 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public Long countAll() {
-        return (Long)sessionFactory.openSession()
+        return (Long) sessionFactory.openSession()
                 .createCriteria(User.class)
                 .setProjection(Projections.rowCount())
                 .uniqueResult();

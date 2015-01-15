@@ -18,6 +18,8 @@ import java.util.logging.Logger;
 
 public class CommentaryServiceImpl implements CommentaryService {
 
+    private static final Logger LOGGER = Logger.getGlobal();
+
     @Autowired
     private CommentaryDao commentaryDao;
 
@@ -36,8 +38,6 @@ public class CommentaryServiceImpl implements CommentaryService {
     public Long countAll() {
         return commentaryDao.countAll();
     }
-
-    private static final Logger LOGGER = Logger.getGlobal();
 
     @Override
     @Transactional

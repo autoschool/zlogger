@@ -35,13 +35,13 @@ public class CommentariesController {
         return commentaryService.listForPost(postService.get(postId));
     }
 
-    @RequestMapping(value = "/post/{id}/addcomment",  method = RequestMethod.POST)
-    public String addComment(@PathVariable("id") long postId, Authentication authentication, @RequestParam String message ){
+    @RequestMapping(value = "/post/{id}/addcomment", method = RequestMethod.POST)
+    public String addComment(@PathVariable("id") long postId, Authentication authentication, @RequestParam String message) {
         User user = userService.get(authentication.getName());
-        Post toPost =  postService.get(postId);
+        Post toPost = postService.get(postId);
         Commentary newCom = new Commentary();
         newCom.setMessage(message);
         commentaryService.add(newCom, toPost, user);
-        return "redirect:/post/"+postId;
+        return "redirect:/post/" + postId;
     }
 }

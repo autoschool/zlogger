@@ -15,17 +15,3 @@ myAppControllers.controller('postCommentsCtrl', ['$scope', '$http','commentsLoad
             alert("AJAX fail");
         });
 }]);
-
-myAppControllers.controller('postsFormCtrl', ['$scope' , '$http', 'postsAddUrl', function($scope, $http, postsAddUrl) {
-
-     $scope.send = function(data) {
-        $http.post(postsAddUrl, data)
-            .success(function(data) {
-                $scope.posts.push(data);
-            })
-            .error(function() {
-                alert("POST fail");
-            });
-     };
-
-}]);

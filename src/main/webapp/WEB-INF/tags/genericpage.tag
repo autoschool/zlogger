@@ -54,7 +54,7 @@
 
         <hr>
         <footer class="blog-footer">
-          <p>Version: <%=version %> Build date: <%=timestamp %></p>
+          <p><%=version %> Build date: <%=timestamp %></p>
           <p>
             <a href="#">Back to top</a>
           </p>
