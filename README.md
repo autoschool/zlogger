@@ -1,25 +1,9 @@
 ![](src/main/webapp/resources/img/zlogo-small-round-red.png)
 ========
 
-Blog project
+Blog platform project
 
-Spring MVC, AngularJS.
-
-<hr/>
-
-**Configure MySQL**
-
-    `server=localhost:3306`
-
-    `db_name=zlogger_db`
-
-    `user=zlogger`
-
-    `password=zlogger`
-
-Execute `\src\main\resources\database\zlogger_db.sql`
-
-
+Spring, AngularJS.
 
 <hr/>
 
@@ -38,10 +22,6 @@ or
 **Run all tests**
 
     `mvn clean verify`
-
-or
-
-    `mvn integration-test`
 
 Build test reports (allure)
 
