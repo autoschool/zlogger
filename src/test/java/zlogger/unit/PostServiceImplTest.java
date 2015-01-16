@@ -1,7 +1,6 @@
 package zlogger.unit;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -20,8 +19,6 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
 
 public class PostServiceImplTest {
 
@@ -56,17 +53,6 @@ public class PostServiceImplTest {
 
         //Then
         assertThat(testId, equalTo(newId));
-    }
-
-    @Test
-    @Ignore("Broken")
-    public void should_setDate_createPost() {
-        //Given
-        Post post = mock(Post.class);
-        //When
-        testingObject.add(post, testWall, testUser);
-        //Then
-        verify(post, times(1)).setCreationDate(any(Date.class));
     }
 
     @Test
