@@ -25,7 +25,7 @@
 
 				<div class="blog-post">
 					<h2 class="blog-post-title">${postModel.post.title}</h2>
-					<p class="blog-post-meta">${postModel.post.creationDate} by <a href="#">${postModel.post.creator.username}</a></p>
+					<p class="blog-post-meta">${postModel.post.getFormattedCreationDate()} by <a href="#">${postModel.post.creator.username}</a></p>
 					<p>${postModel.post.message}</p>
 				</div>
 

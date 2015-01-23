@@ -22,7 +22,7 @@
 					<c:forEach items="${blogModel.posts}" var="post">
 						<div class="blog-post" >
 							<h2 class="blog-post-title"><a href="/post/${post.id}">${post.title}</a></h2>
-							<p class="blog-post-meta">${post.creationDate} by <a href="#">${post.creator.username}</a></p>
+							<p class="blog-post-meta">${post.getFormattedCreationDate()} by <a href="#">${post.creator.username}</a></p>
 							<p>${post.message}</p>
 						</div>
 					</c:forEach>
