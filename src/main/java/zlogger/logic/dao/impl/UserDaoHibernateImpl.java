@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import zlogger.logic.dao.UserDao;
 import zlogger.logic.models.User;
+import zlogger.logic.models.UserDetails;
 import zlogger.logic.models.Wall;
 
 import java.util.List;
@@ -57,6 +58,9 @@ public class UserDaoHibernateImpl implements UserDao {
         Wall wall = new Wall();
         wall.setOwner(user);
         sessionFactory.getCurrentSession().save(wall);
+        UserDetails userDetails = new UserDetails();
+        userDetails.setUser(user);
+        sessionFactory.getCurrentSession().save(userDetails);
         return user.getUsername();
     }
 
@@ -71,6 +75,14 @@ public class UserDaoHibernateImpl implements UserDao {
         return (Wall) sessionFactory.openSession()
                 .createCriteria(Wall.class)
                 .add(Restrictions.eq("owner", owner))
+                .uniqueResult();
+    }
+
+    @Override
+    public UserDetails getUserDetails(User user) {
+        return (UserDetails) sessionFactory.openSession()
+                .createCriteria(UserDetails.class)
+                .add(Restrictions.eq("username", user))
                 .uniqueResult();
     }
 }
