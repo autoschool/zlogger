@@ -62,7 +62,6 @@ public class PostController {
     public ModelAndView showPost(@PathVariable("id") long postId, Authentication authentication) {
         PostModel model = new PostModel();
         model.setPost(postService.get(postId));
-        //model.setCommentaries(commentaryService.listCommentariesForPost(model.getPost())); load by ajax
         model.setUrlLoadCommentary("/post/" + postId + "/commentaries");
         if (authentication == null) {
             model.setCanAddCommentary(false);
