@@ -17,7 +17,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
-import java.util.Objects;
 
 @Controller
 public class RegistrationController {
@@ -43,7 +42,7 @@ public class RegistrationController {
         User user = new User(model.getUserName(),
                 passwordEncoder.encode(model.getPassword()));
         userService.add(user);
-        if (Objects.nonNull(model.getEmail())) {
+        if (model.getEmail() != null) {
             UserDetails details = userService.getUserDetails(user);
             details.setEmail(model.getEmail());
         }

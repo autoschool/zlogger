@@ -2,7 +2,6 @@ package zlogger.logic.models;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @MappedSuperclass
@@ -22,11 +21,6 @@ public abstract class AbstractPost implements Serializable {
     @ManyToOne
     @JoinColumn(name = "creator_name", nullable = false)
     protected User creator;
-
-    public String getFormattedCreationDate() {
-        SimpleDateFormat format = new SimpleDateFormat("dd MMMMM yyyy 'at' H:mm");
-        return format.format(creationDate);
-    }
 
     public Long getId() {
         return id;

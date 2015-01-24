@@ -3,9 +3,9 @@ package zlogger.web.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import zlogger.logic.models.PagedList;
@@ -18,9 +18,11 @@ import zlogger.logic.services.UserService;
 import zlogger.web.models.BlogModel;
 import zlogger.web.models.PostModel;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+
 @Controller
 public class PostController {
-    static final int pageSize = 2;
     @Autowired
     PostService postService;
     @Autowired
@@ -28,26 +30,41 @@ public class PostController {
     @Autowired
     UserService userService;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ModelAndView displayHome(Authentication authentication, @RequestParam(value = "page", defaultValue = "1") int page) {
+    @GET
+    @RequestMapping("/")
+    public ModelAndView displayHome(Authentication authentication,
+                                    @RequestParam(value = "page", defaultValue = "1") int page,
+                                    @CookieValue(value = "pageSize", defaultValue = "5") int pageSize) {
         BlogModel model = new BlogModel();
+        PagedList<Post> posts;
         if (authentication == null) {
             model.setBlogName("Zlogger");
-            model.setUrlLoadPost("/posts");
             model.setCanAddPost(false);
+            posts = postService.list(page, pageSize);
         } else {
             String userName = authentication.getName();
             model.setBlogName(userName + "\'s blog - Zlogger");
-            model.setUrlLoadPost("/blog/" + userName + "/posts");
             model.setCanAddPost(true);
+            posts = postService.list(userName, page, pageSize);
         }
-        PagedList<Post> posts = postService.list(page, pageSize);
         model.setPosts(posts);
-        model.setUrlAddPost("/addpost");
         return new ModelAndView("blog", "blogModel", model);
     }
 
-    @RequestMapping(value = "/addpost", method = RequestMethod.POST)
+    @GET
+    @RequestMapping("/common")
+    public ModelAndView displayAll(@RequestParam(value = "page", defaultValue = "1") int page,
+                                   @CookieValue(value = "pageSize", defaultValue = "5") int pageSize) {
+        BlogModel blogModel = new BlogModel();
+        PagedList<Post> posts = postService.list(page, pageSize);
+        blogModel.setBlogName("Zlogger");
+        blogModel.setCanAddPost(false);
+        blogModel.setPosts(posts);
+        return new ModelAndView("blog", "blogModel", blogModel);
+    }
+
+    @POST
+    @RequestMapping("/addpost")
     public String addPost(@RequestParam String title, @RequestParam String message,
                           Authentication authentication) {
         User user = userService.get(authentication.getName());
@@ -58,6 +75,7 @@ public class PostController {
         return "redirect:/";
     }
 
+    @GET
     @RequestMapping("/post/{id}")
     public ModelAndView showPost(@PathVariable("id") long postId, Authentication authentication) {
         PostModel model = new PostModel();

@@ -8,7 +8,11 @@ public interface UserService extends GenericService<User, String> {
 
     public Wall getWall(User owner);
 
+    public Wall getWall(String username);
+
     public UserDetails getUserDetails(User user);
+
+    public UserDetails getUserDetails(String username);
 
     public boolean exists(String name);
 

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import zlogger.logic.dao.PostDao;
 import zlogger.logic.models.Post;
-import zlogger.logic.models.User;
 import zlogger.logic.models.Wall;
 
 import java.util.List;
@@ -53,11 +52,23 @@ public class PostDaoHibernateImpl implements PostDao {
     }
 
     @Override
-    public List<Post> listForUser(User user) {
+    public List<Post> listForWall(Wall wall, int pageNumber, int pageSize) {
         return sessionFactory.openSession()
                 .createCriteria(Post.class)
-                .add(Restrictions.eq("creator", user))
+                .setFirstResult((pageNumber - 1) * pageSize)
+                .setMaxResults(pageSize)
+                .add(Restrictions.eq("wall", wall))
+                .addOrder(Order.desc("creationDate"))
                 .list();
+    }
+
+    @Override
+    public long countForWall(Wall wall) {
+        return (Long) sessionFactory.openSession()
+                .createCriteria(Post.class)
+                .add(Restrictions.eq("wall", wall))
+                .setProjection(Projections.rowCount())
+                .uniqueResult();
     }
 
     @Override

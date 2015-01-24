@@ -8,7 +8,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import zlogger.BasicTest;
 import zlogger.logic.models.Post;
 import zlogger.logic.models.User;
-import zlogger.logic.models.Wall;
 import zlogger.logic.services.PostService;
 
 import java.util.List;
@@ -26,15 +25,7 @@ public class PostServiceTest extends BasicTest {
     @Test
     public void shouldGetPostsForUser() {
         User testUser = getUser();
-        List<Post> posts = postService.listForUser(testUser);
-
-        assertThat(posts, notNullValue());
-    }
-
-    @Test
-    public void shouldGetPostsForWall() {
-        Wall testWall = getWall();
-        List<Post> posts = postService.listForWall(testWall);
+        List<Post> posts = postService.list(testUser);
 
         assertThat(posts, notNullValue());
     }

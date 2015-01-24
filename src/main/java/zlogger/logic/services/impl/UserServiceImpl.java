@@ -92,6 +92,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Wall getWall(String username) {
+        User user = new User(username, null);
+        return getWall(user);
+    }
+
+    @Override
     public UserDetails getUserDetails(User user) {
         Objects.requireNonNull(user, "Can't get details of null user");
         Objects.requireNonNull(user.getUsername(), "Can't get details of user with null username");
@@ -99,7 +105,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDetails getUserDetails(String username) {
+        User user = new User(username, null);
+        return getUserDetails(user);
+    }
+
+    @Override
     public boolean exists(String name) {
-        return Objects.nonNull(userDao.get(name));
+        return userDao.get(name) != null;
     }
 }

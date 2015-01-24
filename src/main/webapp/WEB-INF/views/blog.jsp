@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
 <t:genericpage>
@@ -12,7 +13,7 @@
     <jsp:attribute name="title">${blogModel.blogName}</jsp:attribute>
 	<jsp:body>
 
-        <div class="row" >
+        <div class="row" ng-app="zlogger">
 
             <div class="col-sm-8 blog-main">
 				<div>
@@ -20,7 +21,9 @@
 					<c:forEach items="${blogModel.posts}" var="post">
 						<div class="blog-post" >
 							<h2 class="blog-post-title"><a href="/post/${post.id}">${post.title}</a></h2>
-							<p class="blog-post-meta">${post.getFormattedCreationDate()} by <a href="#">${post.creator.username}</a></p>
+							<p class="blog-post-meta">
+								<fmt:formatDate type = "both" dateStyle="short" timeStyle="short" value="${post.creationDate}"/> by <a href="/blog/${post.creator.username}">${post.creator.username}</a>
+							</p>
 							<p>${post.message}</p>
 						</div>
 					</c:forEach>
@@ -43,7 +46,7 @@
 			</div>
 
 			<c:if test="${blogModel.canAddPost}">
-				<form id="form" method="post" action="${blogModel.urlAddPost}" >
+				<form id="form" method="post" action="/addpost" >
 					<input type="text" name="title" placeholder="Title"></text>
 					<textarea name="message" placeholder="Message"></textarea>
 

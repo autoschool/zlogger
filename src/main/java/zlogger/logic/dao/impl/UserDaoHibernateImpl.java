@@ -89,7 +89,7 @@ public class UserDaoHibernateImpl implements UserDao {
     public UserDetails getUserDetails(User user) {
         return (UserDetails) sessionFactory.openSession()
                 .createCriteria(UserDetails.class)
-                .add(Restrictions.eq("username", user))
+                .add(Restrictions.eq("user", user))
                 .uniqueResult();
     }
 }

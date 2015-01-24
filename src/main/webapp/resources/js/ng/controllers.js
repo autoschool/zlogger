@@ -10,9 +10,6 @@ zloggerControllers.controller('postCommentsCtrl', ['$scope', '$http','commentsLo
     $http.get(commentsLoadUrl)
         .success(function (data) {
             $scope.commentaries = data;
-        })
-        .error(function () {
-            alert("AJAX fail");
         });
 }]);
 
@@ -39,7 +36,7 @@ zloggerControllers.controller('registrationController', ['$http', '$window', fun
                 }
                 });
         } else {
-            model.message = "Not all required fields are valid";
+            model.message = "Not all fields are valid";
         }
     };
 }]);
