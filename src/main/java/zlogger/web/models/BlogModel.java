@@ -11,8 +11,6 @@ public class BlogModel {
     private PagedList<Post> posts;
     private String blogName;
     private boolean canAddPost;
-    private String urlAddPost;
-    private String urlLoadPost;
 
     public String getBlogName() {
         return blogName;
@@ -54,19 +52,4 @@ public class BlogModel {
         this.canAddPost = canAddPost;
     }
 
-    public String getUrlAddPost() {
-        return urlAddPost;
-    }
-
-    public void setUrlAddPost(String urlAddPost) {
-        this.urlAddPost = urlAddPost;
-    }
-
-    public String getUrlLoadPost() {
-        return urlLoadPost;
-    }
-
-    public void setUrlLoadPost(String urlLoadPost) {
-        this.urlLoadPost = urlLoadPost;
-    }
 }

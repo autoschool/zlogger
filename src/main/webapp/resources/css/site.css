@@ -5,3 +5,8 @@
     background-position: left top;
     background-repeat:no-repeat;
 }
+
+.ng-invalid {
+    border-color: red;
+    outline-color: red;
+}

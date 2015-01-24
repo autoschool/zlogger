@@ -1,0 +1,1 @@
+ALTER TABLE `users` MODIFY COLUMN `password` char(60) NOT NULL;

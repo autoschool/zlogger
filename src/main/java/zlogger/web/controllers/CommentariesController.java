@@ -12,6 +12,8 @@ import zlogger.logic.services.CommentaryService;
 import zlogger.logic.services.PostService;
 import zlogger.logic.services.UserService;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
@@ -19,23 +21,22 @@ import java.util.List;
 public class CommentariesController {
     @Autowired
     PostService postService;
-
     @Autowired
     CommentaryService commentaryService;
-
     @Autowired
     UserService userService;
 
-    @RequestMapping(value = "/post/{id}/commentaries",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON)
+    @GET
+    @RequestMapping("/post/{id}/commentaries")
+    @Produces(MediaType.APPLICATION_JSON)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<Commentary> showPost(@PathVariable("id") long postId) {
         return commentaryService.listForPost(postService.get(postId));
     }
 
-    @RequestMapping(value = "/post/{id}/addcomment", method = RequestMethod.POST)
+    @GET
+    @RequestMapping("/post/{id}/addcomment")
     public String addComment(@PathVariable("id") long postId, Authentication authentication, @RequestParam String message) {
         User user = userService.get(authentication.getName());
         Post toPost = postService.get(postId);

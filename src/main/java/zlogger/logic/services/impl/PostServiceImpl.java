@@ -10,6 +10,7 @@ import zlogger.logic.models.Post;
 import zlogger.logic.models.User;
 import zlogger.logic.models.Wall;
 import zlogger.logic.services.PostService;
+import zlogger.logic.services.UserService;
 
 import java.util.Date;
 import java.util.List;
@@ -25,6 +26,9 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     private PostDao postDao;
+
+    @Autowired
+    private UserService userService;
 
     @Override
     @Transactional
@@ -44,23 +48,30 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public List<Post> listForWall(Wall wall) {
-        Objects.requireNonNull(wall, "Can't get posts for null wall");
-        Objects.requireNonNull(wall.getWallId(),
-                "Can't get posts for wall with null wall_id");
+    public List<Post> list(User user) {
+        Objects.requireNonNull(user, "Can't get posts for null user");
+        Objects.requireNonNull(user.getUsername(),
+                "Can't get posts for user with null username");
+        Wall wall = userService.getWall(user);
 
         return postDao.listForWall(wall);
     }
 
     @Override
-    @Transactional
-    public List<Post> listForUser(User user) {
-        Objects.requireNonNull(user, "Can't get posts for null user");
-        Objects.requireNonNull(user.getUsername(),
-                "Can't get posts for user with null username");
-
-        return postDao.listForUser(user);
+    public List<Post> list(String username) {
+        User user = new User(username, null);
+        return list(user);
     }
+
+    @Override
+    public PagedList<Post> list(String username, int page, int pageSize) {
+        Objects.requireNonNull(username,
+                "Can't get posts for user with null username");
+        User user = new User(username, null);
+        Wall wall = userService.getWall(user);
+        return new PagedList<>(postDao.listForWall(wall), postDao.countForWall(wall), page, pageSize);
+    }
+
 
     @Override
     @Transactional

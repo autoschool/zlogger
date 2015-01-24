@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import zlogger.logic.dao.UserDao;
 import zlogger.logic.models.PagedList;
 import zlogger.logic.models.User;
+import zlogger.logic.models.UserDetails;
 import zlogger.logic.models.Wall;
 import zlogger.logic.services.UserService;
 
@@ -88,5 +89,29 @@ public class UserServiceImpl implements UserService {
         Objects.requireNonNull(owner, "Can't get wall of null user");
         Objects.requireNonNull(owner.getUsername(), "Can't get wall of user with null username");
         return userDao.getWall(owner);
+    }
+
+    @Override
+    public Wall getWall(String username) {
+        User user = new User(username, null);
+        return getWall(user);
+    }
+
+    @Override
+    public UserDetails getUserDetails(User user) {
+        Objects.requireNonNull(user, "Can't get details of null user");
+        Objects.requireNonNull(user.getUsername(), "Can't get details of user with null username");
+        return userDao.getUserDetails(user);
+    }
+
+    @Override
+    public UserDetails getUserDetails(String username) {
+        User user = new User(username, null);
+        return getUserDetails(user);
+    }
+
+    @Override
+    public boolean exists(String name) {
+        return userDao.get(name) != null;
     }
 }
