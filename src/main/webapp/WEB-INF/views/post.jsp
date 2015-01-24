@@ -5,21 +5,18 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
 <t:genericpage>
-    <jsp:attribute name="header">
-    </jsp:attribute>
+    <jsp:attribute name="header"></jsp:attribute>
     <jsp:attribute name="footer">
-    	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.27/angular.min.js"></script>
-		<script src="/js/ng/app.js"></script>
 		<script>
 			   app.value("commentsLoadUrl", "${postModel.urlLoadCommentary}");
 		</script>
-		<script src="/js/ng/controllers.js"></script>
     </jsp:attribute>
+    <jsp:attribute name="title">${postModel.post.title} - Zlogger</jsp:attribute>
     <jsp:body>
 
 
 
-		<div class="row" ng-app="myApp">
+		<div class="row" ng-app="zlogger">
 			
 			<div class="col-sm-8 blog-main">
 

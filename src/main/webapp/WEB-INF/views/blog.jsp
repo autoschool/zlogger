@@ -8,10 +8,8 @@
     <jsp:attribute name="header">
     </jsp:attribute>
     <jsp:attribute name="footer">
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.27/angular.min.js"></script>
-		<script src="/js/ng/app.js"></script>
-		<script src="/js/ng/controllers.js"></script>
     </jsp:attribute>
+    <jsp:attribute name="title">${blogModel.blogName}</jsp:attribute>
 	<jsp:body>
 
         <div class="row" >

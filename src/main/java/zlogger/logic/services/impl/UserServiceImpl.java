@@ -97,4 +97,9 @@ public class UserServiceImpl implements UserService {
         Objects.requireNonNull(user.getUsername(), "Can't get details of user with null username");
         return userDao.getUserDetails(user);
     }
+
+    @Override
+    public boolean exists(String name) {
+        return Objects.nonNull(userDao.get(name));
+    }
 }

@@ -1,5 +1,6 @@
 package zlogger.web;
 
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -18,6 +19,11 @@ public class PostContollerTest {
     @Before
     public void setup() {
         driver.get(baseUrl);
+    }
+
+    @AfterClass
+    public void closeDriver() {
+        driver.close();
     }
 
     @Test

@@ -32,12 +32,12 @@ public class PostController {
     public ModelAndView displayHome(Authentication authentication, @RequestParam(value = "page", defaultValue = "1") int page) {
         BlogModel model = new BlogModel();
         if (authentication == null) {
-            model.setBlogName("Common blog");
+            model.setBlogName("Zlogger");
             model.setUrlLoadPost("/posts");
             model.setCanAddPost(false);
         } else {
             String userName = authentication.getName();
-            model.setBlogName(userName + "\'s blog");
+            model.setBlogName(userName + "\'s blog - Zlogger");
             model.setUrlLoadPost("/blog/" + userName + "/posts");
             model.setCanAddPost(true);
         }

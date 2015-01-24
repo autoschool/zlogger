@@ -7,6 +7,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import zlogger.logic.dao.UserDao;
+import zlogger.logic.models.Authority;
 import zlogger.logic.models.User;
 import zlogger.logic.models.UserDetails;
 import zlogger.logic.models.Wall;
@@ -44,7 +45,9 @@ public class UserDaoHibernateImpl implements UserDao {
     @Override
     public User get(String name) {
         return (User) sessionFactory.openSession()
-                .load(User.class, name);
+                .createCriteria(User.class)
+                .add(Restrictions.ilike("username", name))
+                .uniqueResult();
     }
 
     @Override
@@ -61,6 +64,10 @@ public class UserDaoHibernateImpl implements UserDao {
         UserDetails userDetails = new UserDetails();
         userDetails.setUser(user);
         sessionFactory.getCurrentSession().save(userDetails);
+        Authority authority = new Authority();
+        authority.setUsername(user);
+        authority.setRole("ROLE_USER");
+        sessionFactory.getCurrentSession().save(authority);
         return user.getUsername();
     }
 
