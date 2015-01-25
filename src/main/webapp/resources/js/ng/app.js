@@ -1,8 +1,8 @@
 'use strict';
 
-var app = angular.module('myApp', [
-  //'myApp.filters',
-  //'myApp.services',
-  //'myApp.directives',
-  'myApp.controllers'
+var app = angular.module('zlogger', [
+  'zlogger.directives',
+  'zlogger.controllers',
+  'zlogger.services',
+  'ui.tinymce'
 ]);

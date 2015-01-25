@@ -6,7 +6,7 @@ import zlogger.logic.models.User;
 
 import java.util.List;
 
-public interface CommentaryService extends CRUDService<Commentary, Long> {
+public interface CommentaryService extends GenericService<Commentary, Long> {
 
     public Long add(Commentary commentary, Post post, User user);
 

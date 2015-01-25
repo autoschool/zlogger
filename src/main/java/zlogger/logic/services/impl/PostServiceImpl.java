@@ -5,10 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import zlogger.logic.dao.PostDao;
+import zlogger.logic.models.PagedList;
 import zlogger.logic.models.Post;
 import zlogger.logic.models.User;
 import zlogger.logic.models.Wall;
 import zlogger.logic.services.PostService;
+import zlogger.logic.services.UserService;
 
 import java.util.Date;
 import java.util.List;
@@ -20,34 +22,57 @@ import java.util.logging.Logger;
 @Service
 public class PostServiceImpl implements PostService {
 
+    private static final Logger LOGGER = Logger.getGlobal();
+
     @Autowired
     private PostDao postDao;
+
+    @Autowired
+    private UserService userService;
 
     @Override
     @Transactional
     public List<Post> list() {
-        return postDao.getPosts();
+        return postDao.list();
+    }
+
+    @Override
+    public PagedList<Post> list(int pageNumber, int pageSize) {
+        return new PagedList(postDao.list(pageNumber, pageSize), postDao.countAll(), pageNumber, pageSize);
+    }
+
+    @Override
+    public Long countAll() {
+        return postDao.countAll();
     }
 
     @Override
     @Transactional
-    public List<Post> listForWall(Wall wall) {
-        Objects.requireNonNull(wall, "Can't get posts for null wall");
-        Objects.requireNonNull(wall.getWallId(),
-                "Can't get posts for wall with null wall_id");
-
-        return postDao.getPostsByWall(wall);
-    }
-
-    @Override
-    @Transactional
-    public List<Post> listForUser(User user) {
+    public List<Post> list(User user) {
         Objects.requireNonNull(user, "Can't get posts for null user");
         Objects.requireNonNull(user.getUsername(),
                 "Can't get posts for user with null username");
+        Wall wall = userService.getWall(user);
 
-        return postDao.getPostsByUser(user);
+        return postDao.listForWall(wall);
     }
+
+    @Override
+    public List<Post> list(String username) {
+        User user = new User(username, null);
+        return list(user);
+    }
+
+    @Override
+    public PagedList<Post> list(String username, int page, int pageSize) {
+        Objects.requireNonNull(username,
+                "Can't get posts for user with null username");
+        User user = new User(username, null);
+        Wall wall = userService.getWall(user);
+        return new PagedList<>(postDao.listForWall(wall, page, pageSize),
+                postDao.countForWall(wall), page, pageSize);
+    }
+
 
     @Override
     @Transactional
@@ -75,10 +100,9 @@ public class PostServiceImpl implements PostService {
 
         entity.setCreationDate(new Date());
         try {
-            return postDao.createPost(entity);
+            return postDao.create(entity);
         } catch (ConstraintViolationException e) {
-            Logger logger = Logger.getGlobal();
-            logger.log(Level.WARNING, "ConstraintViolationException: " + e);
+            LOGGER.log(Level.WARNING, e.toString());
             throw new IllegalArgumentException("Post is malformed or it's " +
                     "dependencies are not persistent. " +
                     "Violated constraint: " + e.getConstraintName()
@@ -91,7 +115,7 @@ public class PostServiceImpl implements PostService {
     public Post get(Long id) {
         Objects.requireNonNull(id, "Can't get post with null id");
 
-        return postDao.getPostById(id);
+        return postDao.get(id);
     }
 
     @Override
@@ -111,15 +135,15 @@ public class PostServiceImpl implements PostService {
         post.setCreationDate(oldPost.getCreationDate());
         post.setWall(oldPost.getWall());
         post.setCreator(oldPost.getCreator());
-        return postDao.updatePost(post);
+        return postDao.update(post);
     }
 
     @Override
     @Transactional
-    public void delete(Long id) {
-        Objects.requireNonNull(id, "Can't delete post with null id");
+    public void delete(Post post) {
+        Objects.requireNonNull(post, "Can't delete null post");
 
-        postDao.deletePostById(id);
+        postDao.delete(post);
     }
 
 }

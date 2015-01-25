@@ -1,19 +1,24 @@
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
+<beans xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:s="http://www.springframework.org/schema/security"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/security
+        http://www.springframework.org/schema/security/spring-security-3.2.xsd"
         >
 
     <import resource="classpath:applicationContext.xml"/>
     <context:component-scan base-package="zlogger.web.controllers"/>
 
+    <!-- Enables Method Security and Expression-based access control -->
+    <s:global-method-security pre-post-annotations="enabled"/>
 
     <mvc:annotation-driven/>
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -26,32 +31,12 @@
         </property>
     </bean>
 
-    <bean id="messageSource"
-          class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-        <property name="basename" value="classpath:messages/messages"/>
-        <property name="defaultEncoding" value="UTF-8"/>
-    </bean>
-
-    <bean id="localeChangeInterceptor"
-          class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
-        <property name="paramName" value="lang"/>
-    </bean>
-
-    <bean id="localeResolver"
-          class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
-        <property name="defaultLocale" value="en"/>
-    </bean>
-
-    <bean id="handlerMapping"
-          class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
-        <property name="interceptors">
-            <ref bean="localeChangeInterceptor"/>
-        </property>
-    </bean>
+    <bean class="org.springframework.web.multipart.support.StandardServletMultipartResolver" id="multipartResolver"/>
 
     <mvc:resources mapping="/css/**" location="resources/css/"/>
     <mvc:resources mapping="/img/**" location="resources/img/"/>
     <mvc:resources mapping="/js/**" location="resources/js/"/>
     <mvc:resources mapping="/ico/**" location="resources/ico/"/>
+    <mvc:resources mapping="/fonts/**" location="resources/fonts/"/>
 
 </beans>

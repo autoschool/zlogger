@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import zlogger.logic.dao.CommentaryDao;
 import zlogger.logic.models.Commentary;
+import zlogger.logic.models.PagedList;
 import zlogger.logic.models.Post;
 import zlogger.logic.models.User;
 import zlogger.logic.services.CommentaryService;
@@ -17,13 +18,25 @@ import java.util.logging.Logger;
 
 public class CommentaryServiceImpl implements CommentaryService {
 
+    private static final Logger LOGGER = Logger.getGlobal();
+
     @Autowired
     private CommentaryDao commentaryDao;
 
     @Override
     @Transactional
     public List<Commentary> list() {
-        return commentaryDao.getCommentaries();
+        return commentaryDao.list();
+    }
+
+    @Override
+    public PagedList<Commentary> list(int pageNumber, int pageSize) {
+        return new PagedList(commentaryDao.list(pageNumber, pageSize), commentaryDao.countAll(), pageNumber, pageSize);
+    }
+
+    @Override
+    public Long countAll() {
+        return commentaryDao.countAll();
     }
 
     @Override
@@ -33,7 +46,7 @@ public class CommentaryServiceImpl implements CommentaryService {
         Objects.requireNonNull(post.getId(),
                 "Can't get commentaries for post with null id");
 
-        return commentaryDao.getCommentariesByPost(post);
+        return commentaryDao.listByPost(post);
     }
 
     @Override
@@ -43,7 +56,7 @@ public class CommentaryServiceImpl implements CommentaryService {
         Objects.requireNonNull(user.getUsername(),
                 "Can't get commentaries for user with null username");
 
-        return commentaryDao.getCommentariesByUser(user);
+        return commentaryDao.listForUser(user);
     }
 
     @Override
@@ -71,10 +84,9 @@ public class CommentaryServiceImpl implements CommentaryService {
 
         entity.setCreationDate(new Date());
         try {
-            return commentaryDao.createCommentary(entity);
+            return commentaryDao.create(entity);
         } catch (ConstraintViolationException e) {
-            Logger logger = Logger.getGlobal();
-            logger.log(Level.WARNING, "ConstraintViolationException: ");
+            LOGGER.log(Level.WARNING, e.toString());
             throw new IllegalArgumentException("Commentary is malformed or it's " +
                     "dependencies are not persistent. " +
                     "Violated constraint: " + e.getConstraintName());
@@ -87,7 +99,7 @@ public class CommentaryServiceImpl implements CommentaryService {
     public Commentary get(Long id) {
         Objects.requireNonNull(id, "Can't get commentary with null id");
 
-        return commentaryDao.getCommentaryById(id);
+        return commentaryDao.get(id);
     }
 
     @Override
@@ -104,14 +116,14 @@ public class CommentaryServiceImpl implements CommentaryService {
         commentary.setCreationDate(oldCommentary.getCreationDate());
         commentary.setPost(oldCommentary.getPost());
         commentary.setCreator(oldCommentary.getCreator());
-        return commentaryDao.updateCommentary(commentary);
+        return commentaryDao.update(commentary);
     }
 
     @Override
     @Transactional
-    public void delete(Long id) {
-        Objects.requireNonNull(id, "Can't delete commentary with null id");
+    public void delete(Commentary commentary) {
+        Objects.requireNonNull(commentary, "Can't delete null commentary");
 
-        commentaryDao.deleteCommentaryById(id);
+        commentaryDao.delete(commentary);
     }
 }

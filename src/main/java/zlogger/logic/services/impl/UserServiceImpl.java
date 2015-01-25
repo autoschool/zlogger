@@ -4,7 +4,10 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import zlogger.logic.dao.UserDao;
+import zlogger.logic.models.PagedList;
 import zlogger.logic.models.User;
+import zlogger.logic.models.UserDetails;
+import zlogger.logic.models.Wall;
 import zlogger.logic.services.UserService;
 
 import java.util.List;
@@ -14,13 +17,24 @@ import java.util.logging.Logger;
 
 public class UserServiceImpl implements UserService {
 
+    private static final Logger LOGGER = Logger.getGlobal();
     @Autowired
     UserDao userDao;
 
     @Override
     @Transactional
     public List<User> list() {
-        return userDao.listUsers();
+        return userDao.list();
+    }
+
+    @Override
+    public PagedList<User> list(int pageNumber, int pageSize) {
+        return new PagedList(userDao.list(pageNumber, pageSize), userDao.countAll(), pageNumber, pageSize);
+    }
+
+    @Override
+    public Long countAll() {
+        return userDao.countAll();
     }
 
     @Override
@@ -28,10 +42,9 @@ public class UserServiceImpl implements UserService {
     public String add(User user) {
         Objects.requireNonNull(user, "Can't add null user");
         try {
-            return userDao.createUser(user);
+            return userDao.create(user);
         } catch (ConstraintViolationException e) {
-            Logger logger = Logger.getGlobal();
-            logger.log(Level.WARNING, "ConstraintViolationException: " + e);
+            LOGGER.log(Level.WARNING, e.toString());
             throw new IllegalArgumentException("User is malformed. " +
                     "Violated constraint: " + e.getConstraintName()
             );
@@ -42,7 +55,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User get(String name) {
         Objects.requireNonNull(name, "Can't get user with null username");
-        return userDao.getUserByName(name);
+        return userDao.get(name);
     }
 
     @Override
@@ -61,13 +74,50 @@ public class UserServiceImpl implements UserService {
             user.setEnabled(oldUser.getEnabled());
         }
         user.setUsername(oldUser.getUsername());
-        return userDao.updateUser(user);
+        return userDao.update(user);
     }
 
     @Override
     @Transactional
-    public void delete(String name) {
-        Objects.requireNonNull(name, "Can't delete user with null username");
-        userDao.deleteUserByName(name);
+    public void delete(User user) {
+        Objects.requireNonNull(user, "Can't delete null user");
+        userDao.delete(user);
+    }
+
+    @Override
+    public Wall getWall(User owner) {
+        Objects.requireNonNull(owner, "Can't get wall of null user");
+        Objects.requireNonNull(owner.getUsername(), "Can't get wall of user with null username");
+        return userDao.getWall(owner);
+    }
+
+    @Override
+    public Wall getWall(String username) {
+        User user = new User(username, null);
+        return getWall(user);
+    }
+
+    @Override
+    public UserDetails getUserDetails(User user) {
+        Objects.requireNonNull(user, "Can't get details of null user");
+        Objects.requireNonNull(user.getUsername(), "Can't get details of user with null username");
+        return userDao.getUserDetails(user);
+    }
+
+    @Override
+    public UserDetails getUserDetails(String username) {
+        User user = new User(username, null);
+        return getUserDetails(user);
+    }
+
+    @Override
+    @Transactional
+    public User updateUserDetails(UserDetails userDetails) {
+        return userDao.updateUserDetails(userDetails);
+    }
+
+    @Override
+    public boolean exists(String name) {
+        return userDao.get(name) != null;
     }
 }
