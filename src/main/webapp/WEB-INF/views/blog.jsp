@@ -7,7 +7,7 @@
 
 <t:genericpage>
     <jsp:attribute name="header">
-        <link href="css/blog.css" rel="stylesheet">
+        <link href="/css/blog.css" rel="stylesheet">
     </jsp:attribute>
     <jsp:attribute name="footer">
         <script>
