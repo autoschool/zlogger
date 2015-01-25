@@ -111,6 +111,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
+    public User updateUserDetails(UserDetails userDetails) {
+        return userDao.updateUserDetails(userDetails);
+    }
+
+    @Override
     public boolean exists(String name) {
         return userDao.get(name) != null;
     }

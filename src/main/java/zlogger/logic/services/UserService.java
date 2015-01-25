@@ -14,6 +14,8 @@ public interface UserService extends GenericService<User, String> {
 
     public UserDetails getUserDetails(String username);
 
+    public User updateUserDetails(UserDetails userDetails);
+
     public boolean exists(String name);
 
 }

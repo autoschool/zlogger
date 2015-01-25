@@ -99,10 +99,6 @@
                     <stopPort>9999</stopPort>
                     <stopWait>5</stopWait>
                     <scanIntervalSeconds>5</scanIntervalSeconds>
-                    <scanTargets>
-                        <scanTarget>${project.basedir}/src/main</scanTarget>
-                        <scanTarget>${project.basedir}/src/test</scanTarget>
-                    </scanTargets>
                 </configuration>
                 <executions>
                     <execution>
@@ -302,8 +298,8 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-acl</artifactId>
-            <version>${springsecurity.version}</version>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>3.2.5.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.codehaus.redback.components.cache</groupId>

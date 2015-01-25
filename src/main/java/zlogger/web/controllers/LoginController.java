@@ -1,41 +1,27 @@
 package zlogger.web.controllers;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Controller
 public class LoginController {
 
     @RequestMapping("login")
-    public ModelAndView getLoginForm(
+    @ResponseStatus(HttpStatus.OK)
+    public String getLoginForm(
             @RequestParam(required = false) String authfailed, String logout,
-            String denied) {
-        String message = "";
-        if (authfailed != null) {
-            message = "Invalid username of password, try again !";
-        } else if (logout != null) {
-            message = "Logged Out successfully, login again to continue !";
-        } else if (denied != null) {
-            message = "Access denied for this user !";
+            String denied, HttpServletResponse response) throws IOException {
+        if (authfailed != null || denied != null) {
+            response.sendError(HttpStatus.UNAUTHORIZED.value());
+            return "login";
         }
-        return new ModelAndView("login", "message", message);
-    }
-
-    @RequestMapping("user")
-    public String geUserPage() {
-        return "user";
-    }
-
-    @RequestMapping("admin")
-    public String geAdminPage() {
-        return "admin";
-    }
-
-    @RequestMapping("403page")
-    public String ge403denied() {
-        return "redirect:login?denied";
+        return "login";
     }
 
 }

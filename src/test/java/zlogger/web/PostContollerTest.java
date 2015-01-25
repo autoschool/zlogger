@@ -22,7 +22,7 @@ public class PostContollerTest {
 
     @Test
     public void shouldViewPosts() {
-        WebElement element = driver.findElement(By.className("blog-post-title"));
+        WebElement element = driver.findElement(By.className("post"));
         assertThat(element, notNullValue());
     }
 }

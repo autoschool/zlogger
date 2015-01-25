@@ -92,4 +92,10 @@ public class UserDaoHibernateImpl implements UserDao {
                 .add(Restrictions.eq("user", user))
                 .uniqueResult();
     }
+
+    @Override
+    public User updateUserDetails(UserDetails userDetails) {
+        sessionFactory.getCurrentSession().merge(userDetails);
+        return userDetails.getUser();
+    }
 }

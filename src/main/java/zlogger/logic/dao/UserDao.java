@@ -10,4 +10,6 @@ public interface UserDao extends GenericDao<String, User> {
 
     public UserDetails getUserDetails(User user);
 
+    public User updateUserDetails(UserDetails userDetails);
+
 }

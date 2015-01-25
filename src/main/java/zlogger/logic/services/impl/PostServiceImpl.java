@@ -69,7 +69,8 @@ public class PostServiceImpl implements PostService {
                 "Can't get posts for user with null username");
         User user = new User(username, null);
         Wall wall = userService.getWall(user);
-        return new PagedList<>(postDao.listForWall(wall), postDao.countForWall(wall), page, pageSize);
+        return new PagedList<>(postDao.listForWall(wall, page, pageSize),
+                postDao.countForWall(wall), page, pageSize);
     }
 
 

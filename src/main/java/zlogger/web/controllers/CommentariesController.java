@@ -12,9 +12,9 @@ import zlogger.logic.services.CommentaryService;
 import zlogger.logic.services.PostService;
 import zlogger.logic.services.UserService;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Produces;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.MediaType;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -26,23 +26,29 @@ public class CommentariesController {
     @Autowired
     UserService userService;
 
-    @GET
-    @RequestMapping("/post/{id}/commentaries")
-    @Produces(MediaType.APPLICATION_JSON)
+    @RequestMapping(value = "/post/{id}/commentaries",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<Commentary> showPost(@PathVariable("id") long postId) {
         return commentaryService.listForPost(postService.get(postId));
     }
 
-    @GET
-    @RequestMapping("/post/{id}/addcomment")
-    public String addComment(@PathVariable("id") long postId, Authentication authentication, @RequestParam String message) {
-        User user = userService.get(authentication.getName());
-        Post toPost = postService.get(postId);
-        Commentary newCom = new Commentary();
-        newCom.setMessage(message);
-        commentaryService.add(newCom, toPost, user);
-        return "redirect:/post/" + postId;
+    @RequestMapping(value = "/post/{id}/addcomment",
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON)
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addComment(@PathVariable("id") long postId,
+                           Authentication authentication,
+                           @RequestBody Commentary commentary,
+                           HttpServletResponse response) throws IOException {
+        if (authentication != null) {
+            User user = userService.get(authentication.getName());
+            Post toPost = postService.get(postId);
+            commentaryService.add(commentary, toPost, user);
+        } else {
+            response.sendError(HttpStatus.UNAUTHORIZED.value());
+        }
     }
 }
