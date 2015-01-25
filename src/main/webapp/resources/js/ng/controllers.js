@@ -1,6 +1,6 @@
 'use strict';
 
-var zloggerControllers = angular.module('zlogger.controllers', ["ngDialog"]);
+var zloggerControllers = angular.module('zlogger.controllers', []);
 
 /* Controllers */
 

@@ -95,8 +95,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.10/angular.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.10/angular-messages.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.3.7/js/ngDialog.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.3.7/css/ngDialog-theme-default.min.css"></script>
 <script src="/js/ng/app.js"></script>
 <script src="/js/ng/controllers.js"></script>
 <script src="/js/ng/services.js"></script>
