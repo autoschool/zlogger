@@ -13,8 +13,6 @@ import zlogger.logic.models.UserDetails;
 import zlogger.logic.services.UserService;
 import zlogger.web.models.RegistrationModel;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 
@@ -27,15 +25,17 @@ public class RegistrationController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    @RequestMapping("signup")
+    @RequestMapping(value = "/signup",
+            method = RequestMethod.GET)
     public String getRegistrationPage() {
         return "registration";
     }
 
-    @RequestMapping(value = "signup", method = RequestMethod.POST)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public ResponseEntity<String> registerNewUser(@RequestBody RegistrationModel model) throws IOException {
+    @RequestMapping(value = "/signup",
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON,
+            produces = MediaType.APPLICATION_JSON)
+    public ResponseEntity<User> registerNewUser(@RequestBody RegistrationModel model) throws IOException {
         if (userService.exists(model.getUserName())) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
@@ -46,7 +46,7 @@ public class RegistrationController {
             UserDetails details = userService.getUserDetails(user);
             details.setEmail(model.getEmail());
         }
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
 }

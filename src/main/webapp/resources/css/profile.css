@@ -1,0 +1,100 @@
+section > h2 {
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 30px;
+  font-weight: normal;
+  line-height: 1;
+  margin: auto;
+  padding: 24px;
+}
+.thematic-block {
+  margin: auto;
+  padding: 24px;
+  display: block;
+  font-size: 14px;
+  text-decoration: none;
+  text-align: center;
+}
+.thematic-block > div {
+  display: inline-block;
+}
+.thematic-block > div:nth-child(1) > form > div {
+  margin-top: 10px;
+  text-align: center;
+}
+.thematic-block > div:nth-child(1) > form > input[type="text"],
+.thematic-block > div:nth-child(1) > form input[type="password"],
+.thematic-block > div:nth-child(1) > form input[type="email"],
+.thematic-block > div:nth-child(1) > form input[type="url"],
+.thematic-block > div:nth-child(1) > form textarea {
+  font-size: 13px;
+  margin: 0px;
+  min-width: 220px;
+  outline: medium none;
+  padding: 6px;
+}
+.thematic-block > div:nth-child(1) > form > label {
+  font-weight: bold;
+  font-size: 20px;
+  display: block;
+  margin-bottom: 5px;
+}
+.thematic-block > div:nth-child(1) > img {
+  max-width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #e3e3e3;
+}
+.userpic-block {
+  width: 250px;
+  height: 250px;
+}
+.userpic-block > div:nth-child(1) > form > textarea {
+  overflow: hidden;
+  resize: none;
+}
+.userpic-block > div:nth-child(1) > form > div {
+  margin-top: 10px;
+  text-align: center;
+}
+.userpic-block > div:nth-child(1) > form > label {
+  font-weight: bold;
+  font-size: 20px;
+  display: block;
+  margin-bottom: 5px;
+}
+.glyphter {
+  text-transform: lowercase;
+  font-family: untitled-font-3;
+  vertical-align: middle;
+}
+button .glyphter {
+  font-size: 16px;
+}
+button[type="reset"] .icon {
+  width: 10px;
+  height: 10px;
+  transition: all 0.4s ease-in-out;
+}
+button[type="reset"]:hover .icon,
+button[type="reset"].hover .icon {
+  transform: rotate(360deg) scale(1.2);
+}
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}

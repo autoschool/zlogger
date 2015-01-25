@@ -3,6 +3,7 @@ package zlogger.web.models;
 
 import zlogger.logic.models.PagedList;
 import zlogger.logic.models.Post;
+import zlogger.logic.models.UserDetails;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ public class BlogModel {
     private PagedList<Post> posts;
     private String blogName;
     private boolean canAddPost;
+    private UserDetails owner;
 
     public String getBlogName() {
         return blogName;
@@ -51,5 +53,14 @@ public class BlogModel {
     public void setCanAddPost(boolean canAddPost) {
         this.canAddPost = canAddPost;
     }
+
+    public UserDetails getOwner() {
+        return owner;
+    }
+
+    public void setOwner(UserDetails owner) {
+        this.owner = owner;
+    }
+
 
 }

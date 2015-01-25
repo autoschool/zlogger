@@ -1,0 +1,19 @@
+.main-space {
+  text-align: center;
+  vertical-align: middle;
+}
+.main-space input[type="email"] {
+  margin-bottom: 10px;
+}
+.main-space .chkbx {
+  display: inline-block;
+}
+.main-space .checkbox-group {
+  margin: 10px auto;
+}
+.main-space .checkbox-group label {
+  font-weight: normal;
+}
+.form-signin-heading {
+  text-transform: uppercase;
+}

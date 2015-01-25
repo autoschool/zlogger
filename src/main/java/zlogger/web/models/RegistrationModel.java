@@ -10,7 +10,6 @@ public class RegistrationModel implements Serializable {
     private String email;
 
     public RegistrationModel() {
-
     }
 
     public String getUserName() {

@@ -1,6 +1,5 @@
 package zlogger.logic.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -17,7 +16,6 @@ public class UserDetails implements Serializable {
     private User user;
 
     @Column(name = "email")
-    @JsonIgnore
     private String email;
 
     @Column(name = "about")
