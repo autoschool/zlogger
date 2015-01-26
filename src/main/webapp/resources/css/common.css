@@ -243,6 +243,18 @@ footer {
   background: transparent;
   border: none;
 }
+.post-remove-img {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAABc0lEQVQ4T62UWStFYRSGn2MI/0f+gXshZEgoRVzJ8A8oLsxRMg8ZUi4MN/wuJxx66/u0znfW3mcX+/Jbaz9rfFeJf/5KhtcCrANvwG3BOMNABzAHfOifCGwDHoBO4BuYAvbrQGeAzcB4AbqAcgTuANMG8Ako+nUGdAw4ABqMfQ2Yj8Ah4DRxEHTQKX8UOEx8v4A+4N72UA8XQJOJKkdlcxbeVMW2aZWey0AP8Gh7GBledDVboNYwtMa81tgMo18vcJVk6rVSmXUDT9boAWUX9BJozhjKe4A9p/YsoPy0FlsZwHHgyLPlAZeA5QzgRJh0jTkLmAcTRNNXllq1qs8DLgIrBaTnQlPgJLCX7JnWRu9aG+1gujYSxU1MwAJngQ1naaVRaTVOP12pSij/xC72CHD8B+lJpv1WervhwsTM5VBVStJT7zisAguxZPXlHBgI2qxRgDMkq31NW0Eq3oF9Be4KTFkualV7OLCq6vfAFvy/vtsPxudQFWBRbvYAAAAASUVORK5CYII=) no-repeat;
+  width: 20px;
+  height: 20px;
+}
+.post-remove-button {
+  float: right;
+  width: 25px;
+  height: 25px;
+  background: transparent;
+  border: none;
+}
 .post .post-alone {
   padding-left: 0px;
 }
