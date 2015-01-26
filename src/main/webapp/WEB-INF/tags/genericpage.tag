@@ -19,6 +19,7 @@
 
         <title><jsp:invoke fragment="title"/></title>
 
+
         <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open Sans">
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
         <link href="/css/glyphter.css" rel="stylesheet">
@@ -27,6 +28,7 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.3.7/css/ngDialog-theme-default.min.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.3.7/css/ngDialog-theme-plain.min.css" rel="stylesheet">
 		<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+
 		<!--[if lt IE 9]>
       		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     	<![endif]-->
@@ -77,9 +79,11 @@
     </nav>
 </header>
 <main>
-    <div class="motto">
-         A certain blog platform's evil twin
-    </div>
+    <a href="index.html" class="motto-container">
+        <div class="motto">
+            A certain blog platform's evil twin
+        </div>
+    </a>
 	<section class="container">
 			<jsp:doBody/>
 	</section>
@@ -87,7 +91,8 @@
 <footer class="blog-footer">
     <p><%=version %> Build date: <%=timestamp %></p>
     <p>
-        <a href="#">Back to top</a>
+        <a class="underlined underlined-default" href="#">Back to top</a>
+
     </p>
 </footer>
 

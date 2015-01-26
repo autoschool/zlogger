@@ -9,10 +9,10 @@
   padding: 15px;
   border: 2px solid #28189d;
 }
-.leave-comment-comment-block {
+.leave-comment-block {
   text-align: center;
 }
-.leave-comment-comment-block label {
+.leave-comment-block label {
   width: 100%;
   text-align: left;
 }
@@ -40,6 +40,8 @@
   max-height: 64px;
   margin-top: 5px;
   margin-left: 5px;
+  overflow: hidden;
+  padding: 5px;
 }
 .comment-body {
   display: table-cell;
@@ -53,17 +55,16 @@
   text-decoration: none;
   letter-spacing: 1px;
   outline: none;
-  text-shadow: 2px 2px 5px #6251e4;
 }
 .comment-body > a:after {
   content: '';
   position: absolute;
-  top: 100%;
+  top: 90%;
   left: 0;
   width: 100%;
   height: 4px;
-  background: rgba(0, 0, 0, 0.5);
-  transform: translateY(10px);
+  background: #1e6fc5;
+  transform: translateY(7px);
   opacity: 0;
   transition: opacity 0.3s, transform 0.3s;
 }

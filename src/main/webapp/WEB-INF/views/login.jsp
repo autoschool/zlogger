@@ -30,8 +30,8 @@
                         </div>
                         <br>
                         <div class="form-group">
-                            <a href="/signup">Sign up</a>
-                            <input class="btn btn-lg btn-primary" type="submit" value="Sign in"/>
+                            <a class="underlined underlined-default" href="/signup">Sign up</a>
+                            <input type="submit" value="Sign in"/>
                         </div>
                         <h3 style="color : red">{{login.message}}</h3>
                     </form>
