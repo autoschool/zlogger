@@ -44,8 +44,8 @@ zloggerDirectives.directive('editable', function ($location, $anchorScroll) {
         restrict: 'A',
         link: function(scope, element, attrs) {
             element.find('button').bind('click', function() {
-                scope.post.message = element.find(".content").text().trim();
-                scope.post.title = element.find(".post-title").html().trim();
+                scope.post.message = element.find(".content").html().trim();
+                scope.post.title = element.find(".post-title").text().trim();
                 scope.edit = true;
                 scope.post.id = attrs['id'];
                 scope.buttonCaption = "Cancel";
@@ -79,9 +79,9 @@ zloggerDirectives.directive('edit', function($location) {
                     element.find(".add-post-block").toggle();
                     scope.buttonCaption = "Add post";
                     scope.labelCaption = "New post";
-                    scope.$apply();
                     $location.hash("");
                 };
+                scope.$apply();
             });
         }
     };
