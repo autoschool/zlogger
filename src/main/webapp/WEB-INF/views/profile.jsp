@@ -32,10 +32,11 @@
                         <div class="form-group">
                             <label>Userpic <span class="icon-device-camera"></span></label>
                             <input class="btn btn-default btn-file" type="file" name="userpic" file-model="myFile">
-                        </div>
+
                         <div class="divide">
                             <button type="submit" ng-click="uploadFile()">Upload <span class="icon-move-up"></span>
                             </button>
+                        </div>
                         </div>
                     </div>
                     <div class="thematic-block" ng-controller="detailsCtrl as ctrl">
