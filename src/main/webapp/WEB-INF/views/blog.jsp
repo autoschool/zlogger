@@ -10,18 +10,6 @@
         <link href="/css/blog.css" rel="stylesheet">
     </jsp:attribute>
     <jsp:attribute name="footer">
-        <script>
-            $(document).ready(function(){
-                $("#addPostButton").click(function() {
-                    if($("#addPostButton").text() === "Add post") {
-                        $("#addPostButton").text("Hide");
-                    } else {
-                        $("#addPostButton").text("Add post");
-                    }
-                    $(".add-post-block").toggle();
-                });
-            });
-        </script>
     </jsp:attribute>
     <jsp:attribute name="title">${blogModel.blogName}</jsp:attribute>
     <jsp:body>
@@ -57,22 +45,23 @@
         <c:if test="${!(blogModel.owner.user.username.length() > 0)}">
             <div class="col-sm-12">
         </c:if>
-            <div class="main-space">
+            <div class="main-space" ng-controller="blogCtrl as ctrl">
                 <c:if test="${blogModel.canAddPost}">
-                    <button class="btn btn-block btn-primary" id="addPostButton">Add post</button>
-                    <div class="add-post-block" ng-controller="blogCtrl as ctrl" hidden>
-                        <h2>New post</h2>
+                <div edit id="edit">
+                    <button class="btn btn-block btn-primary" id="addPostButton">{{buttonCaption}}</button>
+                    <div class="add-post-block" hidden>
+                        <h2>{{labelCaption}}</h2>
                         <form name="PostForm" novalidate ng-submit="ctrl.submit(PostForm.$valid)">
                             <div class="form-group">
                                 <label for="title">Title</label>
-                                <input class="form-control"  type="text" maxlength="255" name="title" ng-model="ctrl.post.title">
+                                <input class="form-control"  type="text" maxlength="255" name="title" ng-model="post.title">
                                 <div ng-messages="PostForm.title.$error">
                                     <div ng-message="maxlength">Please use less than 255 characters.</div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="message">Post content</label>
-                                <textarea ui-tinymce class="form-control" minlength="3" maxlength="2000" name="message" ng-model="ctrl.post.message" rows="8" required></textarea>
+                                <textarea ui-tinymce class="form-control" minlength="3" maxlength="2000" name="message" ng-model="post.message" rows="8" required></textarea>
                                 <div ng-messages="PostForm.message.$error">
                                     <div ng-message="required">You can't leave this empty.</div>
                                     <div ng-message="minlength">Please use between 3 and 2000 characters.</div>
@@ -84,14 +73,18 @@
                                     <input type="submit" value="Submit" class="btn btn-lg btn-primary"/>
                                 </div>
                             </div>
-                            <h3>{{ctrl.message}}</h3>
+                            <h3>{{message}}</h3>
                         </form>
                     </div>
                     <hr>
+                </div>
                 </c:if>
                 <c:forEach items="${blogModel.posts}" var="post">
-                    <article class="post">
-                        <h2><a href="/post/${post.id}">
+                    <article class="post" id="${post.id}" editable>
+                        <c:if test="${blogModel.canAddPost}">
+                            <button class="post-edit-button"><div class="post-edit-img"></div></button>
+                        </c:if>
+                        <h2><a href="/post/${post.id}" class="post-title">
                             <c:if test="${post.title == null || post.title.equals(\"\")}">No title</c:if>${post.title}
                         </a></h2>
                         <p class="post-date">
@@ -99,7 +92,9 @@
                             <fmt:formatDate type = "both" dateStyle="short" timeStyle="short" value="${post.creationDate}"/> by
                             <a class="post-owner" href="/blog/${post.creator.username}">${post.creator.username}</a></p>
                         <hr>
-                        <p class="content">${post.message}</p>
+                        <div class="content">
+                            ${post.message}
+                        </div>
                     </article>
                     <hr>
                 </c:forEach>

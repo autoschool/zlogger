@@ -55,12 +55,13 @@
                         </div>
                     </c:if>
                     <hr>
-                    <div class = "comment" ng-repeat="commentary in commentaries">
+                    <h4>Commentaries: {{commentaries.length}}</h4>
+                    <div class = "comment" ng-repeat="commentary in filteredComments">
                         <a class="comment-userpic-link" href="/blog/{{commentary.creator.username}}">
                             <div class="comment-userpic-block">
                                 <img class="comment-userpic"
                                      src="/img/{{commentary.creator.username}}.png"
-                                     onerror="this.src = '/img/Default.png';">
+                                     onerror="this.src = '/img/Default.png';"/>
                             </div>
                         </a>
                         <div class="comment-body">
@@ -73,6 +74,10 @@
                             </div>
                         </div>
                     </div>
+                    <pagination total-items="totalItems" ng-model="currentPage"
+                        max-size="maxSize" class="pagination-sm" items-per-page="numPerPage"
+                        boundary-links="true">
+                    </pagination>
                 </div>
             </div>
         </div>

@@ -11,8 +11,6 @@ public class PostModel {
     private Post post;
 
     private boolean canAddCommentary;
-    private String urlAddCommentary;
-    private String urlLoadCommentary;
 
     public List<Commentary> getCommentaries() {
         return commentaries;
@@ -36,21 +34,5 @@ public class PostModel {
 
     public void setPost(Post post) {
         this.post = post;
-    }
-
-    public String getUrlAddCommentary() {
-        return urlAddCommentary;
-    }
-
-    public void setUrlAddCommentary(String urlAddCommentary) {
-        this.urlAddCommentary = urlAddCommentary;
-    }
-
-    public String getUrlLoadCommentary() {
-        return urlLoadCommentary;
-    }
-
-    public void setUrlLoadCommentary(String urlLoadCommentary) {
-        this.urlLoadCommentary = urlLoadCommentary;
     }
 }

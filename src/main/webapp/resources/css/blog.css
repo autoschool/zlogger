@@ -14,8 +14,18 @@
 }
 .main-space .content {
   text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
+}
+.post-edit-img {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAABNklEQVQ4T63UPSuFYRgA4OsMBkqUvyDJJJuUjyKDjTCwko/kB1hsdsokiyQGksXGYDMxyCTKIBtFodBd7zm9nc43T73Te3c999P9kfHPJ1OD14JldOMdh9jBd1jVgg24xRf20YxpnGISP9WCEX+AXgzgBu24xBx2KwVbcYIpXGMvD91CE8YrAQM7wxVG8YklrOM5yXQGbRgpB6axMXxgHhtYwCD6kks2sVYKLIXNYhuNuMMLuvBaDKwEq8dx8tR+3Bdrm5qxQuCfsHzwz1ga/BcsDcboDOMIE4i+itbIVrNgAQrtgWyVz/GEqNYjOmvB0hkGGF/MaUxFtEAP6gq1RqkNlc4wwFV0JOhF0rgxUrk+K7fu0mDEBhon0HE8VIOln7yCobzb37CYnYBymWX/l1sOlTq5uF8sG2gVKD6COQAAAABJRU5ErkJggg==) no-repeat;
+  width: 20px;
+  height: 20px;
+}
+.post-edit-button {
+  float: right;
+  width: 20px;
+  height: 20px;
+  background: transparent;
+  border: none;
 }
 .post a {
   color: black;

@@ -2,6 +2,7 @@ package zlogger.web.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +17,7 @@ import zlogger.logic.services.UserService;
 import zlogger.web.models.BlogModel;
 import zlogger.web.models.PostModel;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.MediaType;
-import java.io.IOException;
 
 @Controller
 public class PostController {
@@ -63,20 +62,24 @@ public class PostController {
         return new ModelAndView("blog", "blogModel", blogModel);
     }
 
-    @RequestMapping(value = "/addpost",
+    @RequestMapping(value = "/user/addpost",
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON)
-    @ResponseStatus(HttpStatus.CREATED)
-    public void addPost(@RequestBody Post post,
-                        Authentication authentication,
-                        HttpServletResponse response) throws IOException {
-        if (authentication != null) {
-            User user = userService.get(authentication.getName());
-            Wall wall = userService.getWall(user);
-            postService.add(post, wall, user);
-        } else {
-            response.sendError(HttpStatus.UNAUTHORIZED.value());
-        }
+    public ResponseEntity<String> addPost(@RequestBody Post post,
+                                          Authentication authentication) {
+        User user = userService.get(authentication.getName());
+        Wall wall = userService.getWall(user);
+        postService.add(post, wall, user);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/user/editpost",
+            method = RequestMethod.PUT,
+            consumes = MediaType.APPLICATION_JSON)
+    @ResponseStatus(HttpStatus.OK)
+    public void editPost(@RequestBody Post post,
+                         Authentication authentication) {
+        postService.update(post);
     }
 
     @RequestMapping(value = "/post/{id}",
@@ -84,13 +87,11 @@ public class PostController {
     public ModelAndView showPost(@PathVariable("id") long postId, Authentication authentication) {
         PostModel model = new PostModel();
         model.setPost(postService.get(postId));
-        model.setUrlLoadCommentary("/post/" + postId + "/commentaries");
         if (authentication == null) {
             model.setCanAddCommentary(false);
         } else {
             model.setCanAddCommentary(true);
         }
-        model.setUrlAddCommentary("/post/" + postId + "/addcomment");
         return new ModelAndView("post", "postModel", model);
     }
 

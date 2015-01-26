@@ -21,6 +21,8 @@ body {
   line-height: 1.5;
   padding: 15px;
   border: 2px solid #28189d;
+  word-wrap: break-word;
+  white-space: normal;
 }
 .main-space h2 {
   text-transform: uppercase;

@@ -63,7 +63,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <button id="resetDetails" type="reset">Reset <img class="icon" src="/img/reset.png"></button>
+                            <button id="resetDetails" class="btn btn-md btn-default" ng-click="reset()">Reset</button>
                             <button type="submit">Submit <img class="icon" src="/img/submit.png"></button>
                         </div>
                         <h3>{{ctrl.message}}</h3>

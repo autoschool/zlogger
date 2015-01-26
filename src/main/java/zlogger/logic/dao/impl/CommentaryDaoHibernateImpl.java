@@ -2,6 +2,7 @@ package zlogger.logic.dao.impl;
 
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,7 @@ public class CommentaryDaoHibernateImpl implements CommentaryDao {
         return sessionFactory.openSession()
                 .createCriteria(Commentary.class)
                 .add(Restrictions.eq("post", post))
+                .addOrder(Order.desc("creationDate"))
                 .list();
     }
 
