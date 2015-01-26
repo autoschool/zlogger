@@ -79,7 +79,7 @@
     </nav>
 </header>
 <main>
-    <a href="index.html" class="motto-container">
+    <a href="/common" class="motto-container">
         <div class="motto">
             A certain blog platform's evil twin
         </div>
