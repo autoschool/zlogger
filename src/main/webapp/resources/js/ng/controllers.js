@@ -1,25 +1,36 @@
 'use strict';
 
-var zloggerControllers = angular.module('zlogger.controllers', []);
+var zloggerControllers = angular.module('zlogger.controllers', ['ui.bootstrap']);
 
 /* Controllers */
 
-zloggerControllers.controller('postCommentsCtrl', function ($scope, $http, $location, $interval, postId) {
+zloggerControllers.controller('postCommentsCtrl', function ($scope, $http, $location, $window, postId) {
     $scope.commentaries = [];
     var commentsLoadUrl = "/post/" + postId + "/commentaries";
-    var commentsAddUrl = "/post/" + postId + "/addcomment";
+    var commentsAddUrl = "/user/addcomment/" + postId;
 
-     $http.get(commentsLoadUrl)
-        .success(function (data) {
-            $scope.commentaries = data;
-     });
+    $http.get(commentsLoadUrl)
+       .success(function (data) {
+           $scope.commentaries = data;
+           $scope.filteredComments = [];
+           $scope.currentPage = 1;
+           $scope.numPerPage = 10;
+           $scope.maxSize = 5;
+           $scope.totalItems = $scope.commentaries.length;
+    });
+
+    $scope.$watch('currentPage + numPerPage', function() {
+        var begin = (($scope.currentPage - 1) * $scope.numPerPage)
+        , end = begin + $scope.numPerPage;
+        $scope.filteredComments = $scope.commentaries.slice(begin, end);
+    });
 
     var model = this;
 
     model.message = "";
 
     model.commentary = {
-        message: "",
+        message: ""
     };
 
     model.submit = function(isValid) {
@@ -57,10 +68,8 @@ zloggerControllers.controller('registrationController', ['$http', '$window', fun
                     model.message = "";
                     $window.location.href = "http://" + $window.location.host + "/login";
                 }).
-                error(function(status) {
-                if(status === 409) {
+                error(function() {
                     model.message = "This username is already taken. Please try another one.";
-                }
                 });
         } else {
             model.message = "Not all fields are valid";
@@ -95,30 +104,48 @@ zloggerControllers.controller('loginCtrl', function($http, $window) {
     };
 });
 
-zloggerControllers.controller('blogCtrl', function($http, $window) {
+zloggerControllers.controller('blogCtrl', function($http, $window, $scope) {
     var model = this;
 
-    model.message = "";
+    $scope.buttonCaption = "Add post";
+    $scope.labelCaption = "New post";
+    $scope.message = "";
+    $scope.edit = false;
 
-    model.post = {
+    $scope.post = {
+        id : "",
         title: "",
         message: ""
     };
 
      model.submit = function(isValid) {
         if(isValid) {
-            $http.post("/addpost", model.post).
-                success(function() {
-                    model.message = "";
-                    model.post.title = "";
-                    model.post.message = "";
-                    $window.location.reload();
-                }).
-                error(function() {
-                    model.message = "Saving post was unsuccessfull";
-                });
+            if(!$scope.edit) {
+                $http.post("/user/addpost", $scope.post)
+                    .success(function() {
+                        model.message = "";
+                        $scope.post.title = "";
+                        $scope.post.message = "";
+                        $window.location.reload();
+                    })
+                    .error(function() {
+                        $scope.message = "Saving post was unsuccessfull";
+                    });
+            } else {
+                $http.put("/user/editpost", $scope.post)
+                    .success(function() {
+                        model.message = "";
+                        $scope.post.title = "";
+                        $scope.post.message = "";
+                        $scope.post.id = "";
+                        $window.location.reload();
+                    })
+                    .error(function() {
+                        $scope.message = "Editing post was unsuccessfull";
+                    });
+            }
         } else {
-            model.message = "Message is invalid";
+            $scope.message = "Message is invalid";
         }
      };
 });
@@ -131,7 +158,7 @@ zloggerControllers.controller('avatarCtrl', ['$scope', 'fileUpload', function($s
   };
 }]);
 
-zloggerControllers.controller('detailsCtrl', function($http, $window, email, about, site) {
+zloggerControllers.controller('detailsCtrl', function($http, $window, $scope, email, about, site) {
     var model = this;
 
     model.message = "";
@@ -142,11 +169,18 @@ zloggerControllers.controller('detailsCtrl', function($http, $window, email, abo
         site: site
     };
 
+    model.saved = angular.copy(model.details);
+
+    $scope.reset = function() {
+        model.details = angular.copy(model.saved);
+    };
+
      model.submit = function(isValid) {
         if(isValid) {
-            $http.post("/user/changedetails", model.details).
+            $http.put("/user/changedetails", model.details).
                 success(function() {
                     model.message = "";
+                    model.saved = angular.copy(model.details);
                 }).
                 error(function() {
                     model.message = "Saving details was unsuccessfull.";
@@ -157,21 +191,27 @@ zloggerControllers.controller('detailsCtrl', function($http, $window, email, abo
      };
 });
 
-zloggerControllers.controller('changePasswordCtrl', function($http, $window) {
+zloggerControllers.controller('changePasswordCtrl', function($http) {
     var model = this;
 
     model.message = "";
+
+    model.password = {
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: ""
+    };
 
     model.submit = function(isValid) {
         if(isValid) {
             $http.post("/user/changepassword", model.password).
                 success(function() {
                     model.message = "";
-                    model.password.oldPassword = "";
+                    model.password.currentPassword = "";
                     model.password.newPassword = "";
                     model.password.confirmPassword = "";
                 }).
-                error(function(status) {
+                error(function() {
                     model.message = "Wrong current password.";
                 });
         } else {

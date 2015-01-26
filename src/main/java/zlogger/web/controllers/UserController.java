@@ -16,12 +16,10 @@ import zlogger.logic.services.AuthenticationService;
 import zlogger.logic.services.PostService;
 import zlogger.logic.services.UserService;
 import zlogger.web.models.BlogModel;
-import zlogger.web.models.Message;
 import zlogger.web.models.PasswordModel;
 import zlogger.web.models.UserModel;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.MediaType;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -71,43 +69,42 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/changedetails",
-            method = RequestMethod.POST,
+            method = RequestMethod.PUT,
             consumes = MediaType.APPLICATION_JSON)
-    public ModelAndView changeUserDetails(@RequestBody UserDetails details,
-                                          HttpServletResponse response,
+    @ResponseStatus(HttpStatus.OK)
+    public void changeUserDetails(@RequestBody UserDetails details,
                                           Authentication authentication) {
         details.setUser(new User(authentication.getName(), null));
         userService.updateUserDetails(details);
-        UserModel userModel = new UserModel();
-        userModel.setUsername(authentication.getName());
-        userModel.setDetails(userService.getUserDetails(authentication.getName()));
-        return new ModelAndView("profile", "userModel", userModel);
     }
 
     @RequestMapping(value = "/user/changepassword",
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON)
-    public void changePassword(@RequestBody PasswordModel passwordModel,
-                               HttpServletResponse response,
-                               Authentication authentication) throws IOException {
+    public ResponseEntity<String> changePassword(@RequestBody PasswordModel passwordModel,
+                                                 Authentication authentication) {
         User user = userService.get(authentication.getName());
-        String hashedPassword = passwordEncoder.encode(passwordModel.getOldPassword());
-        if (user.getPassword().equals(hashedPassword)) {
-            hashedPassword = passwordEncoder.encode(passwordModel.getNewPassword());
+        if (passwordModel.getNewPassword().length() < 8) {
+            return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+        }
+        if (passwordEncoder.matches(passwordModel.getCurrentPassword(), user.getPassword())) {
+            String hashedPassword = passwordEncoder.encode(passwordModel.getNewPassword());
             user.setPassword(hashedPassword);
             userService.update(user);
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            response.sendError(HttpStatus.UNAUTHORIZED.value());
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 
-    @RequestMapping(value = "/user/changeavatar", method = RequestMethod.POST)
-    public ResponseEntity<Message> changeUserAvatar(@RequestParam("file") MultipartFile avatar,
-                                                    HttpServletResponse response,
+    @RequestMapping(value = "/user/changeavatar",
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON)
+    public ResponseEntity<String> changeUserAvatar(@RequestParam("file") MultipartFile avatar,
                                                     HttpServletRequest request,
                                                     Authentication authentication) {
         if (!avatar.isEmpty()) {
-            if (avatar.getContentType().equals("image/png")) {
+            if ("image/png".equals(avatar.getContentType())) {
                 try {
                     byte[] bytes = avatar.getBytes();
                     String pathToImg = request.getServletContext().getRealPath("/resources/img");
@@ -117,16 +114,16 @@ public class UserController {
                                             pathToImg + "/" + authentication.getName() + ".png")));
                     stream.write(bytes);
                     stream.close();
-                    return new ResponseEntity<>(new Message("Successfully changed avatar"), HttpStatus.OK);
+                    return new ResponseEntity<>(HttpStatus.OK);
                 } catch (IOException e) {
                     LOGGER.log(Level.WARNING, "IO error when changing avatar", e);
-                    return new ResponseEntity<>(new Message("Error when saving on disk"), HttpStatus.BAD_REQUEST);
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
                 }
             } else {
-                return new ResponseEntity<>(new Message("Avatar must be .png file"), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
         } else {
-            return new ResponseEntity<>(new Message("Can't save empty file"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 

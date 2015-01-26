@@ -15,5 +15,5 @@ zloggerServices.service('fileUpload', ['$http', '$window', function ($http, $win
        })
        .error(function(){
        });
-   }
+   };
 }]);

@@ -2,15 +2,15 @@ package zlogger.web.models;
 
 import java.io.Serializable;
 
-public class Message implements Serializable {
+public class MessageModel implements Serializable {
 
     String message;
 
-    public Message(String message) {
+    public MessageModel(String message) {
         this.message = message;
     }
 
-    public Message() {
+    public MessageModel() {
     }
 
     public String getMessage() {
