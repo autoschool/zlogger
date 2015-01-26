@@ -45,7 +45,7 @@
         <c:if test="${!(blogModel.owner.user.username.length() > 0)}">
             <div class="col-sm-12">
         </c:if>
-            <div class="main-space" ng-controller="blogCtrl as ctrl">
+            <div class="main-space lower" ng-controller="blogCtrl as ctrl">
                 <c:if test="${blogModel.canAddPost}">
                 <div edit id="edit">
                     <button class="btn btn-block btn-primary" id="addPostButton">{{buttonCaption}}</button>
@@ -82,6 +82,7 @@
                 <c:forEach items="${blogModel.posts}" var="post">
                     <article class="post" id="${post.id}" editable>
                         <c:if test="${blogModel.canAddPost}">
+                            <button class="post-remove-button"><div class="post-remove-img"></div></button>
                             <button class="post-edit-button"><div class="post-edit-img"></div></button>
                         </c:if>
                         <h2><a href="/post/${post.id}" class="post-title underlined underlined-default">
