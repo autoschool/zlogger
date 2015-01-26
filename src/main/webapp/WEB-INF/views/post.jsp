@@ -22,7 +22,7 @@
             <div class="col-sm-8">
                 <div class="full-post-space" ng-controller="postCommentsCtrl as ctrl">
                     <article class="post">
-                        <h2>${postModel.post.title}</h2>
+                        <h2 class="post-alone">${postModel.post.title}</h2>
                         <p class="post-date">
                             <span class="glyphicon glyphicon-time"></span>
                             <fmt:formatDate type = "both" dateStyle="short" timeStyle="short" value="${postModel.post.creationDate}"/> by

@@ -2,7 +2,7 @@ section > h2 {
   text-transform: uppercase;
   text-align: center;
   font-size: 30px;
-  font-weight: normal;
+  font-weight: bold;
   line-height: 1;
   margin: auto;
   padding: 24px;
@@ -22,7 +22,7 @@ section > h2 {
   margin-top: 10px;
   text-align: center;
 }
-.thematic-block > div:nth-child(1) > form > input[type="text"],
+.thematic-block > div:nth-child(1) > form input[type="text"],
 .thematic-block > div:nth-child(1) > form input[type="password"],
 .thematic-block > div:nth-child(1) > form input[type="email"],
 .thematic-block > div:nth-child(1) > form input[type="url"],
@@ -75,15 +75,28 @@ button[type="reset"] .icon {
   height: 10px;
   transition: all 0.4s ease-in-out;
 }
-button[type="reset"]:hover .icon,
-button[type="reset"].hover .icon {
+button[type="reset"] .hover .icon {
   transform: rotate(360deg) scale(1.2);
+}
+button[type="reset"]:hover .icon {
+  transform: rotate(360deg) scale(1.2);
+}
+button[type="submit"] .icon {
+  width: 10px;
+  height: 10px;
+  transition: all 0.4s;
+}
+button[type="submit"] .hover .icon {
+  transform: scale(1.2);
+}
+button[type="submit"]:hover .icon {
+  transform: scale(1.2);
 }
 .btn-file {
   position: relative;
   overflow: hidden;
 }
-.btn-file input[type=file] {
+.btn-fileinput[type=file] {
   position: absolute;
   top: 0;
   right: 0;
@@ -97,4 +110,8 @@ button[type="reset"].hover .icon {
   background: white;
   cursor: inherit;
   display: block;
+}
+.divide {
+  margin-top: 10px;
+  text-align: center;
 }

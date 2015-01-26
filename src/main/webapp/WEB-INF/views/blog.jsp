@@ -84,17 +84,17 @@
                         <c:if test="${blogModel.canAddPost}">
                             <button class="post-edit-button"><div class="post-edit-img"></div></button>
                         </c:if>
-                        <h2><a href="/post/${post.id}" class="post-title">
+                        <h2><a href="/post/${post.id}" class="post-title underlined underlined-default">
                             <c:if test="${post.title == null || post.title.equals(\"\")}">No title</c:if>${post.title}
                         </a></h2>
                         <p class="post-date">
                             <span class="glyphicon glyphicon-time"></span>
                             <fmt:formatDate type = "both" dateStyle="short" timeStyle="short" value="${post.creationDate}"/> by
-                            <a class="post-owner" href="/blog/${post.creator.username}">${post.creator.username}</a></p>
+                            <a class="underlined post-owner" href="/blog/${post.creator.username}">${post.creator.username}</a></p>
                         <hr>
-                        <div class="content">
+                        <p class="content">
                             ${post.message}
-                        </div>
+                        </p>
                     </article>
                     <hr>
                 </c:forEach>
