@@ -79,9 +79,11 @@
     </nav>
 </header>
 <main>
-    <div class="motto">
-         A certain blog platform's evil twin
-    </div>
+    <a href="index.html" class="motto-container">
+        <div class="motto">
+            A certain blog platform's evil twin
+        </div>
+    </a>
 	<section class="container">
 			<jsp:doBody/>
 	</section>
@@ -89,7 +91,8 @@
 <footer class="blog-footer">
     <p><%=version %> Build date: <%=timestamp %></p>
     <p>
-        <a href="#">Back to top</a>
+        <a class="underlined underlined-default" href="#">Back to top</a>
+
     </p>
 </footer>
 
