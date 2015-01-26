@@ -1,5 +1,6 @@
-![](src/main/webapp/resources/img/zlogo-small-round-red.png)
+![](src/main/webapp/resources/img/newlogolight250.png)
 ========
+ZLOGGER
 
 Blog platform project
 
