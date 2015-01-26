@@ -93,9 +93,9 @@
                             <fmt:formatDate type = "both" dateStyle="short" timeStyle="short" value="${post.creationDate}"/> by
                             <a class="underlined post-owner" href="/blog/${post.creator.username}">${post.creator.username}</a></p>
                         <hr>
-                        <p class="content">
+                        <div class="content">
                             ${post.message}
-                        </p>
+                        </div>
                     </article>
                     <hr>
                 </c:forEach>
