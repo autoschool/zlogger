@@ -38,3 +38,51 @@ zloggerDirectives.directive('fileModel', ['$parse', function ($parse) {
         }
     };
 }]);
+
+zloggerDirectives.directive('editable', function ($location, $anchorScroll) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            element.find('button').bind('click', function() {
+                scope.post.message = element.find(".content").text().trim();
+                scope.post.title = element.find(".post-title").html().trim();
+                scope.edit = true;
+                scope.post.id = attrs['id'];
+                scope.buttonCaption = "Cancel";
+                scope.labelCaption = "Edit post"
+                scope.$apply();
+                element.parent().find(".add-post-block").show();
+                $location.hash("edit");
+                $anchorScroll();
+            });
+        }
+    };
+});
+
+zloggerDirectives.directive('edit', function($location) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            element.find("button").bind('click', function() {
+                if(!scope.edit) {
+                    element.find(".add-post-block").toggle();
+                    if(scope.buttonCaption === "Add post") {
+                        scope.buttonCaption = "Hide";
+                    } else {
+                        scope.buttonCaption = "Add post";
+                    };
+                } else {
+                    scope.edit = false;
+                    scope.post.message = "";
+                    scope.post.title = "";
+                    scope.id = "";
+                    element.find(".add-post-block").toggle();
+                    scope.buttonCaption = "Add post";
+                    scope.labelCaption = "New post";
+                    scope.$apply();
+                    $location.hash("");
+                };
+            });
+        }
+    };
+});
