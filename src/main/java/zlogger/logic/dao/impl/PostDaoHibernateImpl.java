@@ -74,7 +74,9 @@ public class PostDaoHibernateImpl implements PostDao {
     @Override
     public Post get(Long id) {
         return (Post) sessionFactory.openSession()
-                .load(Post.class, id);
+                .createCriteria(Post.class)
+                .add(Restrictions.eq("id", id))
+                .uniqueResult();
     }
 
     @Override

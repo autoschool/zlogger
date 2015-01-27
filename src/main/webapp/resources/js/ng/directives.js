@@ -23,7 +23,7 @@ zloggerDirectives.directive('compareTo',function () {
         };
 });
 
-zloggerDirectives.directive('fileModel', ['$parse', function ($parse) {
+zloggerDirectives.directive('fileModel', function ($parse) {
     return {
         restrict: 'A',
         link: function(scope, element, attrs) {
@@ -37,19 +37,22 @@ zloggerDirectives.directive('fileModel', ['$parse', function ($parse) {
             });
         }
     };
-}]);
+});
 
 zloggerDirectives.directive('editable', function ($location, $anchorScroll) {
     return {
         restrict: 'A',
         link: function(scope, element, attrs) {
-            element.find('button').bind('click', function() {
+            element.find('.post-edit-button').bind('click', function() {
                 scope.post.message = element.find(".post-content").html().trim();
                 scope.post.title = element.find(".post-title").text().trim();
+                if(scope.post.title === "No title") {
+                    scope.post.title = "";
+                }
                 scope.edit = true;
                 scope.post.id = attrs['id'];
                 scope.buttonCaption = "Cancel";
-                scope.labelCaption = "Edit post"
+                scope.labelCaption = "Edit post";
                 scope.$apply();
                 element.parent().find(".add-post-block").show();
                 $location.hash("edit");
@@ -62,8 +65,8 @@ zloggerDirectives.directive('editable', function ($location, $anchorScroll) {
 zloggerDirectives.directive('edit', function($location) {
     return {
         restrict: 'A',
-        link: function(scope, element, attrs) {
-            element.find("button").bind('click', function() {
+        link: function(scope, element) {
+            element.find(".add-post-button").bind('click', function() {
                 if(!scope.edit) {
                     element.find(".add-post-block").toggle();
                     if(scope.buttonCaption === "Add post") {

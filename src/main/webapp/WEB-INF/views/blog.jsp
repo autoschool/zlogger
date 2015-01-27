@@ -25,16 +25,16 @@
                         <c:if test="${blogModel.owner.about != null && !blogModel.owner.about.equals(\"\")}">
                             <p class="caption-link" info="About"
                                content="${blogModel.owner.about}">
-                               <img src="/img/${blogModel.owner.user.username}.png" onerror="this.src = '/img/Default.png';">
+                               <img src="/img/${blogModel.owner.user.username}.png" onerror="this.src = '/img/default.png';">
                             </p>
                         </c:if>
                         <c:if test="${blogModel.owner.about == null || blogModel.owner.about.equals(\"\")}">
-                            <img src="/img/${blogModel.owner.user.username}.png" onerror="this.src = '/img/Default.png';">
+                            <img src="/img/${blogModel.owner.user.username}.png" onerror="this.src = '/img/default.png';">
                         </c:if>
                     </section>
                     <c:if test="${blogModel.owner.site != null && !blogModel.owner.site.equals(\"\")}">
                         <div class="social-networks-link">
-                            <a href="${blogModel.owner.site}"><span class="icon-fontawesome-webfont"></span>
+                            <a href="${blogModel.owner.site}"><span class="glyphicon glyphicon-home"/>
                                 <span>Web-site</span></a>
                         </div>
                     </c:if>
@@ -48,7 +48,7 @@
             <div class="main-space lower" ng-controller="blogCtrl as ctrl">
                 <c:if test="${blogModel.canAddPost}">
                 <div edit id="edit">
-                    <button class="btn btn-block btn-primary" id="addPostButton">{{buttonCaption}}</button>
+                    <button class="add-post-button">{{buttonCaption}}</button>
                     <div class="add-post-block" hidden>
                         <h2>{{labelCaption}}</h2>
                         <form name="PostForm" novalidate ng-submit="ctrl.submit(PostForm.$valid)">
@@ -62,18 +62,26 @@
                             <div class="form-group">
                                 <label for="message">Post content</label>
                                 <textarea ui-tinymce class="form-control" minlength="3" maxlength="2000" name="message" ng-model="post.message" rows="8" required></textarea>
-                                <div ng-messages="PostForm.message.$error">
-                                    <div ng-message="required">You can't leave this empty.</div>
-                                    <div ng-message="minlength">Please use between 3 and 2000 characters.</div>
-                                    <div ng-message="maxlength">Please use between 3 and 2000 characters.</div>
+                                <div ng-messages="PostForm.message.$error" ng-show="!sent">
+                                    <div ng-message="required">You can't leave content empty.</div>
+                                    <div ng-message="minlength">Please use between 3 and 2000 characters (including html).</div>
+                                    <div ng-message="maxlength">Please use between 3 and 2000 characters (including html).</div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="add-post-buttons">
-                                    <input type="submit" value="Submit" class="btn btn-lg btn-primary"/>
+                                    <button type="submit" class="btn btn-lg btn-primary"
+                                        ng-disabled="!PostForm.$valid">
+                                        <div ng-show="sent">
+                                            Submitting... <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+                                        </div>
+                                        <div ng-show="!sent">
+                                            Submit
+                                        </div>
+                                    </button>
                                 </div>
                             </div>
-                            <h3>{{message}}</h3>
+                            <alert type="danger" ng-show="message">{{message}}</alert>
                         </form>
                     </div>
                     <hr>
@@ -82,11 +90,11 @@
                 <c:forEach items="${blogModel.posts}" var="post">
                     <article class="post" id="${post.id}" editable>
                         <c:if test="${blogModel.canAddPost}">
-                            <button class="post-remove-button"><div class="post-remove-img"></div></button>
-                            <button class="post-edit-button"><div class="post-edit-img"></div></button>
+                            <button class="post-remove-button" ng-click="ctrl.del(${post.id})"><span class="glyphicon glyphicon-trash"/></button>
+                            <button class="post-edit-button"><span class="glyphicon glyphicon-pencil"/></button>
                         </c:if>
-                        <h2><a href="/post/${post.id}" class="post-title underlined underlined-default">
-                            <c:if test="${post.title == null || post.title.equals(\"\")}">No title</c:if>${post.title}
+                        <h2><a href="/post/${post.id}" class="post-title underlined">
+                            <c:if test="${post.title.equals(\"\")}">No title</c:if>${post.title}
                         </a></h2>
                         <p class="post-date">
                             <span class="glyphicon glyphicon-time"></span>

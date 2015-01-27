@@ -11,6 +11,7 @@ import zlogger.logic.models.PagedList;
 import zlogger.logic.models.Post;
 import zlogger.logic.models.User;
 import zlogger.logic.models.Wall;
+import zlogger.logic.services.AuthenticationService;
 import zlogger.logic.services.CommentaryService;
 import zlogger.logic.services.PostService;
 import zlogger.logic.services.UserService;
@@ -27,6 +28,8 @@ public class PostController {
     CommentaryService commentaryService;
     @Autowired
     UserService userService;
+    @Autowired
+    AuthenticationService authenticationService;
 
     @RequestMapping(value = "/",
             method = RequestMethod.GET)
@@ -77,14 +80,31 @@ public class PostController {
             method = RequestMethod.PUT,
             consumes = MediaType.APPLICATION_JSON)
     @ResponseStatus(HttpStatus.OK)
-    public void editPost(@RequestBody Post post,
-                         Authentication authentication) {
+    public void editPost(@RequestBody Post post) {
         postService.update(post);
+    }
+
+    @RequestMapping(value = "/user/deletepost/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<String> deletePost(@PathVariable("id") long postId,
+                                             Authentication authentication) {
+        Post post = postService.get(postId);
+
+        if (post == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        if (!authenticationService.isCreator(authentication, post)) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        postService.delete(post);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(value = "/post/{id}",
             method = RequestMethod.GET)
-    public ModelAndView showPost(@PathVariable("id") long postId, Authentication authentication) {
+    public ModelAndView showPost(@PathVariable("id") long postId,
+                                 Authentication authentication) {
         PostModel model = new PostModel();
         model.setPost(postService.get(postId));
         if (authentication == null) {

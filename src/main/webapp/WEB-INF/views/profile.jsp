@@ -21,21 +21,28 @@
         <div class="row blog-row">
             <div class="col-sm-12">
                 <div class="main-space">
-                    <h2>Personal Information</h2>
+                    <h2 class="uppercase">Edit Personal Information</h2>
 
                     <div class="thematic-block">
                         <div class="userpic-block">
-                            <img src="/img/${userModel.username}.png" onerror="this.src = '/img/Default.png';"/>
+                            <img src="/img/${userModel.username}.png" onerror="this.src = '/img/default.png';"/>
                         </div>
                     </div>
                     <div class="thematic-block ng-scope" ng-controller="avatarCtrl as ctrl">
                         <div class="form-group">
-                            <label>Userpic <span class="icon-device-camera"></span></label>
+                            <label>Userpic <span class="glyphicon glyphicon-camera"/></label>
                             <input class="btn btn-default btn-file" type="file" name="userpic" file-model="myFile">
 
                         <div class="divide">
-                            <button type="submit" ng-click="uploadFile()">Upload <span class="icon-move-up"></span>
+                            <button type="submit" ng-click="uploadFile()">
+                                <div ng-show="sent">
+                                    Uploading... <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+                                </div>
+                                <div ng-show="!sent">
+                                    Upload <span class="glyphicon glyphicon-upload"/></span>
+                                </div>
                             </button>
+                            <alert type="danger" ng-show="message">{{message}}</alert>
                         </div>
                         </div>
                     </div>
@@ -43,14 +50,15 @@
                         <form name="DetailsForm" novalidate ng-submit="ctrl.submit(DetailsForm.$valid)">
                             <div class="form-group">
                                 <label>Email <span class="icon-at-sign"></span></label>
-                                <input class="form-control" type="email" name="email" ng-model="ctrl.details.email">
+                                <input class="form-control" type="email" name="email" ng-model="ctrl.details.email"
+                                    placeholder="zlo@evil.com">
 
                                 <div ng-messages="DetailsForm.email.$error">
                                     <div ng-message="email">Invalid email address format</div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>About <span class="icon-list-number"></span></label>
+                                <label>About <span class="glyphicon glyphicon-list-alt"/></label>
                             <textarea class="form-control" placeholder="e.g. Conquering the world"
                                       maxlength="500" name="about" ng-model="ctrl.details.about"></textarea>
 
@@ -59,7 +67,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>Web Site <span class="icon-fontawesome-webfont"></span> </label>
+                                <label>Web-Site <span class="glyphicon glyphicon-home"/></label>
                                 <input class="form-control" type="url" placeholder="e.g. http://evil.com"
                                        maxlength="100" name="site" ng-model="ctrl.details.site">
 
@@ -69,12 +77,18 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <button id="resetDetails" type="reset" ng-click="reset()">Reset<img class="icon"
-                                                                                                    src="/img/reset.png">
+                                <button class="reset-button" ng-click="reset()">Reset <span class="glyphicon glyphicon-repeat"/>
                                 </button>
-                                <button type="submit">Submit <img class="icon" src="/img/submit.png"></button>
+                                <button type="submit">
+                                    <div ng-show="sent">
+                                        Submitting... <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+                                    </div>
+                                    <div ng-show="!sent">
+                                        Submit <span class="glyphicon glyphicon-ok"/>
+                                    </div>
+                                </button>
                             </div>
-                            <h3>{{ctrl.message}}</h3>
+                            <alert type="danger" ng-show="message">{{message}}</alert>
                         </form>
                     </div>
                     <div class="thematic-block" ng-controller="changePasswordCtrl as ctrl">
@@ -105,9 +119,16 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <button type="submit">Submit <img class="icon" src="/img/submit.png"></button>
+                                    <button type="submit">
+                                        <div ng-show="sent">
+                                            Submitting... <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+                                        </div>
+                                        <div ng-show="!sent">
+                                            Submit <span class="glyphicon glyphicon-ok"/>
+                                        </div>
+                                    </button>
                                 </div>
-                                <h3>{{ctrl.message}}</h3>
+                                <alert type="danger" ng-show="message">{{message}}</alert>
                             </form>
                         </div>
                     </div>

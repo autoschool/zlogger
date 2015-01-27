@@ -27,33 +27,38 @@ zloggerControllers.controller('postCommentsCtrl', function ($scope, $http, $loca
 
     var model = this;
 
-    model.message = "";
+    $scope.message = "";
 
     model.commentary = {
         message: ""
     };
 
+    $scope.sent = false;
+
     model.submit = function(isValid) {
-        if(isValid) {
-            $http.post(commentsAddUrl, model.commentary).
-                success(function() {
-                    model.message = "";
-                    model.commentary.message = "";
-                    $window.location.reload();
-                }).
-                error(function() {
-                    model.message = "Could not save commentary. Please try again later.";
-                });
-        } else {
-            model.message = "Commentary is invalid.";
+        if(!$scope.sent) {
+            $scope.sent = true;
+            $scope.message = "";
+            if(isValid) {
+                $http.post(commentsAddUrl, model.commentary).
+                    success(function() {
+                        model.commentary.message = "";
+                        $window.location.reload();
+                    }).
+                    error(function() {
+                        $scope.sent = false;
+                        $scope.message = "Could not save commentary. Please try again later.";
+                    });
+            }
         }
     };
 });
 
-zloggerControllers.controller('registrationController', ['$http', '$window', function($http, $window) {
+zloggerControllers.controller('registrationController', function($http, $window, $scope) {
     var model = this;
 
-    model.message = "";
+    $scope.message = "";
+    $scope.sent = false;
 
     model.user = {
         userName: "",
@@ -62,23 +67,28 @@ zloggerControllers.controller('registrationController', ['$http', '$window', fun
     };
 
     model.submit = function(isValid) {
-        if(isValid) {
-            $http.post("/signup", model.user).
-                success(function() {
-                    model.message = "";
-                    $window.location.href = "http://" + $window.location.host + "/login";
-                }).
-                error(function() {
-                    model.message = "This username is already taken. Please try another one.";
-                });
-        } else {
-            model.message = "Not all fields are valid";
+        if(!$scope.sent) {
+            if(isValid) {
+                $scope.sent = true;
+                $scope.message = "";
+                $http.post("/signup", model.user).
+                    success(function() {
+                        $window.location.href = "http://" + $window.location.host + "/login";
+                    }).
+                    error(function() {
+                        $scope.sent = false;
+                        $scope.message = "This username is already taken. Please try another one.";
+                    });
+            }
         }
     };
-}]);
+});
 
-zloggerControllers.controller('loginCtrl', function($http, $window) {
+zloggerControllers.controller('loginCtrl', function($http, $window, $scope) {
     var model = this;
+
+    $scope.message = "";
+    $scope.sent = false;
 
     model.auth = {
         username: "",
@@ -86,20 +96,23 @@ zloggerControllers.controller('loginCtrl', function($http, $window) {
     };
 
     model.submit = function(isValid) {
-        if(isValid) {
-            $http({
-                method: 'POST',
-                url : "/j_spring_security_check",
-                params : model.auth,
-                headers: {'Content-Type': 'application/x-www/form-urlencoded'}
-            }).success(function() {
-                $window.location.href = "http://" + $window.location.host + "/";
-            }).
-            error(function() {
-                model.message = "This login/password pair is invalid.";
-            });
-        } else {
-            model.message = "Not all fields are valid";
+        if(!$scope.sent) {
+            if(isValid) {
+                $scope.message = "";
+                $scope.sent = true;
+                $http({
+                    method: 'POST',
+                    url : "/j_spring_security_check",
+                    params : model.auth,
+                    headers: {'Content-Type': 'application/x-www/form-urlencoded'}
+                }).success(function() {
+                    $window.location.href = "http://" + $window.location.host + "/";
+                }).
+                error(function() {
+                    $scope.sent = false;
+                    $scope.message = "This login/password pair is invalid. Try again?";
+                });
+            }
         }
     };
 });
@@ -111,6 +124,7 @@ zloggerControllers.controller('blogCtrl', function($http, $window, $scope) {
     $scope.labelCaption = "New post";
     $scope.message = "";
     $scope.edit = false;
+    $scope.sent = false;
 
     $scope.post = {
         id : "",
@@ -119,49 +133,68 @@ zloggerControllers.controller('blogCtrl', function($http, $window, $scope) {
     };
 
      model.submit = function(isValid) {
-        if(isValid) {
-            if(!$scope.edit) {
-                $http.post("/user/addpost", $scope.post)
-                    .success(function() {
-                        model.message = "";
-                        $scope.post.title = "";
-                        $scope.post.message = "";
-                        $window.location.reload();
-                    })
-                    .error(function() {
-                        $scope.message = "Saving post was unsuccessfull";
-                    });
-            } else {
-                $http.put("/user/editpost", $scope.post)
-                    .success(function() {
-                        model.message = "";
-                        $scope.post.title = "";
-                        $scope.post.message = "";
-                        $scope.post.id = "";
-                        $window.location.reload();
-                    })
-                    .error(function() {
-                        $scope.message = "Editing post was unsuccessfull";
-                    });
+        if(!$scope.sent) {
+            if(isValid) {
+                $scope.sent = true;
+                $scope.message = "";
+                if(!$scope.edit) {
+                    $http.post("/user/addpost", $scope.post)
+                        .success(function() {
+                            $scope.post.title = "";
+                            $scope.post.message = "";
+                            $window.location.reload();
+                        })
+                        .error(function() {
+                            $scope.sent = false;
+                            $scope.message = "Saving post was unsuccessfull";
+                        });
+                } else {
+                    $http.put("/user/editpost", $scope.post)
+                        .success(function() {
+                            $scope.post.title = "";
+                            $scope.post.message = "";
+                            $scope.post.id = "";
+                            $window.location.reload();
+                        })
+                        .error(function() {
+                            $scope.sent = false;
+                            $scope.message = "Editing post was unsuccessfull";
+                        });
+                }
             }
-        } else {
-            $scope.message = "Message is invalid";
+        }
+     };
+
+     model.del = function(id) {
+        if(!$scope.sent) {
+            $scope.sent = true;
+            $http.delete("/user/deletepost/" + id)
+                .success(function() {
+                    $window.location.reload();
+                })
+                .error(function() {
+                    $scope.sent = false;
+                });
         }
      };
 });
 
-zloggerControllers.controller('avatarCtrl', ['$scope', 'fileUpload', function($scope, fileUpload){
-  $scope.uploadFile = function(){
-      var file = $scope.myFile;
-      var uploadUrl = "/user/changeavatar";
-      fileUpload.uploadFileToUrl(file, uploadUrl);
-  };
-}]);
+zloggerControllers.controller('avatarCtrl', function($scope, fileUpload){
+    $scope.sent = false;
+    $scope.message = "";
+
+    $scope.uploadFile = function(){
+        var file = $scope.myFile;
+        var uploadUrl = "/user/changeavatar";
+        fileUpload.uploadFileToUrl(file, uploadUrl, $scope);
+    };
+});
 
 zloggerControllers.controller('detailsCtrl', function($http, $window, $scope, email, about, site) {
     var model = this;
 
-    model.message = "";
+    $scope.message = "";
+    $scope.sent = "";
 
     model.details = {
         email: email,
@@ -176,25 +209,29 @@ zloggerControllers.controller('detailsCtrl', function($http, $window, $scope, em
     };
 
      model.submit = function(isValid) {
-        if(isValid) {
-            $http.put("/user/changedetails", model.details).
-                success(function() {
-                    model.message = "";
-                    model.saved = angular.copy(model.details);
-                }).
-                error(function() {
-                    model.message = "Saving details was unsuccessfull.";
-                });
-        } else {
-            model.message = "Some fields are invalid.";
+        if(!$scope.sent) {
+            if(isValid) {
+                $scope.message = "";
+                $scope.sent = true;
+                $http.put("/user/changedetails", model.details).
+                    success(function() {
+                        model.saved = angular.copy(model.details);
+                        $scope.sent = false;
+                    }).
+                    error(function() {
+                        $scope.sent = false;
+                        $scope.message = "Saving details was unsuccessfull.";
+                    });
+            }
         }
      };
 });
 
-zloggerControllers.controller('changePasswordCtrl', function($http) {
+zloggerControllers.controller('changePasswordCtrl', function($http, $scope) {
     var model = this;
 
-    model.message = "";
+    $scope.message = "";
+    $scope.sent = false;
 
     model.password = {
         currentPassword: "",
@@ -203,19 +240,22 @@ zloggerControllers.controller('changePasswordCtrl', function($http) {
     };
 
     model.submit = function(isValid) {
-        if(isValid) {
-            $http.post("/user/changepassword", model.password).
-                success(function() {
-                    model.message = "";
-                    model.password.currentPassword = "";
-                    model.password.newPassword = "";
-                    model.password.confirmPassword = "";
-                }).
-                error(function() {
-                    model.message = "Wrong current password.";
-                });
-        } else {
-            model.message = "Not all fields are valid";
+        if(!$scope.sent) {
+            if(isValid) {
+                $scope.message = "";
+                $scope.sent = true;
+                $http.post("/user/changepassword", model.password).
+                    success(function() {
+                        model.password.currentPassword = "";
+                        model.password.newPassword = "";
+                        model.password.confirmPassword = "";
+                        $scope.sent = false;
+                    }).
+                    error(function() {
+                        $scope.message = "Wrong current password.";
+                        $scope.sent = false;
+                    });
+            }
         }
     };
 });

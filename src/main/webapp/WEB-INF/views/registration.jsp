@@ -48,10 +48,17 @@
                                 <div ng-message="email">Invalid email address format</div>
                             </div>
                         </div>
-                        <h3>{{reg.message}}</h3>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary" ng-disabled="!SignUpForm.$valid">
+                                <div ng-show="sent">
+                                    Submitting... <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+                                </div>
+                                <div ng-show="!sent">
+                                    Submit
+                                </div>
+                            </button>
                         </div>
+                        <alert type="danger" ng-show="message">{{message}}</alert>
                     </form>
                 </div>
             </div>

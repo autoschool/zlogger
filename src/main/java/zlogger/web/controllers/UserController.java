@@ -30,7 +30,9 @@ import java.util.logging.Logger;
 
 @Controller
 public class UserController {
+
     private static final Logger LOGGER = Logger.getGlobal();
+
     @Autowired
     PostService postService;
     @Autowired
@@ -56,6 +58,7 @@ public class UserController {
         } else {
             blogModel.setCanAddPost(false);
         }
+
         return new ModelAndView("blog", "blogModel", blogModel);
     }
 
@@ -84,9 +87,12 @@ public class UserController {
     public ResponseEntity<String> changePassword(@RequestBody PasswordModel passwordModel,
                                                  Authentication authentication) {
         User user = userService.get(authentication.getName());
-        if (passwordModel.getNewPassword().length() < 8) {
-            return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+
+        if (passwordModel.getNewPassword().length() <
+                authenticationService.getMinPasswordLength()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+
         if (passwordEncoder.matches(passwordModel.getCurrentPassword(), user.getPassword())) {
             String hashedPassword = passwordEncoder.encode(passwordModel.getNewPassword());
             user.setPassword(hashedPassword);

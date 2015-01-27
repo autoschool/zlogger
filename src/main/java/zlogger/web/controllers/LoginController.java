@@ -15,7 +15,7 @@ public class LoginController {
     @RequestMapping("login")
     @ResponseStatus(HttpStatus.OK)
     public String getLoginForm(
-            @RequestParam(required = false) String authfailed, String logout,
+            @RequestParam(required = false) String authfailed,
             String denied, HttpServletResponse response) throws IOException {
         if (authfailed != null || denied != null) {
             response.sendError(HttpStatus.UNAUTHORIZED.value());

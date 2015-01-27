@@ -13,9 +13,9 @@
 <!DOCTYPE html>
 <html ng-app="zlogger" lang="en">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="">
+        <meta name="description" content="Evil blog platform">
 
         <title><jsp:invoke fragment="title"/></title>
 
@@ -52,7 +52,7 @@
                 <li><a class="navbar-brand" href="/common">Zlogger</a></li>
                 <li class="logo-item">
                     <div class="logo-block">
-                        <img class="logo" src="/img/newlogobluelight.png">
+                        <img class="logo" src="/img/logo.png">
                     </div>
                 </li>
             </ul>
@@ -61,7 +61,7 @@
                     <sec:authorize access="hasRole('ROLE_USER')">
                         <li><a data-hover="Home" href="/"></a></li>
                     </sec:authorize>
-                    <li><a data-hover="About" href="#"></a></li>
+                    <li><a data-hover="About" href="https://github.com/autoschool/zlogger"></a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <sec:authorize access="hasRole('ROLE_USER')">
@@ -81,7 +81,7 @@
 <main>
     <a href="/common" class="motto-container">
         <div class="motto">
-            A certain blog platform's evil twin
+            Evil blog platform
         </div>
     </a>
 	<section class="container">
@@ -91,8 +91,7 @@
 <footer class="blog-footer">
     <p><%=version %> Build date: <%=timestamp %></p>
     <p>
-        <a class="underlined underlined-default" href="#">Back to top</a>
-
+        <a class="underlined underlined-default" href="#" style="color:white;">Back to top</a>
     </p>
 </footer>
 
