@@ -122,12 +122,32 @@ button[type="submit"],
   color: white;
   cursor: pointer;
 }
+
 button[type="submit"]:hover,
 .add-post-button:hover,
 .reset-button:hover {
   background: linear-gradient(#191845 0%, #171530 75%, #191222 100%);
   color: white;
 }
+
+nav > .pager li>a,.pager li>span{
+  display:inline-block;
+  padding:5px 14px;
+  background: linear-gradient(#182245 0%, #151a30 75%, #151222 100%);
+  border: none;
+  border-radius:10px;
+  color: white;
+}
+
+nav > .pager li>a:hover,.pager li>span:hover{
+  display:inline-block;
+  padding:5px 14px;
+  background: linear-gradient(#191845 0%, #171530 75%, #191222 100%);
+  border: none;
+  border-radius:10px;
+  color: white;
+}
+
 .add-post-button {
   display: block;
   width: 100%;
