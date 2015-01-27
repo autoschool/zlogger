@@ -25,8 +25,9 @@
         <link href="/css/glyphter.css" rel="stylesheet">
         <link href="/css/common.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.3.7/css/ngDialog.min.css" rel="stylesheet">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.3.7/css/ngDialog-theme-default.min.css" rel="stylesheet">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.3.7/css/ngDialog-theme-plain.min.css" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.10/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.10/angular-messages.min.js"></script>
 		<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 
 		<!--[if lt IE 9]>
@@ -95,15 +96,12 @@
     </p>
 </footer>
 
-<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.10/angular.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.10/angular-messages.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.min.js"></script>
-<script src="/js/ng/app.js"></script>
-<script src="/js/ng/controllers.js"></script>
-<script src="/js/ng/services.js"></script>
-<script src="/js/ng/directives.js"></script>
+<script src="/js/app.js"></script>
+<script src="/js/controllers.js"></script>
+<script src="/js/services.js"></script>
+<script src="/js/directives.js"></script>
 <script src="https://tinymce.cachefly.net/4.1/tinymce.min.js"></script>
 <script src="/js/tinymce.js"></script>
 <jsp:invoke fragment="footer"/>
