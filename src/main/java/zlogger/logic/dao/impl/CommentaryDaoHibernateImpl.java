@@ -62,7 +62,9 @@ public class CommentaryDaoHibernateImpl implements CommentaryDao {
     @Override
     public Commentary get(Long id) {
         return (Commentary) sessionFactory.openSession()
-                .load(Commentary.class, id);
+                .createCriteria(Commentary.class)
+                .add(Restrictions.eq("id", id))
+                .uniqueResult();
     }
 
     @Override

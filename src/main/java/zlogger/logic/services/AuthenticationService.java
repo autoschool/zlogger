@@ -10,4 +10,12 @@ public interface AuthenticationService {
 
     public boolean isCreator(Authentication authentication, AbstractPost post);
 
+    public int getMinPasswordLength();
+
+    public int getMinUsernameLength();
+
+    public int getMaxUsernameLength();
+
+    public boolean isValidIdentity(String username, String password);
+
 }

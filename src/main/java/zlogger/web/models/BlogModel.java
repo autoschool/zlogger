@@ -39,11 +39,11 @@ public class BlogModel {
     }
 
     public String getLinkNextPage() {
-        return "/?page=" + Integer.toString(posts.getPageNumber() + 1);
+        return "?page=" + Integer.toString(posts.getPageNumber() + 1);
     }
 
     public String getLinkPreviousPage() {
-        return "/?page=" + Integer.toString(posts.getPageNumber() - 1);
+        return "?page=" + Integer.toString(posts.getPageNumber() - 1);
     }
 
     public boolean isCanAddPost() {

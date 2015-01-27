@@ -13,7 +13,6 @@ import zlogger.logic.services.CommentaryService;
 import zlogger.logic.services.PostService;
 import zlogger.logic.services.UserService;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
@@ -40,8 +39,7 @@ public class CommentariesController {
             consumes = MediaType.APPLICATION_JSON)
     public ResponseEntity<String> addComment(@PathVariable("id") long postId,
                            Authentication authentication,
-                           @RequestBody Commentary commentary,
-                           HttpServletResponse response) {
+                           @RequestBody Commentary commentary) {
         User user = userService.get(authentication.getName());
         Post toPost = postService.get(postId);
         commentaryService.add(commentary, toPost, user);

@@ -31,7 +31,7 @@
 .short-user-info p:hover img {
   transform: translateX(250px);
 }
-.short-user-info p img {
+.short-user-info img {
   display: block;
   width: 250px;
   max-height: 250px;

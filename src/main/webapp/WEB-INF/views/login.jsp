@@ -15,15 +15,15 @@
                     <form name="LoginForm" class="form-signin" novalidate ng-submit="login.submit(LoginForm.$valid)">
                         <h2 class="form-signin-heading">Please sign in</h2>
                         <div class="form-group">
-                            <label for="username">Login  <span class="icon-user-outline"></span></label>
-                            <input class="form-control"  type="text" value="" id="username" ng-model="login.auth.username" required autofocus>
+                            <label>Login  <span class="icon-user-outline"></span></label>
+                            <input class="form-control"  type="text" value="" name="username" ng-model="login.auth.username" required autofocus>
                             <div ng-messages="LoginForm.username.$error">
                                 <div ng-message="required">You can't leave this empty.</div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="password">Password  <span class="icon-key"></span></label>
-                            <input class="form-control"  type="password" id="password" ng-model="login.auth.password" required>
+                            <label>Password  <span class="icon-key"></span></label>
+                            <input class="form-control"  type="password" name="password" ng-model="login.auth.password" required>
                             <div ng-messages="LoginForm.password.$error">
                                 <div ng-message="required">You can't leave this empty.</div>
                             </div>
@@ -31,9 +31,16 @@
                         <br>
                         <div class="form-group">
                             <a class="underlined underlined-default" href="/signup">Sign up</a>
-                            <input type="submit" value="Sign in"/>
+                            <button type="submit" ng-disabled="!LoginForm.$valid">
+                                <div ng-show="!sent">
+                                    Sign in
+                                </div>
+                                <div ng-show="sent">
+                                    Signing in... <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+                                </div>
+                            </button>
                         </div>
-                        <h3 style="color : red">{{login.message}}</h3>
+                        <alert type="danger" ng-show="message">{{message}}</alert>
                     </form>
                 </div>
             </div>

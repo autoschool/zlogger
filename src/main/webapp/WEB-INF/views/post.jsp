@@ -22,7 +22,10 @@
             <div class="col-sm-8">
                 <div class="full-post-space" ng-controller="postCommentsCtrl as ctrl">
                     <article class="post">
-                        <h2 class="post-alone">${postModel.post.title}</h2>
+                        <h2 class="post-alone">
+                            <c:if test="${postModel.post.title.equals(\"\")}">No title</c:if>
+                            ${postModel.post.title}
+                        </h2>
                         <p class="post-date">
                             <span class="glyphicon glyphicon-time"></span>
                             <fmt:formatDate type = "both" dateStyle="short" timeStyle="short" value="${postModel.post.creationDate}"/> by
@@ -40,28 +43,37 @@
                                     <label for="message">Leave a comment</label>
                                     <textarea class="form-control" name="message" minlength="3" maxlength="2000" rows="3"
                                           required ng-model="ctrl.commentary.message" autofocus></textarea>
-                                    <div ng-messages="CommentaryForm.message.$error">
+                                    <div ng-messages="CommentaryForm.message.$error" ng-show="CommentaryForm.message.$dirty && !sent">
+                                        <div ng-message="required">You can't leave this empty</div>
                                         <div ng-message="minlength">Please use between 3 and 2000 characters.</div>
                                         <div ng-message="maxlength">Please use between 3 and 2000 characters.</div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="leave-comment-buttons">
-                                        <input class="btn btn-lg btn-primary" type="submit" value="Submit"/>
+                                        <button class="btn btn-lg btn-primary" type="submit" value="Submit"
+                                            ng-disabled="!CommentaryForm.$valid">
+                                            <div ng-show="sent">
+                                                Submitting... <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+                                            </div>
+                                            <div ng-show="!sent">
+                                                Submit
+                                            </div>
+                                        </button>
                                     </div>
                                 </div>
-                                <h3>{{ctrl.message}}</h3>
+                                <alert type="danger" ng-show="message">{{message}}</alert>
                             </form>
                         </div>
+                        <hr>
                     </c:if>
-                    <hr>
                     <h4>Commentaries: {{commentaries.length}}</h4>
                     <div class = "comment" ng-repeat="commentary in filteredComments">
                         <a class="comment-userpic-link" href="/blog/{{commentary.creator.username}}">
                             <div class="comment-userpic-block">
                                 <img class="comment-userpic"
                                      src="/img/{{commentary.creator.username}}.png"
-                                     onerror="this.src = '/img/Default.png';"/>
+                                     onerror="this.src = '/img/default.png';"/>
                             </div>
                         </a>
                         <div class="comment-body">

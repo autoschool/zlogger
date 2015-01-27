@@ -15,6 +15,9 @@ section > h2 {
   text-decoration: none;
   text-align: center;
 }
+.thematic-block textarea {
+ resize:vertical;
+}
 .thematic-block > div {
   display: inline-block;
 }
@@ -48,6 +51,10 @@ section > h2 {
   width: 250px;
   height: 250px;
 }
+.userpic-block img {
+  width: 250px;
+  height: 250px;
+}
 .userpic-block > div:nth-child(1) > form > textarea {
   overflow: hidden;
   resize: none;
@@ -69,17 +76,6 @@ section > h2 {
 }
 button .glyphter {
   font-size: 16px;
-}
-button[type="reset"] .icon {
-  width: 10px;
-  height: 10px;
-  transition: all 0.4s ease-in-out;
-}
-button[type="reset"] .hover .icon {
-  transform: rotate(360deg) scale(1.2);
-}
-button[type="reset"]:hover .icon {
-  transform: rotate(360deg) scale(1.2);
 }
 button[type="submit"] .icon {
   width: 10px;

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import zlogger.logic.models.User;
 import zlogger.logic.models.UserDetails;
+import zlogger.logic.services.AuthenticationService;
 import zlogger.logic.services.UserService;
 import zlogger.web.models.RegistrationModel;
 
@@ -21,6 +22,9 @@ public class RegistrationController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    AuthenticationService authenticationService;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -36,16 +40,25 @@ public class RegistrationController {
             consumes = MediaType.APPLICATION_JSON,
             produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<User> registerNewUser(@RequestBody RegistrationModel model) throws IOException {
+
+        if (!authenticationService.isValidIdentity(model.getUserName(), model.getPassword())) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         if (userService.exists(model.getUserName())) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
+
         User user = new User(model.getUserName(),
                 passwordEncoder.encode(model.getPassword()));
         userService.add(user);
+
         if (model.getEmail() != null) {
             UserDetails details = userService.getUserDetails(user);
             details.setEmail(model.getEmail());
+            userService.updateUserDetails(details);
         }
+
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
