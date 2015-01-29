@@ -52,7 +52,7 @@
                                 <div class="form-group">
                                     <div class="leave-comment-buttons">
                                         <button class="btn btn-lg btn-primary" type="submit" value="Submit"
-                                            ng-disabled="!CommentaryForm.$valid">
+                                            ng-disabled="!CommentaryForm.$valid && !sent">
                                             <div ng-show="sent">
                                                 Submitting... <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
                                             </div>
@@ -86,8 +86,10 @@
                             </div>
                         </div>
                     </div>
-                    <pagination total-items="totalItems" ng-model="currentPage"
-                        max-size="maxSize" class="pagination-sm" items-per-page="numPerPage"
+                    <pagination total-items="commentaries.length" 
+                        ng-model="paginationProperties.currentPage"
+                        max-size="paginationProperties.maxSize" class="pagination-sm" 
+                        items-per-page="paginationProperties.numPerPage"
                         boundary-links="true">
                     </pagination>
                 </div>
