@@ -7,7 +7,7 @@ zloggerControllers.constant('REFRESH_INTERVAL', 300000);
 /* Controllers */
 
 zloggerControllers.controller('postCommentsCtrl', ['$scope', '$http', '$interval', 
-	'postId', 'REFRESH_INTERVAL', function ($scope, $http, $interval, postId, REFRESH_INTERVAL) {
+    'postId', 'REFRESH_INTERVAL', function ($scope, $http, $interval, postId, REFRESH_INTERVAL) {
 
 		$scope.commentaries = [];
 		$scope.filteredComments = [];
@@ -134,7 +134,7 @@ zloggerControllers.controller('blogCtrl', ['$http', '$window', '$scope', functio
 	$scope.edit = false;
 	$scope.sent = false;
 
-	model.post = {
+	$scope.post = {
 		id : "",
 		title: "",
 		message: ""
@@ -149,10 +149,10 @@ zloggerControllers.controller('blogCtrl', ['$http', '$window', '$scope', functio
 			$scope.sent = true;
 			$scope.message = "";
 			if(!$scope.edit) {
-				$http.post("/user/addpost", model.post)
+				$http.post("/user/addpost", $scope.post)
 				.success(function() {
-					model.post.title = "";
-					model.post.message = "";
+					$scope.post.title = "";
+					$scope.post.message = "";
 					model.windowReload();
 				})
 				.error(function() {
@@ -160,11 +160,11 @@ zloggerControllers.controller('blogCtrl', ['$http', '$window', '$scope', functio
 					$scope.message = "Saving post was unsuccessfull";
 				});
 			} else {
-				$http.put("/user/editpost", model.post)
+				$http.put("/user/editpost", $scope.post)
 				.success(function() {
-					model.post.title = "";
-					model.post.message = "";
-					model.post.id = "";
+					$scope.post.title = "";
+					$scope.post.message = "";
+					$scope.post.id = "";
 					model.windowReload();
 				})
 				.error(function() {

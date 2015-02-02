@@ -54,14 +54,14 @@
                         <form name="PostForm" novalidate ng-submit="ctrl.submit(PostForm.$valid)">
                             <div class="form-group">
                                 <label for="title">Title</label>
-                                <input class="form-control"  type="text" maxlength="255" name="title" ng-model="ctrl.post.title">
+                                <input class="form-control"  type="text" maxlength="255" name="title" ng-model="post.title">
                                 <div ng-messages="PostForm.title.$error">
                                     <div ng-message="maxlength">Please use less than 255 characters.</div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="message">Post content</label>
-                                <textarea ui-tinymce class="form-control" minlength="3" maxlength="2000" name="message" ng-model="ctrl.post.message" rows="8" required></textarea>
+                                <textarea ui-tinymce class="form-control" minlength="3" maxlength="2000" name="message" ng-model="post.message" rows="8" required></textarea>
                                 <div ng-messages="PostForm.message.$error" ng-show="!sent">
                                     <div ng-message="required">You can't leave content empty.</div>
                                     <div ng-message="minlength">Please use between 3 and 2000 characters (including html).</div>

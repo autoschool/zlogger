@@ -55,7 +55,7 @@ public class CrudTest extends BasicTest {
     }
 
     @Before
-    public void setUpSpringContest() throws Exception {
+    public void setUpSpringContext() throws Exception {
         TestContextManager testContextManager = new TestContextManager(getClass());
         testContextManager.prepareTestInstance(this);
     }

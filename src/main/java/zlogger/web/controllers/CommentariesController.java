@@ -41,8 +41,11 @@ public class CommentariesController {
                            Authentication authentication,
                            @RequestBody Commentary commentary) {
         User user = userService.get(authentication.getName());
-        Post toPost = postService.get(postId);
-        commentaryService.add(commentary, toPost, user);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        if (user != null) {
+            Post toPost = postService.get(postId);
+            commentaryService.add(commentary, toPost, user);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 }
