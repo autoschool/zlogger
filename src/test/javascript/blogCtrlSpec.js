@@ -30,7 +30,7 @@ describe('blogCtrl', function() {
     var controller = createController();
     spyOn(controller, 'windowReload').andCallFake(function(){});
     
-    controller.post = TEST_POST_DATA;
+    $rootScope.post = TEST_POST_DATA;
     $httpBackend.expectPOST(TEST_POST_LINK, TEST_POST_DATA); 
     controller.submit(true);
     $httpBackend.flush();
